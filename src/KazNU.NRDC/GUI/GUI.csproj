@@ -5,8 +5,8 @@
     <TargetFramework>net6.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
-    <BaseOutputPath>..\..\out\</BaseOutputPath>
-    <BaseIntermediateOutputPath>..\..\out\obj\</BaseIntermediateOutputPath>
+    <BaseOutputPath>..\..\..\out\</BaseOutputPath>
+    <BaseIntermediateOutputPath>..\..\..\out\obj\</BaseIntermediateOutputPath>
     <Authors>Nurzat Kenzhebayev</Authors>
     <Company>Kazakh National University (Phys-Tech)</Company>
   </PropertyGroup>

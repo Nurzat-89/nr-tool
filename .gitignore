@@ -8,3 +8,5 @@
 /src/KazNU.NRDC/.vs/KazNU.NRDC
 /src/KazNU.NRDC/GUI/GUI.csproj.user
 /src/out
+/out
+/src/KazNU.NRDC/NuclearData/obj/Debug
