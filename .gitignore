@@ -3,3 +3,8 @@
 ################################################################################
 
 /src/KazNU.NRDC/GUI/bin/Debug/net6.0-windows
+/src/KazNU.NRDC/GUI/obj
+/.vs
+/src/KazNU.NRDC/.vs/KazNU.NRDC
+/src/KazNU.NRDC/GUI/GUI.csproj.user
+/src/out
