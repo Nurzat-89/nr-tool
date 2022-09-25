@@ -9,9 +9,10 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>NuclearData</RootNamespace>
     <AssemblyName>NuclearData</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -41,7 +42,50 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Constants.cs" />
+    <Compile Include="Globals.cs" />
+    <Compile Include="Libraries\AtomDataReader.cs" />
+    <Compile Include="Libraries\DecayDataReader.cs" />
+    <Compile Include="Libraries\Endf\BaseEndf.cs" />
+    <Compile Include="Libraries\Endf\BaseMacsEndf.cs" />
+    <Compile Include="Libraries\Endf\EndfMacs.cs" />
+    <Compile Include="Libraries\Endf\Macs.cs" />
+    <Compile Include="Libraries\Interfaces\ICrossSectionData.cs" />
+    <Compile Include="Libraries\Interfaces\ICrossSectionValue.cs" />
+    <Compile Include="Libraries\Interfaces\IDecayData.cs" />
+    <Compile Include="Libraries\Interfaces\IEndf.cs" />
+    <Compile Include="Libraries\Interfaces\IMacs.cs" />
+    <Compile Include="Libraries\Interfaces\IMacsEndf.cs" />
+    <Compile Include="Libraries\Interfaces\INuclearDataReader.cs" />
+    <Compile Include="Libraries\Models\CrossSection.cs" />
+    <Compile Include="Libraries\Models\CrossSectionValue.cs" />
+    <Compile Include="Libraries\Models\Decay.cs" />
+    <Compile Include="Libraries\N2NdataReader.cs" />
+    <Compile Include="Libraries\NAlphaDataReader.cs" />
+    <Compile Include="Libraries\NElectronDataReader.cs" />
+    <Compile Include="Libraries\NGammaDataReader.cs" />
+    <Compile Include="Libraries\NProtonDataReader.cs" />
+    <Compile Include="Libraries\ReactionDataReader.cs" />
+    <Compile Include="Libraries\Record.cs" />
+    <Compile Include="Particles\Atom.cs" />
+    <Compile Include="Particles\Element.cs" />
+    <Compile Include="Particles\Interfaces\IAtom.cs" />
+    <Compile Include="Particles\Interfaces\IIsotope.cs" />
+    <Compile Include="Particles\Interfaces\INuclide.cs" />
+    <Compile Include="Particles\Interfaces\IParticle.cs" />
+    <Compile Include="Particles\Isotope.cs" />
+    <Compile Include="Particles\Neutron.cs" />
+    <Compile Include="Particles\Particle.cs" />
+    <Compile Include="Particles\Photon.cs" />
+    <Compile Include="Particles\Proton.cs" />
+    <Compile Include="Physics\Interfaces\IReaction.cs" />
+    <Compile Include="Physics\Reaction.cs" />
+    <Compile Include="Physics\ReactionN2N.cs" />
+    <Compile Include="Physics\ReactionNG.cs" />
+    <Compile Include="Physics\ReactionNP.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utils\EndfHelper.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
