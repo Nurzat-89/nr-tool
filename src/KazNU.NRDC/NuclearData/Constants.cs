@@ -24,7 +24,7 @@ namespace NuclearData
         public const double OneMonthSec = 2592000.0;
         public const double OneDaySec = 86400.0;
         public const double OneHourSec = 3600.0;
-        public enum FILETYP { ATOM, DECAY, NEUTRON, FISSION };
+        public enum FILETYP { ATOM, DECAY, NEUTRON, FISSION, MACS };
         public enum RTYPE { GAMMA, BETA, EC, IT, ALFA, N, SF, P, BETA_N, BETA_A, UNDEF };
         public enum DATALIBS { ENDFB_VII, ENDFB_VIII, EAF2010, JEFF, JENDL, TENDL, CENDL };
         public enum REACT { N_el, N_inl, N_tot, N_G, N_2N, N_P, N_A };
@@ -69,7 +69,10 @@ namespace NuclearData
             {6, RTYPE.SF },
             {7, RTYPE.P }
         };
-        public static readonly string[] ElementNames = {
+
+        public static string[] ElementNames = { " ", "H", "He", "Li", "Be", "B", "C", "N", "O", "F", "Ne", "Na", "Mg", "Al", "Si", "P", "S", "Cl", "Ar", "K", "Ca", "Sc", "Ti", "V", "Cr", "Mn", "Fe", "Co", "Ni", "Cu", "Zn", "Ga", "Ge", "As", "Se", "Br", "Kr", "Rb", "Sr", "Y", "Zr", "Nb", "Mo", "Tc", "Ru", "Rh", "Pd", "Ag", "Cd", "In", "Sn", "Sb", "Te", "I", "Xe", "Cs", "Ba", "La", "Ce", "Pr", "Nd", "Pm", "Sm", "Eu", "Gd", "Tb", "Dy", "Ho", "Er", "Tm", "Yb", "Lu", "Hf", "Ta", "W", "Re", "Os", "Ir", "Pt", "Au", "Hg", "Tl", "Pb", "Bi", "Po", "At", "Rn", "Fr", "Ra", "Ac", "Th", "Pa", "U", "Np", "Pu", "Am", "Cm", "Bk", "Cf", "Es", "Fm" };
+
+        public static readonly string[] ElementTableNames = {
             "Nn", "H", "He",
             "Li", "Be", "B", "C", "N", "O", "F" ,                       "Ne",
             "Na", "Mg", "Al", "Si", "P", "S", "Cl",                     "Ar",

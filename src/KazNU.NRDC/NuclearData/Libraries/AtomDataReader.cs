@@ -2,7 +2,7 @@
 using System.IO;
 using System.Text;
 
-namespace NuclearData.Libraries
+namespace NuclearData
 {
     /// <summary>
     /// Nuclide data reader

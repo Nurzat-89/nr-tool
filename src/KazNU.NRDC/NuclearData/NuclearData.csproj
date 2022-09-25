@@ -48,8 +48,13 @@
     <Compile Include="Libraries\DecayDataReader.cs" />
     <Compile Include="Libraries\Endf\BaseEndf.cs" />
     <Compile Include="Libraries\Endf\BaseMacsEndf.cs" />
-    <Compile Include="Libraries\Endf\EndfMacs.cs" />
+    <Compile Include="Libraries\Endf\EafMacs.cs" />
+    <Compile Include="Libraries\Endf\EndfB.cs" />
+    <Compile Include="Libraries\Endf\EndfBMacs.cs" />
+    <Compile Include="Libraries\Endf\Jeff.cs" />
+    <Compile Include="Libraries\Endf\Jendl.cs" />
     <Compile Include="Libraries\Endf\Macs.cs" />
+    <Compile Include="Libraries\Endf\Tendl.cs" />
     <Compile Include="Libraries\Interfaces\ICrossSectionData.cs" />
     <Compile Include="Libraries\Interfaces\ICrossSectionValue.cs" />
     <Compile Include="Libraries\Interfaces\IDecayData.cs" />
@@ -57,6 +62,7 @@
     <Compile Include="Libraries\Interfaces\IMacs.cs" />
     <Compile Include="Libraries\Interfaces\IMacsEndf.cs" />
     <Compile Include="Libraries\Interfaces\INuclearDataReader.cs" />
+    <Compile Include="Libraries\MacsDataReader.cs" />
     <Compile Include="Libraries\Models\CrossSection.cs" />
     <Compile Include="Libraries\Models\CrossSectionValue.cs" />
     <Compile Include="Libraries\Models\Decay.cs" />

@@ -14,7 +14,7 @@
         /// <inheritdoc/>
         public override IIsotope React(IIsotope isotope)
         {
-            return new Isotope(isotope.A, isotope.Z - 1);
+            return new Isotope(isotope.A, isotope.Z - 1, isotope.AtomicMass, isotope.HalfLife);
         }
     }
 }

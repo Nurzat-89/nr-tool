@@ -8,6 +8,11 @@ namespace NuclearData
     public interface ICrossSectionValue
     {
         /// <summary>
+        /// Id of reaction type
+        /// </summary>
+        int Id { get; }
+
+        /// <summary>
         /// Reaction type
         /// </summary>
         REACT Type { get; }

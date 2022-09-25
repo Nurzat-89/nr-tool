@@ -4,12 +4,15 @@
     internal class CrossSectionValue : ICrossSectionValue
     {
         /// <inheritdoc/>
-        public CrossSectionValue(Constants.REACT type, double en, double cs)
+        public CrossSectionValue(int id, double en, double cs)
         {
-            Type = type;
+            Id = id;
             EneV = en;
             CsBarn = cs;
         }
+
+        /// <inheritdoc/>
+        public int Id { get; }
 
         /// <inheritdoc/>
         public double EneV { get; }
@@ -24,6 +27,6 @@
         public double Cssm2 => CsBarn * Constants.barn;
 
         /// <inheritdoc/>
-        public Constants.REACT Type { get; }
+        public Constants.REACT Type => Constants.REACTIONTYPE[Id];
     }
 }

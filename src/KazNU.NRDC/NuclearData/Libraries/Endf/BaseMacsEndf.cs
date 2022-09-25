@@ -1,33 +1,23 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
+using static NuclearData.Constants;
 
 namespace NuclearData
 {
     /// <summary>
     /// Base class for macs endf data
     /// </summary>
-    internal abstract class BaseMacsEndf : IMacsEndf
+    public abstract class BaseMacsEndf : IMacsEndf
     {
-        private IEnumerable<IMacs> _macsList;
-
         /// <inheritdoc/>
-        public BaseMacsEndf()
+        public BaseMacsEndf(DATALIBS library)
         {
-            _macsList = DataRead();
+            Library = library;
         }
 
-        protected abstract string FileName { get; }
+        /// <inheritdoc/>
+        public DATALIBS Library { get; }
 
         /// <inheritdoc/>
-        public IEnumerable<IMacs> MacsList => _macsList;
-
-        /// <inheritdoc/>
-        public IEnumerable<IMacs> GetMacsList(Constants.DATALIBS dataLib, double kt)
-        {
-            var lib = Constants.DataCenters[dataLib];
-            return _macsList.Where(x => x.DataLib == lib && x.kT == kt);
-        }
-
-        protected abstract IEnumerable<IMacs> DataRead();
+        public abstract IEnumerable<IMacs> GetMacsData();
     }
 }

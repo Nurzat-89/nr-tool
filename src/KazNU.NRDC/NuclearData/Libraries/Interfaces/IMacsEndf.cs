@@ -1,11 +1,21 @@
 ﻿using System.Collections.Generic;
+using static NuclearData.Constants;
 
 namespace NuclearData
 {
-    internal interface IMacsEndf
+    /// <summary>
+    /// Macs data file
+    /// </summary>
+    public interface IMacsEndf
     {
-        IEnumerable<IMacs> MacsList { get; }
+        /// <summary>
+        /// Data library
+        /// </summary>
+        DATALIBS Library { get; }
 
-        IEnumerable<IMacs> GetMacsList(Constants.DATALIBS dataLib, double kt);
+        /// <summary>
+        /// Get list of MACS data
+        /// </summary>
+        IEnumerable<IMacs> GetMacsData();
     }
 }

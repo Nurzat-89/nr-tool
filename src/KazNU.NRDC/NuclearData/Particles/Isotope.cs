@@ -9,7 +9,7 @@ namespace NuclearData
         /// <inheritdoc/>
         public Isotope(int A, int Z, double atmoicMass, double halfLife) : base(Z, A, atmoicMass)
         {
-            Name = $"{Constants.ElementNames[Z]}-{A}";
+            Name = $"{Constants.ElementTableNames[Z]}-{A}";
             HalfLife = halfLife;
         }
 
@@ -17,7 +17,7 @@ namespace NuclearData
         public int DecayTypes => Decays.Count;
 
         /// <inheritdoc/>
-        public string ElementName => Constants.ElementNames[Z];
+        public string ElementName => Constants.ElementTableNames[Z];
 
         /// <inheritdoc/>
         public bool Stable => Decays.Count == 0;

@@ -1,6 +1,6 @@
 ﻿namespace NuclearData
 {
-    internal class Element
+    public class Element
     {
         public int Z { get; }
 
@@ -8,7 +8,7 @@
 
         public int ZAID => Z * 1000 + A;
 
-        public string Name => Constants.ElementNames[Z];
+        public string Name => Constants.ElementTableNames[Z];
 
         public Element(int z, int a)
         {

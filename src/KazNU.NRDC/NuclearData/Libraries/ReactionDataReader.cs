@@ -51,9 +51,9 @@ namespace NuclearData
                         s = line.Substring(72, 3); mts = Convert.ToInt16(s);
 
                         r = EndfHelper.GetRecord(line);
-                        i++; crossSectionValueList.Add(new CrossSectionValue(REACTIONTYPE[MT], r.c1, r.c2)); if (i >= ns) break;
-                        i++; crossSectionValueList.Add(new CrossSectionValue(REACTIONTYPE[MT], r.l1, r.l2)); if (i >= ns) break;
-                        i++; crossSectionValueList.Add(new CrossSectionValue(REACTIONTYPE[MT], r.n1, r.n2)); if (i >= ns) break;
+                        i++; crossSectionValueList.Add(new CrossSectionValue(MT, r.c1, r.c2)); if (i >= ns) break;
+                        i++; crossSectionValueList.Add(new CrossSectionValue(MT, r.l1, r.l2)); if (i >= ns) break;
+                        i++; crossSectionValueList.Add(new CrossSectionValue(MT, r.n1, r.n2)); if (i >= ns) break;
 
                         if (mfs != MF || mts == 2) break;
                     }

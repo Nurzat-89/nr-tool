@@ -3,7 +3,7 @@
     /// <summary>
     /// Maxwellian average cross section data
     /// </summary>
-    interface IMacs
+    public interface IMacs
     {
         /// <summary>
         /// Element

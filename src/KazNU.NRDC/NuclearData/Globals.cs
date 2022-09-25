@@ -8,9 +8,9 @@ namespace NuclearData
 {
     internal static class Globals
     {
-        public static string MyDocuments => Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+        public static string LocalAppData => Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
 
-        public static string RootDir => $"{MyDocuments}/xsdir/";
+        public static string RootDir => $"{LocalAppData}/xsdir/";
 
         public static Dictionary<FILETYP, string> FileTypeDir = new Dictionary<FILETYP, string>() {
                { FILETYP.DECAY, "decay/" },
@@ -29,7 +29,7 @@ namespace NuclearData
             string rtyp = FileTypeDir[ftype] + FileTypeName[ftype];
             string sz = Z.ToString("D3");
             string sa = A.ToString("D3");
-            string filePath = rtyp + sz + "_" + ElementNames[Z] + "_" + sa + ".endf";
+            string filePath = rtyp + sz + "_" + ElementTableNames[Z] + "_" + sa + ".endf";
             return RootDir + filePath;
         }
 
@@ -41,19 +41,19 @@ namespace NuclearData
 
             string sz = z.ToString("D3");
             string sa = a.ToString("D3");
-            string filePath = rtyp + sz + "_" + ElementNames[z] + "_" + sa + ".endf";
+            string filePath = rtyp + sz + "_" + ElementTableNames[z] + "_" + sa + ".endf";
             return RootDir + filePath;
         }
 
         public static string GetIsotopeFile(string name, int A, FILETYP ftype)
         {
             string rtyp = FileTypeDir[ftype] + FileTypeName[ftype];
-            var z = ElementNames.ToList().IndexOf(name);
+            var z = ElementTableNames.ToList().IndexOf(name);
             if (z == -1) return string.Empty;
 
             string sz = z.ToString("D3");
             string sa = A.ToString("D3");
-            string filePath = rtyp + sz + "_" + ElementNames[z] + "_" + sa + ".endf";
+            string filePath = rtyp + sz + "_" + ElementTableNames[z] + "_" + sa + ".endf";
             return RootDir + filePath;
         }
 

@@ -95,6 +95,16 @@ namespace NuclearData
         }
 
         /// <summary>
+        /// Convert zaid to Z and A numbers
+        /// </summary>
+        public static (int, int) ConvertZaid(int zaid) 
+        {
+            int z = zaid / 1000;
+            int a = zaid - z * 1000;
+            return (z, a);
+        }
+
+        /// <summary>
         /// get line from stream reader
         /// </summary>
         public static bool GetLineFromStream(StreamReader streamReader, int MF, int MT, out string line) 

@@ -1,4 +1,4 @@
-﻿namespace NuclearData.Libraries
+﻿namespace NuclearData
 {
     /// <summary>
     /// Data reader for (n,p) reaction 
