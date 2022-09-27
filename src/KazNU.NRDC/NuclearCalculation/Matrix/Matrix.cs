@@ -90,7 +90,7 @@ namespace NuclearCalculation
         public abstract IMatrix<T> Devide(IMatrix<T> A);
 
         /// <inheritdoc/>
-        public Matrix<T2> Cast<T2>() where T2 : struct
+        public IMatrix<T2> Cast<T2>() where T2 : struct
         {
             var matrixType = Globals.MatrixTypes[typeof(T2)];
             var instance = Activator.CreateInstance(matrixType) as Matrix<T2>;

@@ -5,7 +5,7 @@ using static NuclearData.Constants;
 namespace NuclearData
 {
     /// <inheritdoc/>
-    internal class Isotope : Particle, IIsotope
+    public class Isotope : Particle, IIsotope
     {
         /// <inheritdoc/>
         public Isotope(int Z, int A, double atmoicMass, double halfLife) : base(Z, A, atmoicMass)

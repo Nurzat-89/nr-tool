@@ -6,13 +6,17 @@ namespace NuclearData
     public class NeutronSpectra : INeutronSpectra
     {
         /// <inheritdoc/>
-        public NeutronSpectra(double kT)
+        public NeutronSpectra(double kT, double flux)
         {
             this.kT = kT;
+            Flux = flux;
         }
 
         /// <inheritdoc/>
         public double kT { get; }
+
+        /// <inheritdoc/>
+        public double Flux { get; }
 
         /// <inheritdoc/>
         public double OneGroupCrossSection(ICrossSectionData crossSection)

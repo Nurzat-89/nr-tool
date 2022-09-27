@@ -57,11 +57,27 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Globals.cs" />
+    <Compile Include="Matrix\CRAM.cs" />
     <Compile Include="Matrix\Interfaces\IMatrix.cs" />
+    <Compile Include="Matrix\Interfaces\IMatrixExp.cs" />
     <Compile Include="Matrix\Matrix.cs" />
     <Compile Include="Matrix\MatrixComplex.cs" />
     <Compile Include="Matrix\MatrixDouble.cs" />
+    <Compile Include="Matrix\MMPA.cs" />
+    <Compile Include="Matrix\PADE.cs" />
+    <Compile Include="Physics\BurnUp.cs" />
+    <Compile Include="Physics\BurnUpProcess.cs" />
+    <Compile Include="Physics\Interfaces\IBurnUp.cs" />
+    <Compile Include="Physics\Interfaces\IBurnUpProcess.cs" />
+    <Compile Include="Physics\Interfaces\INuclideDensity.cs" />
+    <Compile Include="Physics\NuclideDensity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\NuclearData\NuclearData.csproj">
+      <Project>{6cfd2b75-5ad1-431c-9fd2-56b143a2a302}</Project>
+      <Name>NuclearData</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

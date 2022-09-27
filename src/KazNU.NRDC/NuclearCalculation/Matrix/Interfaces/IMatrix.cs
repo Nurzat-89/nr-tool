@@ -27,6 +27,11 @@
         IMatrix<T> Clone();
 
         /// <summary>
+        /// Method to case matrix elements
+        /// </summary>
+        IMatrix<T1> Cast<T1>() where T1 : struct;
+        
+        /// <summary>
         /// Set all elemnts in matrix to zero
         /// </summary>
         void Zero();

@@ -1,7 +1,7 @@
 ﻿namespace NuclearData
 {
     /// <inheritdoc/>
-    internal abstract class Particle : IParticle
+    public abstract class Particle : IParticle
     {
         /// <summary>
         /// Constructor
