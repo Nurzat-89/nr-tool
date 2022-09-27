@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NuclearData", "NuclearData\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestNuclearData", "TestNuclearData\TestNuclearData.csproj", "{78FC548E-6354-4161-9012-AE8C0B6099C3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NuclearCalculation", "NuclearCalculation\NuclearCalculation.csproj", "{2C99590B-1741-4BB8-BFDA-D613BD563AC1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{78FC548E-6354-4161-9012-AE8C0B6099C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{78FC548E-6354-4161-9012-AE8C0B6099C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{78FC548E-6354-4161-9012-AE8C0B6099C3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2C99590B-1741-4BB8-BFDA-D613BD563AC1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2C99590B-1741-4BB8-BFDA-D613BD563AC1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2C99590B-1741-4BB8-BFDA-D613BD563AC1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2C99590B-1741-4BB8-BFDA-D613BD563AC1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
