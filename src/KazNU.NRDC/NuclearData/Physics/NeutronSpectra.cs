@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
 
 namespace NuclearData
 {
@@ -30,6 +33,21 @@ namespace NuclearData
                 totEn += val;
             }
             return tot / totEn;
+        }
+
+        /// <summary>
+        /// Set macs
+        /// </summary>
+        public static void SetMacsCrossSection(IEnumerable<IIsotope> isotopes, IEnumerable<IMacs> macsCollection) 
+        {
+            foreach (var isotope in isotopes)
+            {
+                var macs = macsCollection.FirstOrDefault(x => x.Element.ZAID == isotope.ZAID);
+                if (macs == null) continue;
+                var ngCrossSection = isotope.GetCrossSection(Constants.REACT.N_G);
+                if (ngCrossSection == null) continue;
+                isotope.CrossSections[Constants.REACT.N_G].AvgCs = macs.AvgCs;
+            }
         }
 
         private double MaxwellBoltzmann(double en)

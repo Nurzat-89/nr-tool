@@ -46,6 +46,28 @@ namespace NuclearCalculation
             return MatrixToDensity(density);
         }
 
+        /// <inheritdoc/>
+        public void SetAvgCrossSections(IMacsEndf macsEndf)
+        {
+            var macsData = macsEndf.GetMacsData();
+            foreach (var macs in macsData)
+            {
+                var isotope = BurnUp.Isotopes.FirstOrDefault(x=>x.ZAID == macs.Element.ZAID);
+                isotope?.SetAvg(macs.AvgCs);
+            }
+        }
+
+        /// <inheritdoc/>
+        public void SetAvgCrossSections(INeutronSpectra spectra)
+        {
+            foreach (var isotope in BurnUp.Isotopes)
+            {
+                var crossSectionData = isotope.GetCrossSection(Constants.REACT.N_G);
+                if (crossSectionData == null) continue;
+                isotope.SetAvg(spectra.OneGroupCrossSection(crossSectionData));
+            }
+        }
+
         private IMatrix<double> DensityToMatix(IEnumerable<INuclideDensity> densities) 
         {
             int i = 0;

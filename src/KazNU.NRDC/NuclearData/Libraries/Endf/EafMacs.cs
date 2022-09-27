@@ -18,6 +18,7 @@ namespace NuclearData
         public override IEnumerable<IMacs> GetMacsData()
         {
             var fullFilePath = $"{Globals.RootDir}MACS/{fileName}";
+            var macsCollection = new List<IMacs>();
 
             if (File.Exists(fullFilePath))
             {
@@ -58,10 +59,11 @@ namespace NuclearData
                             continue;
                         }
                         var macs = new Macs(element, avgCs, s1, kt);
-                        yield return macs;
+                        macsCollection.Add(macs);
                     }
                 }
             }
+            return macsCollection;
         }
     }
 }

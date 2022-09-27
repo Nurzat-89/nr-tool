@@ -33,5 +33,15 @@ namespace NuclearCalculation
         /// Method to calculate nuclide number density after time
         /// </summary>
         IEnumerable<INuclideDensity> Calculate(TimeSpan time);
+
+        /// <summary>
+        /// Set averaged cross sections
+        /// </summary>
+        void SetAvgCrossSections(IMacsEndf macsEndf);
+
+        /// <summary>
+        /// Set averaged cross sections
+        /// </summary>
+        void SetAvgCrossSections(INeutronSpectra spectra);
     }
 }

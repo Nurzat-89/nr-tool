@@ -23,7 +23,7 @@ namespace NuclearCalculation
         }
 
         /// <inheritdoc/>
-        public IEnumerable<IIsotope> Isotopes { get; }
+        public IEnumerable<IIsotope> Isotopes => _isotopes;
 
         /// <inheritdoc/>
         public INeutronSpectra NeutronSpectra { get; }
@@ -35,51 +35,45 @@ namespace NuclearCalculation
         {
             Matrix.Zero();
 
-            for (int i = 0; i < Isotopes.Count(); i++)
+            for (int i = 0; i < _isotopes.Count; i++)
             {
                 int iAlfa = _isotopes.FindIndex(x => x.A == _isotopes[i].A + 4 && x.Z == _isotopes[i].Z + 2);  // alfa decay
                 int iBeta = _isotopes.FindIndex(x => x.A == _isotopes[i].A && x.Z == _isotopes[i].Z - 1);      // beta decay
                 int iEcup = _isotopes.FindIndex(x => x.A == _isotopes[i].A && x.Z == _isotopes[i].Z + 1);      // EC decay
                 int iCapt = _isotopes.FindIndex(x => x.A == _isotopes[i].A - 1 && x.Z == _isotopes[i].Z);      // (n,g) 
 
-                try
+                if (iAlfa != -1 && _isotopes[iAlfa].Decays.TryGetValue(Constants.RTYPE.ALFA, out IDecayData decayAlpha))
                 {
-                    if (iAlfa != -1)
-                    {
-                        double prob = _isotopes[iAlfa].Decays[Constants.RTYPE.ALFA].DecayProb;
-                        Matrix.Array[i, iAlfa] += _isotopes[iAlfa].DecayConst * prob;
-                    }
+                    double prob = decayAlpha.DecayProb;
+                    Matrix.Array[i, iAlfa] += _isotopes[iAlfa].DecayConst * prob;
                 }
-                catch (Exception) { }
-                try
-                {
-                    if (iBeta != -1)
-                    {
-                        double prob = _isotopes[iBeta].Decays[Constants.RTYPE.BETA].DecayProb;
-                        Matrix.Array[i, iBeta] += _isotopes[iBeta].DecayConst * prob;
-                    }
-                }
-                catch (Exception) { }
-                try
-                {
-                    if (iEcup != -1)
-                    {
-                        double prob = _isotopes[iEcup].Decays[Constants.RTYPE.EC].DecayProb;
-                        Matrix.Array[i, iEcup] += _isotopes[iEcup].DecayConst * prob;
-                    }
-                }
-                catch (Exception) { }
-                try
-                {
-                    if (iCapt != -1)
-                    {
-                        Matrix.Array[i, iCapt] += NeutronSpectra.Flux * _isotopes[iCapt].CrossSections[Constants.REACT.N_G].AvgCs * Constants.barn;
-                    }
-                }
-                catch (Exception) { }
 
-                try { Matrix.Array[i, i] += -NeutronSpectra.Flux * _isotopes[i].CrossSections[Constants.REACT.N_G].AvgCs * Constants.barn; } catch (Exception) { }
-                Matrix.Array[i, i] += -_isotopes[i].DecayConst;
+                if (iBeta != -1 && _isotopes[iBeta].Decays.TryGetValue(Constants.RTYPE.BETA, out IDecayData decayBeta))
+                {
+                    double prob = decayBeta.DecayProb;
+                    Matrix.Array[i, iBeta] += _isotopes[iBeta].DecayConst * prob;
+                }
+
+                if (iEcup != -1 && _isotopes[iEcup].Decays.TryGetValue(Constants.RTYPE.EC, out IDecayData decayEc))
+                {
+                    double prob = decayEc.DecayProb;
+                    Matrix.Array[i, iEcup] += _isotopes[iEcup].DecayConst * prob;
+                }
+
+                if (iCapt != -1 && _isotopes[iCapt].CrossSections.TryGetValue(Constants.REACT.N_G, out ICrossSectionData csData))
+                {
+                    Matrix.Array[i, iCapt] += NeutronSpectra.Flux * csData.AvgCs * Constants.barn;
+                }
+
+                if(_isotopes[i].CrossSections.TryGetValue(Constants.REACT.N_G, out ICrossSectionData ngCs))
+                {
+                    Matrix.Array[i, i] += -NeutronSpectra.Flux * ngCs.AvgCs * Constants.barn;
+                }
+
+                if (!_isotopes[i].Stable)
+                {
+                    Matrix.Array[i, i] += -_isotopes[i].DecayConst;
+                }
             }
         }
     }

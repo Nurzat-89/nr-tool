@@ -58,11 +58,13 @@ namespace NuclearData
         /// <inheritdoc/>
         public IEnumerable<IIsotope> GetIsotopes()
         {
+            List<IIsotope> isotopes = new List<IIsotope>();
             var elementList = GetAllElements(FILETYP.DECAY);
             foreach (var element in elementList)
             {
-                yield return CreateIsotope(element.Z, element.A);
+                isotopes.Add(CreateIsotope(element.Z, element.A));
             }
+            return isotopes;
         }
 
         /// <inheritdoc/>
@@ -73,13 +75,15 @@ namespace NuclearData
                 throw new ArgumentOutOfRangeException("Z1 must be less than Z2");
             }
             var elementList = GetAllElements(FILETYP.DECAY);
+            List<IIsotope> isotopes = new List<IIsotope>();
             for (int z = Z1; z <= Z2; z++)
             {
                 foreach (var element in elementList.Where(_ => _.Z == z))
                 {
-                    yield return CreateIsotope(element.Z, element.A);
+                    isotopes.Add(CreateIsotope(element.Z, element.A));
                 }
             }
+            return isotopes;
         }
 
         /// <inheritdoc/>
@@ -99,11 +103,13 @@ namespace NuclearData
         /// <inheritdoc/>
         public IEnumerable<IIsotope> GetIsotopes(params int[] zaids)
         {
+            List<IIsotope> isotopes = new List<IIsotope>();
             foreach (var zaid in zaids)
             {
                 var za = EndfHelper.ConvertZaid(zaid);
-                yield return CreateIsotope(za.Item1, za.Item2);
+                isotopes.Add(CreateIsotope(za.Item1, za.Item2));
             }
+            return isotopes;
         }
 
         private IIsotope CreateIsotope(int z, int a) 

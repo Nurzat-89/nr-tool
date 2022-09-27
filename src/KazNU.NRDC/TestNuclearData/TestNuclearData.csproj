@@ -51,6 +51,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\NuclearCalculation\NuclearCalculation.csproj">
+      <Project>{2c99590b-1741-4bb8-bfda-d613bd563ac1}</Project>
+      <Name>NuclearCalculation</Name>
+    </ProjectReference>
     <ProjectReference Include="..\NuclearData\NuclearData.csproj">
       <Project>{6cfd2b75-5ad1-431c-9fd2-56b143a2a302}</Project>
       <Name>NuclearData</Name>

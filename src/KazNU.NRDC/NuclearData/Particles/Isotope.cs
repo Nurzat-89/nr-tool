@@ -48,5 +48,15 @@ namespace NuclearData
             Decays.TryGetValue(decayType, out IDecayData decay);
             return decay;
         }
+
+        /// <inheritdoc/>
+        public void SetAvg(double avgCs)
+        {
+            var cs = GetCrossSection(REACT.N_G);
+            if (cs != null)
+            {
+                cs.AvgCs = avgCs;
+            }
+        }
     }
 }

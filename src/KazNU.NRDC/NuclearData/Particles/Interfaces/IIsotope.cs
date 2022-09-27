@@ -49,6 +49,11 @@ namespace NuclearData
         ICrossSectionData GetCrossSection(REACT reactionType);
 
         /// <summary>
+        /// Set averaged cross section for (n,g) reaction cs
+        /// </summary>
+        void SetAvg(double avgCs);
+
+        /// <summary>
         /// Get decay data via decay type
         /// </summary>
         IDecayData GetDecay(RTYPE decayType);
