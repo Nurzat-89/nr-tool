@@ -32,7 +32,7 @@ namespace TestNuclearData
 
             foreach (var item in burnUp.Isotopes)
             {
-                Console.WriteLine($"{item.Name}\t{item.GetCrossSection(Constants.REACT.N_G)?.AvgCs ?? 0}");
+                Console.WriteLine($"{item.Name}\t{item.AvgCs}");
             }
 
             for (int i = 0; i < burnUp.Matrix.Col; i++)

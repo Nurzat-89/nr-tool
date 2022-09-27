@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 
 namespace NuclearCalculation
 {
@@ -47,13 +48,27 @@ namespace NuclearCalculation
         }
 
         /// <inheritdoc/>
+        public double HeatDensity(IEnumerable<INuclideDensity> nuclideDensities)
+        {
+            double concen = Constants.NaturalLeadDensity * Constants.N_Avogadro / 208.0;
+            double heatDensity = 0.0;
+
+            foreach (INuclideDensity density in nuclideDensities)
+            {
+                var decayEnergy = density.Isotope.Decays.Select(x => x.Value.DecayEnergy * x.Value.DecayProb).Sum();
+                heatDensity += decayEnergy * concen * density.Density * Constants.q_electron * 1E6;
+            }
+            return heatDensity;
+        }
+
+        /// <inheritdoc/>
         public void SetAvgCrossSections(IMacsEndf macsEndf)
         {
             var macsData = macsEndf.GetMacsData();
             foreach (var macs in macsData)
             {
                 var isotope = BurnUp.Isotopes.FirstOrDefault(x=>x.ZAID == macs.Element.ZAID);
-                isotope?.SetAvg(macs.AvgCs);
+                isotope.AvgCs = macs.AvgCs;
             }
         }
 
@@ -64,7 +79,7 @@ namespace NuclearCalculation
             {
                 var crossSectionData = isotope.GetCrossSection(Constants.REACT.N_G);
                 if (crossSectionData == null) continue;
-                isotope.SetAvg(spectra.OneGroupCrossSection(crossSectionData));
+                isotope.AvgCs = spectra.OneGroupCrossSection(crossSectionData);
             }
         }
 

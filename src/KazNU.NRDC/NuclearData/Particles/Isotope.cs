@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using static NuclearData.Constants;
 
 namespace NuclearData
@@ -36,6 +35,24 @@ namespace NuclearData
         public IDictionary<REACT, ICrossSectionData> CrossSections { get; } = new Dictionary<REACT, ICrossSectionData>();
 
         /// <inheritdoc/>
+        public double AvgCs
+        {
+            get
+            {
+                CrossSections.TryGetValue(REACT.N_G, out ICrossSectionData crossSection);
+                return crossSection?.AvgCs ?? 0;
+            }
+            set
+            {
+                CrossSections.TryGetValue(REACT.N_G, out ICrossSectionData crossSection);
+                if (crossSection != null)
+                {
+                    crossSection.AvgCs = value;
+                }
+            }
+        }
+
+        /// <inheritdoc/>
         public ICrossSectionData GetCrossSection(REACT reactionType)
         {
             CrossSections.TryGetValue(reactionType, out ICrossSectionData crossSection);
@@ -47,16 +64,6 @@ namespace NuclearData
         {
             Decays.TryGetValue(decayType, out IDecayData decay);
             return decay;
-        }
-
-        /// <inheritdoc/>
-        public void SetAvg(double avgCs)
-        {
-            var cs = GetCrossSection(REACT.N_G);
-            if (cs != null)
-            {
-                cs.AvgCs = avgCs;
-            }
         }
     }
 }

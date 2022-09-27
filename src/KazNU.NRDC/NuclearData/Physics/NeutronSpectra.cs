@@ -44,9 +44,7 @@ namespace NuclearData
             {
                 var macs = macsCollection.FirstOrDefault(x => x.Element.ZAID == isotope.ZAID);
                 if (macs == null) continue;
-                var ngCrossSection = isotope.GetCrossSection(Constants.REACT.N_G);
-                if (ngCrossSection == null) continue;
-                isotope.CrossSections[Constants.REACT.N_G].AvgCs = macs.AvgCs;
+                isotope.AvgCs = macs.AvgCs;
             }
         }
 
