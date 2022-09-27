@@ -38,6 +38,7 @@ namespace NuclearData
         {
             var name = Z + "-" + Constants.ElementNames[Z] + "-" + A + "g";
             string filePath = $"{Globals.RootDir}{LibFolder}{Globals.FileTypeDir[ftype]}/{name}{Extention}";
+            filePath = filePath.Replace("/", $"\\").Replace("\\\\", $"\\");
             return filePath;
         }
     }

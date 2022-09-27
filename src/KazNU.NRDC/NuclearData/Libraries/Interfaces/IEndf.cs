@@ -6,7 +6,7 @@ namespace NuclearData
     /// <summary>
     /// Interface for ENDF data file
     /// </summary>
-    internal interface IEndf
+    public interface IEndf
     {
         /// <summary>
         /// Data library

@@ -24,7 +24,7 @@ namespace NuclearData
             int mat, mfs, mts;
             string s;
 
-            if (File.Exists(fileName))
+            if (!File.Exists(fileName))
             {
                 return null;
             }

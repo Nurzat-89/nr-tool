@@ -117,9 +117,16 @@ namespace NuclearData
             {
                 if (line.Length < 75) continue;
 
-                s = line.Substring(66, 4); mat = Convert.ToInt16(s);
-                s = line.Substring(70, 2); mfs = Convert.ToInt16(s);
-                s = line.Substring(72, 3); mts = Convert.ToInt16(s);
+                try
+                {
+                    s = line.Substring(66, 4); mat = Convert.ToInt16(s);
+                    s = line.Substring(70, 2); mfs = Convert.ToInt16(s);
+                    s = line.Substring(72, 3); mts = Convert.ToInt16(s);
+                }
+                catch (Exception)
+                {
+                    continue;
+                }
 
                 if (mfs == MF && mts == MT)
                 {

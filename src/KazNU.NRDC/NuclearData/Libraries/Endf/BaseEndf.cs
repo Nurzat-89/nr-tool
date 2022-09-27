@@ -109,12 +109,21 @@ namespace NuclearData
         private IIsotope CreateIsotope(int z, int a) 
         {
             var nuclideData = _atomicDataReader.ReadData(z, a, GetIsotopeFile(z, a, FILETYP.DECAY));
+            if (nuclideData == null)
+            {
+                return null;
+            }
+
             var decayDataList = _decayDataReader.ReadData(z, a, GetIsotopeFile(z, a, FILETYP.DECAY));
             IIsotope isotope = new Isotope(z, a, nuclideData.FirstOrDefault().AtomicMass, nuclideData.FirstOrDefault().HalfLife);
-            if (decayDataList == null || decayDataList.Any() == false)
+            if (decayDataList != null && decayDataList.Any())
             {
                 foreach (var decaData in decayDataList)
                 {
+                    if (isotope.Decays.ContainsKey(decaData.DecayType))
+                    {
+                        continue;
+                    }
                     isotope.Decays.Add(decaData.DecayType, decaData);
                 }
             }

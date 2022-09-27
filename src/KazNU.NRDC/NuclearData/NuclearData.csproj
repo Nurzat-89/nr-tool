@@ -84,7 +84,9 @@
     <Compile Include="Particles\Particle.cs" />
     <Compile Include="Particles\Photon.cs" />
     <Compile Include="Particles\Proton.cs" />
+    <Compile Include="Physics\Interfaces\INeutronSpectra.cs" />
     <Compile Include="Physics\Interfaces\IReaction.cs" />
+    <Compile Include="Physics\NeutronSpectra.cs" />
     <Compile Include="Physics\Reaction.cs" />
     <Compile Include="Physics\ReactionN2N.cs" />
     <Compile Include="Physics\ReactionNG.cs" />

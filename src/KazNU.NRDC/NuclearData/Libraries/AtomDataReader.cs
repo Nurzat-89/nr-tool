@@ -21,7 +21,7 @@ namespace NuclearData
         /// <inheritdoc/>
         public IEnumerable<IAtom> ReadData(int Z, int A, string fileName)
         {
-            if (File.Exists(fileName))
+            if (!File.Exists(fileName))
             {
                 return null;
             }

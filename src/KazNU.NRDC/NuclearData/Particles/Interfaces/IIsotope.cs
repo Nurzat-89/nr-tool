@@ -42,5 +42,15 @@ namespace NuclearData
         /// Dictionary list of cross sections
         /// </summary>
         IDictionary<REACT, ICrossSectionData> CrossSections { get; }
+
+        /// <summary>
+        /// Get cross section data via reaction type
+        /// </summary>
+        ICrossSectionData GetCrossSection(REACT reactionType);
+
+        /// <summary>
+        /// Get decay data via decay type
+        /// </summary>
+        IDecayData GetDecay(RTYPE decayType);
     }
 }

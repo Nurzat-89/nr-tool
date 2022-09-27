@@ -22,7 +22,7 @@ namespace NuclearData
         /// <inheritdoc/>
         public IEnumerable<IDecayData> ReadData(int Z, int A, string fileName)
         {
-            if (File.Exists(fileName))
+            if (!File.Exists(fileName))
             {
                 return null;
             }

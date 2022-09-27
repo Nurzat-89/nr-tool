@@ -26,7 +26,7 @@ namespace NuclearData
         public string Name => Type.ToString();
 
         /// <inheritdoc/>
-        public double AvgCs { get; }
+        public double AvgCs { get; set; }
 
         /// <inheritdoc/>
         public IReaction Reaction { get; }

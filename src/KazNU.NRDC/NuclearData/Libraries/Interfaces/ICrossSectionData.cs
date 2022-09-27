@@ -31,7 +31,7 @@ namespace NuclearData
         /// <summary>
         /// Average cross section in mb
         /// </summary>
-        double AvgCs { get; }
+        double AvgCs { get; set; }
         
         /// <summary>
         /// Cross section reaction

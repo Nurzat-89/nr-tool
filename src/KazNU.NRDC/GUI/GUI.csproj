@@ -18,4 +18,8 @@
     <Page Remove="obj\**" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\NuclearData\NuclearData.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -40,6 +40,7 @@ namespace NuclearData
             string sa = A.ToString("D3");
             var name = sz + "_" + Constants.ElementNames[Z] + "_" + sa;
             string filePath = $"{Globals.RootDir}{LibFolder}{Globals.FileTypeDir[ftype]}/{Globals.FileTypeName[ftype]}{name}{Extention}";
+            filePath = filePath.Replace("/", $"\\").Replace("\\\\", $"\\");
             return filePath;
         }
     }
