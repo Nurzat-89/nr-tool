@@ -43,6 +43,13 @@ namespace GUI.Utils
         public void ShowCalculationPage() 
         {
             ShowPage(AppContext.Instance.CalculationPageViewModel);
+            AppContext.Instance.MainMenuViewModel.IsCalculationChecked = true;
+        }
+
+        public void ShowSettingsPage()
+        {
+            ShowPage(AppContext.Instance.SettingsPageViewModel);
+            AppContext.Instance.MainMenuViewModel.IsSettingsChecked = true;
         }
 
         #endregion

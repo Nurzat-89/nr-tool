@@ -11,6 +11,8 @@ namespace GUI.ViewModels
         {
             PageNavigation = aPageNavigation;
 
+            CurrentPageVm = AppContext.Instance.CalculationPageViewModel;
+
             PageNavigation.PageChangedEvent += (aModel) => 
             { 
                 CurrentPageVm = aModel; 

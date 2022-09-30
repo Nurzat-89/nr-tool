@@ -3,11 +3,408 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:validation="clr-namespace:GUI.Converters"
              xmlns:local="clr-namespace:GUI.Views"
              mc:Ignorable="d" 
              d:DataContext="{Binding CalculationPageViewModel, Source={StaticResource AppContext}}"
-             d:DesignHeight="450" d:DesignWidth="800">
-    <Grid Background="Red">
-            
+             d:DesignHeight="1000" d:DesignWidth="800">
+    <UserControl.Resources>
+        <ControlTemplate x:Key="validationFailed">
+            <StackPanel>
+                <StackPanel Margin="-70,-6,0,0" Orientation="Horizontal">
+                    <Grid Width="12" Height="12">
+                        <Ellipse
+                                Width="10"
+                                Height="10"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Fill="Red" />
+                        <TextBlock
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                FontSize="6"
+                                FontWeight="Heavy"
+                                Foreground="White"
+                                TextAlignment="Center">
+                                X
+                        </TextBlock>
+                    </Grid>
+                    <TextBlock
+                            Margin="2,0,0,0"
+                            FontSize="10"
+                            Foreground="Red"
+                            Text="Неправильный формат числа" />
+                </StackPanel>
+                <StackPanel Margin="-6,-1,0,0" Orientation="Horizontal">
+                    <Border
+                            Width="65"
+                            Height="22"
+                            BorderBrush="Red"
+                            BorderThickness="1"
+                            CornerRadius="4">
+                        <AdornedElementPlaceholder x:Name="ErrorAdorner" />
+                    </Border>
+                </StackPanel>
+            </StackPanel>
+        </ControlTemplate>
+    </UserControl.Resources>
+    <Grid>
+        <StackPanel Background="AliceBlue" Margin="20 20">
+            <TextBlock
+                Margin="6,0,0,0"
+                Style="{StaticResource HeaderTextBlockStyle}"
+                Text="Начальные условия для рассчета" />
+            <Grid Height="10" />
+            <Grid Margin="10 0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="120"/>
+                    <ColumnDefinition Width="200"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="1"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="1"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="1"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="1"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="1"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="1"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="1"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="1"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="1"/>
+                </Grid.RowDefinitions>
+                <!-- Поток -->
+                <TextBlock 
+                    FontSize="14"
+                    VerticalAlignment="Center"
+                    Text="Поток нейтронов" />
+                <TextBox 
+                    Grid.Column="1" 
+                    Grid.Row="0"
+                    Margin="5 7"
+                    IsEnabled="{Binding IsBuildReady}"
+                    HorizontalContentAlignment="Left"
+                    VerticalContentAlignment="Center"
+                    Text="{Binding NeutronFlux, Mode=TwoWay, Converter={StaticResource StringToDoubleConverter}}"
+                    FontSize="12"/>
+                <TextBlock 
+                    Margin="5"
+                    Grid.Column="2" 
+                    Grid.Row="0"
+                    FontSize="14"
+                    VerticalAlignment="Center"
+                    Text="1/cm2/sec" />
+                <Border
+                    Grid.Column="0" 
+                    Grid.Row="1"
+                    Grid.ColumnSpan="3"
+                    BorderBrush="#99999999"
+                    BorderThickness="1" />
+
+                <!-- Библиотека -->
+                <TextBlock
+                    Grid.Column="0" 
+                    Grid.Row="2"
+                    FontSize="14"
+                    VerticalAlignment="Center"
+                    Text="Дата файл ядерных данных" />
+                <ComboBox
+                    Grid.Column="1" 
+                    Grid.Row="2"
+                    IsEnabled="{Binding IsBuildReady}"
+                    Margin="5 7"
+                    ItemsSource="{Binding EndfLibraryList}"
+                    SelectedItem="{Binding SelectedEndfLibrary}" />
+                <TextBlock 
+                    Margin="5"
+                    Grid.Column="2" 
+                    Grid.Row="2"
+                    FontSize="14"
+                    VerticalAlignment="Center"
+                    Text="endf file" />
+                <Border
+                    Grid.Column="0" 
+                    Grid.Row="3"
+                    Grid.ColumnSpan="3"
+                    BorderBrush="#99999999"
+                    BorderThickness="1" />
+
+                <!-- Библиотека среднего сечения -->
+                <TextBlock
+                    Grid.Column="0" 
+                    Grid.Row="4"
+                    FontSize="14"
+                    VerticalAlignment="Center"
+                    Text="Дата файл усредненного сечения по Максвеллу (MACS)" />
+                <ComboBox
+                    Grid.Column="1" 
+                    Grid.Row="4"
+                    IsEnabled="{Binding IsBuildReady}"
+                    Margin="5 7"
+                    ItemsSource="{Binding MacsLibraryList}"
+                    SelectedItem="{Binding SelectedMacsLibrary}" />
+                <TextBlock 
+                    Margin="5"
+                    Grid.Column="2" 
+                    Grid.Row="4"
+                    FontSize="14"
+                    VerticalAlignment="Center"
+                    Text="macs file" />
+                <Border
+                    Grid.Column="0" 
+                    Grid.Row="5"
+                    Grid.ColumnSpan="3"
+                    BorderBrush="#99999999"
+                    BorderThickness="1" />
+
+                <!-- Температура -->
+                <TextBlock
+                    Grid.Column="0" 
+                    Grid.Row="6"
+                    FontSize="14"
+                    VerticalAlignment="Center"
+                    Text="Температура нейтронов (или среднее температура звезды)" />
+                <ComboBox
+                    Grid.Column="1" 
+                    Grid.Row="6"
+                    IsEnabled="{Binding IsBuildReady}"
+                    Margin="5 7"
+                    ItemsSource="{Binding TemperatureList}"
+                    SelectedItem="{Binding SelectedTemperature}"/>
+                <TextBlock 
+                    Margin="5"
+                    Grid.Column="2" 
+                    Grid.Row="6"
+                    FontSize="14"
+                    VerticalAlignment="Center"
+                    Text="keV" />
+                <Border
+                    Grid.Column="0" 
+                    Grid.Row="7"
+                    Grid.ColumnSpan="3"
+                    BorderBrush="#99999999"
+                    BorderThickness="1" />
+
+                <!-- Диапазон изотопов -->
+                <TextBlock
+                    Grid.Column="0" 
+                    Grid.Row="8"
+                    FontSize="14"
+                    VerticalAlignment="Center"
+                    Text="Выбрать изотопов которые будут участвовать в реакции" />
+                <StackPanel 
+                    Orientation="Horizontal" 
+                    Grid.Column="1"
+                    Grid.ColumnSpan="2"
+                    Grid.Row="8">
+                    <RadioButton  
+                        Grid.Column="1" 
+                        x:Name="fRange"
+                        IsEnabled="{Binding IsBuildReady}"
+                        IsChecked="{Binding IsIsotopeRange, Mode=TwoWay}"
+                        VerticalAlignment="Center"
+                        Grid.Row="8"/>
+                    <TextBlock 
+                        Margin="5"
+                        FontSize="14"
+                        VerticalAlignment="Center"
+                        Text="Диапазон" />
+                    <RadioButton  
+                        x:Name="fIndivid"
+                        Grid.Column="0" 
+                        IsEnabled="{Binding IsBuildReady}"
+                        VerticalAlignment="Center"
+                        Grid.Row="8"/>
+                    <TextBlock 
+                        Margin="5"
+                        FontSize="14"
+                        VerticalAlignment="Center"
+                        Text="Индивидуально" />
+                </StackPanel>
+                <Border
+                    Grid.Column="0" 
+                    Grid.Row="9"
+                    Grid.ColumnSpan="3"
+                    BorderBrush="#99999999"
+                    BorderThickness="1" />
+
+                <!-- Выбор изотопов -->
+                <StackPanel Grid.Column="0" 
+                            Grid.Row="10"
+                            Visibility="{Binding IsChecked, ElementName=fRange, Converter={StaticResource BooleanToVisibleCollapsedConverter}}"
+                            Margin="20 0"
+                            Orientation="Horizontal">
+                    <TextBlock
+                        Grid.Column="0" 
+                        Grid.Row="8"
+                        FontSize="14"
+                        VerticalAlignment="Center"
+                        Text="Выбрать диапазон изотопов" />
+                    <ComboBox
+                        Margin="16 7 2 7"
+                        Width="60"
+                        IsEnabled="{Binding IsBuildReady}"
+                        MaxDropDownHeight="200"
+                        ItemsSource="{Binding ElementList}"
+                        SelectedItem="{Binding SelectedLowerElement}"/>
+                    <Border
+                        Grid.Column="0" 
+                        Grid.Row="8"
+                        Width="10"
+                        VerticalAlignment="Center"
+                        BorderBrush="Gray"
+                        BorderThickness="1" />
+                    <ComboBox
+                        Margin="2 7 2 7"
+                        Width="60"
+                        IsEnabled="{Binding IsBuildReady}"
+                        MaxDropDownHeight="200"
+                        ItemsSource="{Binding ElementList}"
+                        SelectedItem="{Binding SelectedUpperElement}"/>
+                </StackPanel>
+                <Grid Grid.Column="0" 
+                      Grid.Row="10"
+                      Grid.ColumnSpan="3"
+                      Visibility="{Binding IsChecked, ElementName=fRange, Converter={StaticResource InverseBooleanToVisibleCollapsedConverter}}"
+                      Margin="20 0 0 0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="250"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock
+                        Grid.Column="0" 
+                        Grid.Row="0"
+                        FontSize="14"
+                        VerticalAlignment="Center"
+                        Text="Выбрать изотопы индивидуально" />
+                    <TextBox 
+                        Grid.Column="1" 
+                        Grid.Row="0"
+                        IsEnabled="{Binding IsBuildReady}"
+                        Margin="5 7"
+                        Text="{Binding IsotopeRange, Mode=TwoWay}"                            
+                        HorizontalContentAlignment="Left"
+                        VerticalContentAlignment="Center"
+                        FontSize="12"/>
+                </Grid>
+                <Border
+                    Grid.Column="0" 
+                    Grid.Row="11"
+                    Grid.ColumnSpan="3"
+                    BorderBrush="#99999999"
+                    BorderThickness="1" />
+
+                <!-- Исключить изотопы -->
+                <TextBlock
+                    Grid.Column="0" 
+                    Grid.Row="12"
+                    FontSize="14"
+                    VerticalAlignment="Center"
+                    Text="Исключить изотопы периоды полураспадов которые ниже" />
+                <TextBox 
+                    Grid.Column="1" 
+                    Grid.Row="12"
+                    IsEnabled="{Binding IsBuildReady}"
+                    Margin="5 7"
+                    HorizontalContentAlignment="Left"
+                    VerticalContentAlignment="Center"
+                    Text="{Binding HalfLifeLowerLimit, Mode=TwoWay, Converter={StaticResource StringToDoubleConverter}}"
+                    FontSize="12"/>
+                <ComboBox
+                    Grid.Column="2" 
+                    Grid.Row="12"
+                    HorizontalAlignment="Left"
+                    IsEnabled="{Binding IsBuildReady}"
+                    Margin="2 7 2 7"
+                    Width="100"
+                    MaxDropDownHeight="200"
+                    ItemsSource="{Binding TimeScales}"
+                    SelectedItem="{Binding SelectedTimeScale}"/>
+                <Border
+                    Grid.Column="0" 
+                    Grid.Row="13"
+                    Grid.ColumnSpan="3"
+                    BorderBrush="#99999999"
+                    BorderThickness="1" />
+
+                <!--Build section-->
+                <local:ProcessProgressView 
+                    Grid.Column="0" 
+                    Grid.Row="14"
+                    Visibility="{Binding IsBuildReady, Converter={StaticResource InverseBooleanToVisibleCollapsedConverter}}"
+                    Margin="30 6 30 2" />
+                <Button 
+                    Grid.Column="2" 
+                    Grid.Row="14"
+                    Content="Build"
+                    FontSize="12"
+                    IsEnabled="{Binding IsBuildReady}"
+                    Margin="2 5"
+                    Command="{Binding BuildCommand}"
+                    HorizontalAlignment="Left"
+                    Width="100"
+                    FontWeight="ExtraLight"/>
+                <Border
+                    Grid.Column="0" 
+                    Grid.Row="15"
+                    Grid.ColumnSpan="3"
+                    BorderBrush="#99999999"
+                    BorderThickness="1" />
+                <TextBlock 
+                    Grid.Column="0" 
+                    Text="{Binding ErrorMessage}"
+                    VerticalAlignment="Center"
+                    Foreground="Red"
+                    FontSize="14"
+                    Grid.ColumnSpan="3"
+                    Grid.Row="16"/>
+                <TextBlock 
+                    Grid.Column="0" 
+                    Text="{Binding InformationMessage}"
+                    VerticalAlignment="Center"
+                    Foreground="Green"
+                    FontSize="14"
+                    Grid.ColumnSpan="3"
+                    Grid.Row="16"/>
+                <Border
+                    Grid.Column="0" 
+                    Grid.Row="17"
+                    Grid.ColumnSpan="3"
+                    BorderBrush="#99999999"
+                    BorderThickness="1" />
+            </Grid>
+            <DataGrid Height="400" AutoGenerateColumns="False" ItemsSource="{Binding Isotopes}"                       
+                      Margin="10">
+                <DataGrid.Columns>
+                    <DataGridTextColumn CanUserResize="False" IsReadOnly="True" Header="Name" Width="100" Binding="{Binding Name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                    <DataGridTextColumn CanUserResize="False" IsReadOnly="True" Header="Z" Width="60" Binding="{Binding Z, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                    <DataGridTextColumn CanUserResize="False" IsReadOnly="True" Header="A" Width="60" Binding="{Binding A, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                    <DataGridTextColumn CanUserResize="False" IsReadOnly="True" Header="Atomic mass" Width="120" Binding="{Binding AtomicMass, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                    <DataGridTextColumn CanUserResize="False" IsReadOnly="True" Header="Half life" Width="120" Binding="{Binding HalfLife, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    <DataGridTextColumn CanUserResize="False" IsReadOnly="True" Header="Decays" Width="100" Binding="{Binding Decays, Mode=OneWay, Converter={StaticResource StringListToStringConverter}, UpdateSourceTrigger=PropertyChanged}"/>
+                    <DataGridTextColumn CanUserResize="False" IsReadOnly="True" Header="Decay Energy, MeV" Width="180" Binding="{Binding Decays, Mode=OneWay, Converter={StaticResource DecaysToDecayEnergyConverter}, UpdateSourceTrigger=PropertyChanged}"/>
+                    <DataGridTextColumn CanUserResize="False" IsReadOnly="True" Header="Avg cs, barn" Width="150"  Binding="{Binding AvgCs, Mode=OneWay, StringFormat=N4, UpdateSourceTrigger=PropertyChanged}" />
+                    <DataGridTextColumn CanUserResize="False" IsReadOnly="True" Header="Avg cs, barn" Width="150"  Binding="{Binding AvgCalculatedCs, Mode=OneWay, StringFormat=N4, UpdateSourceTrigger=PropertyChanged}" />
+                    <DataGridCheckBoxColumn CanUserResize="False" IsReadOnly="True" Header="Stable" Binding="{Binding Stable, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                </DataGrid.Columns>
+            </DataGrid>
+            <Button Width="100"
+                    Height="33"
+                    Content="Next"
+                    HorizontalAlignment="Right"
+                    Margin="0 5 10 5"
+                    FontSize="12"
+                    Command="{Binding GoToNextCommand}"
+                    IsEnabled="{Binding IsBurnupReady}"
+                    />
+        </StackPanel>
     </Grid>
 </UserControl>

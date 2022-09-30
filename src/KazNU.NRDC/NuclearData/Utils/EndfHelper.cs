@@ -4,14 +4,14 @@ using System.Web;
 
 namespace NuclearData
 {
-    internal class EndfHelper
+    public class EndfHelper
     {
         private const int FIELD_WIDTH = 11;
 
         /// <summary>
         /// Get Record from line
         /// </summary>
-        public static Record GetRecord(string line)
+        internal static Record GetRecord(string line)
         {
             Record r = new Record();
             int p = 0;
@@ -102,6 +102,15 @@ namespace NuclearData
             int z = zaid / 1000;
             int a = zaid - z * 1000;
             return (z, a);
+        }
+
+        /// <summary>
+        /// Check zaid for valid
+        /// </summary>
+        public static bool CheckZaid(int zaid)
+        {
+            var za = ConvertZaid(zaid);
+            return za.Item1 < Constants.ElementNames.Length;
         }
 
         /// <summary>

@@ -24,7 +24,9 @@ namespace GUI
                 // Главное меню
                 service.ForSingletonOf<MainMenuViewModel>().Use<MainMenuViewModel>();
                 // CalculationPageViewModel
-                service.ForSingletonOf<CalculationPageViewModel>().Use<CalculationPageViewModel>();                
+                service.ForSingletonOf<CalculationPageViewModel>().Use<CalculationPageViewModel>();
+                // SettingsPageViewModel
+                service.ForSingletonOf<SettingsPageViewModel>().Use<SettingsPageViewModel>();
             });
         }
 
@@ -55,7 +57,9 @@ namespace GUI
         public MainMenuViewModel MainMenuViewModel => Instance.GetInstance<MainMenuViewModel>();
 
         public CalculationPageViewModel CalculationPageViewModel => Instance.GetInstance<CalculationPageViewModel>();
-        
+
+        public SettingsPageViewModel SettingsPageViewModel => Instance.GetInstance<SettingsPageViewModel>();
+
         #endregion
     }
 }

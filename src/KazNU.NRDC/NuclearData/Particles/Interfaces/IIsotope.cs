@@ -54,6 +54,11 @@ namespace NuclearData
         double AvgCs { get; set; }
 
         /// <summary>
+        /// Averaged calculated cross section for (n,g) reaction cs
+        /// </summary>
+        double AvgCalculatedCs { get; set; }
+
+        /// <summary>
         /// Get decay data via decay type
         /// </summary>
         IDecayData GetDecay(RTYPE decayType);

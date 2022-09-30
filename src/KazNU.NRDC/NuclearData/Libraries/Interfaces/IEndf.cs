@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using static NuclearData.Constants;
 
 namespace NuclearData
@@ -39,5 +40,10 @@ namespace NuclearData
         /// Get isotopes of individual nuclides
         /// </summary>
         IEnumerable<IIsotope> GetIsotopes(params int[] zaids);
+
+        /// <summary>
+        /// DataReaderStatusEvent
+        /// </summary>
+        event Action<int> DataReaderStatusEvent;
     }
 }

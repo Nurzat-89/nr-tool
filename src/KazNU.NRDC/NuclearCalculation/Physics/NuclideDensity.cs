@@ -19,7 +19,7 @@ namespace NuclearCalculation
         public double AtomicWeight => Isotope.AtomicMass;
         /// <inheritdoc/>
         
-        public double Density { get; }
+        public double Density { get; set; }
 
         /// <inheritdoc/>
         public IIsotope Isotope { get; }

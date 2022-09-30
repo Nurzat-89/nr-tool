@@ -13,7 +13,7 @@ namespace NuclearData
     {
         private const string fileName = "ngamma.txt";
 
-        public EndfBMacs() : base(Constants.DATALIBS.ENDFB_VIII) { }
+        public EndfBMacs() : base(Constants.MACSDATALIBS.ENDF_B) { }
 
         public override IEnumerable<IMacs> GetMacsData()
         {

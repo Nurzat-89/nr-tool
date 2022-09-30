@@ -10,6 +10,11 @@ namespace TestNuclearData
     {
         static void Main(string[] args)
         {
+
+            double val = 1000;
+
+            var str = val.ToString("E1");
+
             HeatDensityTest();
 
             Console.ReadLine();
@@ -100,7 +105,6 @@ namespace TestNuclearData
                 //Console.WriteLine($"{isotope.Element.Name}\t{isotope.kT}\t{isotope.AvgCs}");
                 if (isotope.CrossSections.Any(x => x.Key == Constants.REACT.N_G))
                 {
-                    avg = spectra.OneGroupCrossSection(isotope.GetCrossSection(Constants.REACT.N_G));
                     avgMacs = macsData.FirstOrDefault(x => x.Element.ZAID == isotope.ZAID)?.AvgCs ?? 0;
                     //isotope.CrossSections.FirstOrDefault(x => x.Key == Constants.REACT.N_G).Value.AvgCs = macsData.FirstOrDefault(x => x.Element.ZAID == isotope.ZAID)?.AvgCs ?? 0;
 

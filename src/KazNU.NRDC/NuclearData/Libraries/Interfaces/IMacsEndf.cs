@@ -11,7 +11,7 @@ namespace NuclearData
         /// <summary>
         /// Data library
         /// </summary>
-        DATALIBS Library { get; }
+        MACSDATALIBS Library { get; }
 
         /// <summary>
         /// Get list of MACS data

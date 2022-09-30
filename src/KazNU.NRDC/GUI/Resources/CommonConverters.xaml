@@ -1,0 +1,10 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:converters="clr-namespace:GUI.Converters">
+    <converters:BooleanToVisibleHiddenConverter x:Key="BooleanToVisibleHiddenConverter" />
+    <converters:BooleanToVisibleCollapsedConverter x:Key="BooleanToVisibleCollapsedConverter" />
+    <converters:InverseBooleanToVisibleCollapsedConverter x:Key="InverseBooleanToVisibleCollapsedConverter" />
+    <converters:StringListToStringConverter x:Key="StringListToStringConverter" />
+    <converters:DecaysToDecayEnergyConverter x:Key="DecaysToDecayEnergyConverter" />
+    <converters:StringToDoubleConverter x:Key="StringToDoubleConverter" />
+</ResourceDictionary>

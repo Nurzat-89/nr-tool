@@ -14,10 +14,5 @@
         /// Neutron flux in 1/cm2/sec
         /// </summary>
         double Flux { get; }
-
-        /// <summary>
-        /// Method to calculate Maxwellian averaged cross section for given cross section vaules
-        /// </summary>
-        double OneGroupCrossSection(ICrossSectionData crossSection);
     }
 }

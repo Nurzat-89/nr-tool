@@ -16,7 +16,7 @@ namespace GUI.ViewModels
         public MainMenuViewModel(PageNavigation aPageNavigation)
         {
             PageNavigation = aPageNavigation;
-            fIsCalculationCheckedToggle = true;
+            IsCalculationChecked = true;
         }
 
         #region properties
@@ -57,7 +57,7 @@ namespace GUI.ViewModels
 
         public Command GoToCalculationCommand => fGoToCalculationCommand ??= new Command(PageNavigation.ShowCalculationPage);
 
-        public Command GoToSettingsCommand => fGoToSettingsCommand ??= new Command(PageNavigation.ShowCalculationPage);
+        public Command GoToSettingsCommand => fGoToSettingsCommand ??= new Command(PageNavigation.ShowSettingsPage);
 
         #endregion
 

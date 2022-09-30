@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using static NuclearData.Constants;
@@ -14,7 +15,9 @@ namespace NuclearData
         private INuclearDataReader<IAtom> _atomicDataReader;
         private INuclearDataReader<IDecayData> _decayDataReader;
         private IEnumerable<INuclearDataReader<ICrossSectionValue>> _reactionDataReaderList;
-                
+
+        public event Action<int> DataReaderStatusEvent;
+
         /// <inheritdoc/>
         public BaseEndf(DATALIBS library, string libFolder, string extention)
         {
@@ -60,9 +63,18 @@ namespace NuclearData
         {
             List<IIsotope> isotopes = new List<IIsotope>();
             var elementList = GetAllElements(FILETYP.DECAY);
+            double dx = 100.0 / elementList.Count();
+            var progress = 0.0;
+            int currentProgress = 0;
             foreach (var element in elementList)
             {
                 isotopes.Add(CreateIsotope(element.Z, element.A));
+                progress += dx;
+                if (currentProgress != (int)progress)
+                {
+                    currentProgress = (int)progress;
+                    DataReaderStatusEvent?.Invoke(currentProgress);
+                }
             }
             return isotopes;
         }
@@ -75,14 +87,24 @@ namespace NuclearData
                 throw new ArgumentOutOfRangeException("Z1 must be less than Z2");
             }
             var elementList = GetAllElements(FILETYP.DECAY);
+            double dx = 100.0 / elementList.Count(x=>x.Z >= Z1 && x.Z <=Z2);
+            double progress = 0.0;
+            int currentProgress = 0;
             List<IIsotope> isotopes = new List<IIsotope>();
             for (int z = Z1; z <= Z2; z++)
             {
                 foreach (var element in elementList.Where(_ => _.Z == z))
                 {
                     isotopes.Add(CreateIsotope(element.Z, element.A));
+                    progress += dx;
+                    if (currentProgress != (int)progress)
+                    {
+                        currentProgress = (int)progress;
+                        DataReaderStatusEvent?.Invoke(currentProgress);
+                    }
                 }
             }
+            DataReaderStatusEvent?.Invoke(100);
             return isotopes;
         }
 
@@ -104,10 +126,19 @@ namespace NuclearData
         public IEnumerable<IIsotope> GetIsotopes(params int[] zaids)
         {
             List<IIsotope> isotopes = new List<IIsotope>();
+            double dx = 100.0 / zaids.Count();
+            var progress = 0.0;
+            int currentProgress = 0;
             foreach (var zaid in zaids)
             {
                 var za = EndfHelper.ConvertZaid(zaid);
                 isotopes.Add(CreateIsotope(za.Item1, za.Item2));
+                progress += dx;
+                if (currentProgress != (int)progress)
+                {
+                    currentProgress = (int)progress;
+                    DataReaderStatusEvent?.Invoke(currentProgress);
+                }
             }
             return isotopes;
         }

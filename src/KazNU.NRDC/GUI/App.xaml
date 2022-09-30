@@ -1,15 +1,23 @@
 ﻿<Application x:Class="GUI.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:GUI">
+             xmlns:local="clr-namespace:GUI"
+    xmlns:theme="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero2">
     <Application.Resources>
         <ResourceDictionary>
             <x:Static x:Key="AppContext" Member="local:AppContext.Instance" />
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/Styles/ToggleButtonGrayStyle.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/Styles/ToggleButtonLightBlueStyle.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Styles/TextStyles.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Styles/ButtonBlueStyle.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Styles/ComboBoxStyle.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/Styles/Colors.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Styles/ProgressBar.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Styles/DataGridStyles.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Styles/ButtonPauseBlueStyle.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/Resources/Icons.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Resources/CommonConverters.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

@@ -5,38 +5,35 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GUI"
         mc:Ignorable="d"
-        Title="KazNRDC" Height="800" Width="1500">
+        Title="KazNRDC" Height="1000" Width="1500">
     <Grid>
-        <Border BorderBrush="Black"
-                BorderThickness="1">
-            <Grid>
-                <!--  Основной контент  -->
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="250" />
-                    <ColumnDefinition />
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition />
-                </Grid.RowDefinitions>
+        <Grid>
+            <!--  Основной контент  -->
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="250" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition />
+            </Grid.RowDefinitions>
 
-                <!--  Меню  -->
-                <Grid Grid.Column="0"
-                      Background="{StaticResource ToggleButtonGrayNormalBrush}">
-                    <ContentControl VerticalAlignment="Top"
-                                        Content="{Binding Menu}" />
-                </Grid>
-                
-                <!--  Контент страниц  -->
-                <Grid Grid.Column="1"
-                      Margin="0,-8,0,0">
-                    <ContentControl Content="{Binding PageView}" />
-                    <!--  для эффекта отключения заднего фона  -->
-                    <Rectangle x:Name="EffectStackPanel"
-                                   Fill="White"
-                                   Opacity="0.7"
-                                   Visibility="Collapsed" />
-                </Grid>
+            <!--  Меню  -->
+            <Grid Grid.Column="0"
+                    Background="{StaticResource ToggleButtonGrayNormalBrush}">
+                <ContentControl VerticalAlignment="Top"
+                                    Content="{Binding Menu}" />
             </Grid>
-        </Border>
+                
+            <!--  Контент страниц  -->
+            <Grid Grid.Column="1"
+                    Margin="0,-8,0,0">
+                <ContentControl Content="{Binding PageView}" />
+                <!--  для эффекта отключения заднего фона  -->
+                <Rectangle x:Name="EffectStackPanel"
+                                Fill="White"
+                                Opacity="0.7"
+                                Visibility="Collapsed" />
+            </Grid>
+        </Grid>
     </Grid>
 </Window>

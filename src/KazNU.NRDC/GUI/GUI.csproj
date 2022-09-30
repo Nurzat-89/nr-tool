@@ -12,18 +12,27 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="NewFolder1\**" />
     <Compile Remove="obj\**" />
+    <EmbeddedResource Remove="NewFolder1\**" />
     <EmbeddedResource Remove="obj\**" />
+    <None Remove="NewFolder1\**" />
     <None Remove="obj\**" />
+    <Page Remove="NewFolder1\**" />
     <Page Remove="obj\**" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\NuclearCalculation\NuclearCalculation.csproj" />
     <ProjectReference Include="..\NuclearData\NuclearData.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="StructureMap" Version="4.7.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Controls\" />
   </ItemGroup>
 
 </Project>

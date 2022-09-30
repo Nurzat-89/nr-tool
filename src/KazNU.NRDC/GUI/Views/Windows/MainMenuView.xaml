@@ -5,12 +5,12 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:GUI.Views.Windows"
              mc:Ignorable="d" 
-             Height="800"
+             Height="1000"
              DataContext="{Binding MainMenuViewModel, Source={StaticResource AppContext}}"
              d:DesignWidth="225">
     <Grid>
         <Grid Background="#D4E1F4">
-            <StackPanel>
+            <StackPanel Margin="0 10 0 0">
                 <!--  Кнопка Scan list  -->
                 <StackPanel.Resources>
                     <Style

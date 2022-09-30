@@ -13,7 +13,7 @@ namespace NuclearData
     {
         private const string fileName = "eaf2010.txt";
 
-        public EafMacs() : base(Constants.DATALIBS.EAF2010) { }
+        public EafMacs() : base(Constants.MACSDATALIBS.EAF2010) { }
 
         public override IEnumerable<IMacs> GetMacsData()
         {

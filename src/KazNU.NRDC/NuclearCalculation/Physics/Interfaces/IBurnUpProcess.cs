@@ -40,11 +40,6 @@ namespace NuclearCalculation
         void SetAvgCrossSections(IMacsEndf macsEndf);
 
         /// <summary>
-        /// Set averaged cross sections
-        /// </summary>
-        void SetAvgCrossSections(INeutronSpectra spectra);
-
-        /// <summary>
         /// Get total heat density 
         /// </summary>
         double HeatDensity(IEnumerable<INuclideDensity> nuclideDensities);

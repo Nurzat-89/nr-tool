@@ -53,6 +53,9 @@ namespace NuclearData
         }
 
         /// <inheritdoc/>
+        public double AvgCalculatedCs { get; set; }
+
+        /// <inheritdoc/>
         public ICrossSectionData GetCrossSection(REACT reactionType)
         {
             CrossSections.TryGetValue(reactionType, out ICrossSectionData crossSection);

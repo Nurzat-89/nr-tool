@@ -76,17 +76,6 @@ namespace NuclearCalculation
             }
         }
 
-        /// <inheritdoc/>
-        public void SetAvgCrossSections(INeutronSpectra spectra)
-        {
-            foreach (var isotope in BurnUp.Isotopes)
-            {
-                var crossSectionData = isotope.GetCrossSection(Constants.REACT.N_G);
-                if (crossSectionData == null) continue;
-                isotope.AvgCs = spectra.OneGroupCrossSection(crossSectionData);
-            }
-        }
-
         private IMatrix<double> DensityToMatix(IEnumerable<INuclideDensity> densities) 
         {
             int i = 0;

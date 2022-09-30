@@ -44,5 +44,56 @@
             </DrawingGroup>
         </DrawingImage.Drawing>
     </DrawingImage>
-
+    <DrawingImage x:Key="CancelIcon">
+        <DrawingImage.Drawing>
+            <DrawingGroup ClipGeometry="M0,0 V18 H18 V0 H0 Z">
+                <DrawingGroup.Transform>
+                    <TranslateTransform X="1" Y="1" />
+                </DrawingGroup.Transform>
+                <GeometryDrawing Brush="#FF0056B2">
+                    <GeometryDrawing.Pen>
+                        <Pen
+                            Brush="#FF0056B2"
+                            EndLineCap="Flat"
+                            LineJoin="Miter"
+                            StartLineCap="Flat"
+                            Thickness="0.751717" />
+                    </GeometryDrawing.Pen>
+                    <GeometryDrawing.Geometry>
+                        <RectangleGeometry
+                            RadiusX="0.6241"
+                            RadiusY="0.6241"
+                            Rect="6.3759,6.3759,5.2483,5.2483" />
+                    </GeometryDrawing.Geometry>
+                </GeometryDrawing>
+                <GeometryDrawing Brush="#FF0056B2" Geometry="F1 M18,18z M0,0z M2,1L16,1 16,-1 2,-1 2,1z M17,2L17,16 19,16 19,2 17,2z M16,17L2,17 2,19 16,19 16,17z M1,16L1,2 -1,2 -1,16 1,16z M2,17C1.44772,17,1,16.5523,1,16L-1,16C-1,17.6569,0.343146,19,2,19L2,17z M17,16C17,16.5523,16.5523,17,16,17L16,19C17.6569,19,19,17.6569,19,16L17,16z M16,1C16.5523,1,17,1.44772,17,2L19,2C19,0.343146,17.6569,-1,16,-1L16,1z M2,-1C0.343146,-1,-1,0.343146,-1,2L1,2C1,1.44772,1.44772,1,2,1L2,-1z" />
+            </DrawingGroup>
+        </DrawingImage.Drawing>
+    </DrawingImage>
+    <DrawingImage x:Key="CancelIconMouseOver">
+        <DrawingImage.Drawing>
+            <DrawingGroup ClipGeometry="M0,0 V18 H18 V0 H0 Z">
+                <DrawingGroup.Transform>
+                    <TranslateTransform X="1" Y="1" />
+                </DrawingGroup.Transform>
+                <GeometryDrawing Brush="#00A3FF">
+                    <GeometryDrawing.Pen>
+                        <Pen
+                            Brush="#00A3FF"
+                            EndLineCap="Flat"
+                            LineJoin="Miter"
+                            StartLineCap="Flat"
+                            Thickness="0.751717" />
+                    </GeometryDrawing.Pen>
+                    <GeometryDrawing.Geometry>
+                        <RectangleGeometry
+                            RadiusX="0.6241"
+                            RadiusY="0.6241"
+                            Rect="6.3759,6.3759,5.2483,5.2483" />
+                    </GeometryDrawing.Geometry>
+                </GeometryDrawing>
+                <GeometryDrawing Brush="#00A3FF" Geometry="F1 M18,18z M0,0z M2,1L16,1 16,-1 2,-1 2,1z M17,2L17,16 19,16 19,2 17,2z M16,17L2,17 2,19 16,19 16,17z M1,16L1,2 -1,2 -1,16 1,16z M2,17C1.44772,17,1,16.5523,1,16L-1,16C-1,17.6569,0.343146,19,2,19L2,17z M17,16C17,16.5523,16.5523,17,16,17L16,19C17.6569,19,19,17.6569,19,16L17,16z M16,1C16.5523,1,17,1.44772,17,2L19,2C19,0.343146,17.6569,-1,16,-1L16,1z M2,-1C0.343146,-1,-1,0.343146,-1,2L1,2C1,1.44772,1.44772,1,2,1L2,-1z" />
+            </DrawingGroup>
+        </DrawingImage.Drawing>
+    </DrawingImage>
 </ResourceDictionary>

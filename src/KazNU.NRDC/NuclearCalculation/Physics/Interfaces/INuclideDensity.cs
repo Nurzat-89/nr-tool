@@ -20,7 +20,7 @@ namespace NuclearCalculation
         /// <summary>
         /// Density
         /// </summary>
-        double Density { get; }
+        double Density { get; set; }
 
         /// <summary>
         /// Isotope

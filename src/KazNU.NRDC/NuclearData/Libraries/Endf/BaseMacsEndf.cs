@@ -9,13 +9,13 @@ namespace NuclearData
     public abstract class BaseMacsEndf : IMacsEndf
     {
         /// <inheritdoc/>
-        public BaseMacsEndf(DATALIBS library)
+        public BaseMacsEndf(MACSDATALIBS library)
         {
             Library = library;
         }
 
         /// <inheritdoc/>
-        public DATALIBS Library { get; }
+        public MACSDATALIBS Library { get; }
 
         /// <inheritdoc/>
         public abstract IEnumerable<IMacs> GetMacsData();

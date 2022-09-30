@@ -26,13 +26,13 @@ namespace NuclearData
         public const double OneHourSec = 3600.0;
         public enum FILETYP { ATOM, DECAY, NEUTRON, FISSION, MACS };
         public enum RTYPE { GAMMA, BETA, EC, IT, ALFA, N, SF, P, BETA_N, BETA_A, UNDEF };
-        public enum DATALIBS { ENDFB_VII, ENDFB_VIII, EAF2010, JEFF, JENDL, TENDL, CENDL };
+        public enum DATALIBS { ENDFB_VIII, JEFF, JENDL, TENDL };
+        public enum MACSDATALIBS { EAF2010, ENDF_B };
+
         public enum REACT { N_el, N_inl, N_tot, N_G, N_2N, N_P, N_A };
         public static Dictionary<DATALIBS, string> DataCenters = new Dictionary<DATALIBS, string>()
         {
-            {DATALIBS.ENDFB_VII, "ENDF/B-VII.0" },
             {DATALIBS.ENDFB_VIII, "ENDF/B-VI.8" },
-            {DATALIBS.EAF2010, "EAF 2010" },
             {DATALIBS.JENDL, "JENDL-3.3" },
             {DATALIBS.TENDL, "TENDL" },
             {DATALIBS.JEFF, "JEFF-3.1" }
@@ -86,6 +86,6 @@ namespace NuclearData
             "Au", "Hg", "Tl", "Pb", "Bi", "Po", "At", "Rn",
             "Fr", "Ra",
             "Ac", "Th", "Pa", "U", "Np", "Pu", "Am", "Cm", "Bk", "Cf", "Es", "Fm", "Md", "No", "Lr",
-            "Rf", "Db", "Sg", "Bh", "Hs", "Mt", "Ds", "Rg" };
+            "Rf", "Db", "Sg", "Bh", "Hs", "Mt", "Ds", "Rg" }; 
     }
 }
