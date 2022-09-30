@@ -1,4 +1,6 @@
-﻿using System;
+﻿using GUI.Utils;
+using GUI.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,16 +15,23 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace GUI
+namespace GUI.Views.Windows
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for MainMenuView.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainMenuView : UserControl
     {
-        public MainWindow()
+        public MainMenuView()
         {
             InitializeComponent();
+        }
+    }
+
+    class DesignMainMenuView : MainMenuViewModel
+    {
+        public DesignMainMenuView(PageNavigation aPageNavigation) : base(aPageNavigation)
+        {
         }
     }
 }

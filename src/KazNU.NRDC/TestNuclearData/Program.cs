@@ -10,9 +10,40 @@ namespace TestNuclearData
     {
         static void Main(string[] args)
         {
-            BurnUpTest();
+            HeatDensityTest();
 
             Console.ReadLine();
+        }
+
+        private static void HeatDensityTest() 
+        {
+            double[] fluxes = new double[] { 1E20, 1E21, 1E22, 1E23, 1E24, 1E25, 1E26, 1E27, 1E28, 1E29, 1E30, 1E31, 1E32, 1E35, 1E40 };
+
+            foreach (var flux in fluxes)
+            {
+                IEndf endf = new EndfB();
+                IMacsEndf endfMacs = new EndfBMacs();
+                var isoopes = endf.GetIsotopes(81206, 81207, 82204, 82205, 82206, 82207, 82208, 82209, 82210, 82211, 83209, 83210, 83211, 84210, 84211);
+                NeutronSpectra.SetMacsCrossSection(isoopes, endfMacs.GetMacsData());
+
+                INeutronSpectra spectra = new NeutronSpectra(30000, flux);
+                IBurnUp burnUp = new BurnUp(isoopes, spectra);
+
+                IMatrixExp matrixExp = new MMPA();
+                var initial = isoopes.FirstOrDefault(x => x.Z == 83 && x.A == 209);
+                IBurnUpProcess burnUpProcess = new BurnUpProcess(burnUp, matrixExp, new NuclideDensity(initial, 1.0));
+                burnUpProcess.SetAvgCrossSections(endfMacs);
+                var finalDensities = burnUpProcess.Calculate(TimeSpan.FromDays(1000));
+                var heat = burnUpProcess.HeatDensity(finalDensities) * 1.6E-19;
+                Console.WriteLine($"{flux}\t{heat}");
+
+                foreach (var final in finalDensities)
+                {
+                    Console.WriteLine($"\t{final.NuclideName}-{final.Density}");
+                }
+                Console.WriteLine("");
+                System.IO.File.AppendAllText("D://heatDensity.txt", $"{flux}\t{heat}\n");
+            }
         }
 
         private static void BurnUpTest() 

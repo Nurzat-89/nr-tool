@@ -1,0 +1,58 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <SolidColorBrush x:Key="ToggleButtonGrayNormalBrush" Color="#F3F3F3" />
+    <SolidColorBrush x:Key="ToggleButtonGrayDisabledFontBrush" Color="#676767" />
+
+    <Style x:Key="ToggleButtonGrayStyle"
+           TargetType="{x:Type ToggleButton}">
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="FontFamily" Value="Segoe UI"/>
+        <Setter Property="Content" Value=""/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ToggleButton">
+                    <Border x:Name="Border"
+                            CornerRadius="0" 
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}">
+                        <Border.Effect>
+                            <DropShadowEffect/>
+                        </Border.Effect>
+                        <ContentPresenter x:Name="contentPresenter" 
+                                          ContentTemplate="{TemplateBinding ContentTemplate}" 
+                                          Content="{TemplateBinding Content}" 
+                                          Margin="44,11,0,11"/>
+
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter TargetName="Border" Property="Background" Value="White"/>
+                            <Setter Property="BorderBrush" Value="White"/>
+                            <Setter Property="BorderThickness" Value="1"/>
+                            <Setter Property="FontWeight" Value="Regular"/>
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="False">
+                            <Setter Property="BorderBrush" Value="{StaticResource ToggleButtonGrayNormalBrush}"/>
+                            <Setter Property="BorderThickness" Value="1"/>
+                            <Setter TargetName="Border" Property="Background" Value="{StaticResource ToggleButtonGrayNormalBrush}"/>
+                            <Setter Property="FontWeight" Value="Regular"/>
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="{x:Null}">
+                            <Setter Property="BorderBrush" Value="{StaticResource ToggleButtonGrayNormalBrush}"/>
+                            <Setter Property="BorderThickness" Value="1"/>
+                            <Setter Property="Background" Value="{StaticResource ToggleButtonGrayNormalBrush}"/>
+                            <Setter Property="FontWeight" Value="Regular"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="BorderBrush" Value="{StaticResource ToggleButtonGrayNormalBrush}"/>
+                            <Setter Property="BorderThickness" Value="1"/>
+                            <Setter TargetName="Border" Property="Background" Value="{StaticResource ToggleButtonGrayNormalBrush}"/>
+                            <Setter Property="FontWeight" Value="Regular"/>
+                            <Setter Property="Foreground" Value="{StaticResource ToggleButtonGrayDisabledFontBrush}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

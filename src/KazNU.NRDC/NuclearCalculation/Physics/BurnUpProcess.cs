@@ -68,6 +68,10 @@ namespace NuclearCalculation
             foreach (var macs in macsData)
             {
                 var isotope = BurnUp.Isotopes.FirstOrDefault(x=>x.ZAID == macs.Element.ZAID);
+                if (isotope == null)
+                {
+                    continue;
+                }
                 isotope.AvgCs = macs.AvgCs;
             }
         }

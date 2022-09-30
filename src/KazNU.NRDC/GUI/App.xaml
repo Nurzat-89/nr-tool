@@ -1,9 +1,16 @@
 ﻿<Application x:Class="GUI.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:GUI"
-             StartupUri="MainWindow.xaml">
+             xmlns:local="clr-namespace:GUI">
     <Application.Resources>
-         
+        <ResourceDictionary>
+            <x:Static x:Key="AppContext" Member="local:AppContext.Instance" />
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/Styles/ToggleButtonGrayStyle.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Styles/ToggleButtonLightBlueStyle.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Styles/Colors.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Resources/Icons.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>
