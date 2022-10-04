@@ -1,4 +1,5 @@
 ﻿using NuclearData;
+using System;
 using System.Collections.Generic;
 
 namespace NuclearCalculation
@@ -22,5 +23,10 @@ namespace NuclearCalculation
         /// Burnup matrix (n x n)
         /// </summary>
         IMatrix<double> Matrix { get; }
+
+        /// <summary>
+        /// Event triggered when building burnup matrix
+        /// </summary>
+        event Action<int> BurnupMatrixStatusChangedEvent;
     }
 }

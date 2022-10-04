@@ -29,17 +29,17 @@ namespace TestNuclearData
                 IEndf endf = new EndfB();
                 IMacsEndf endfMacs = new EndfBMacs();
                 var isoopes = endf.GetIsotopes(81206, 81207, 82204, 82205, 82206, 82207, 82208, 82209, 82210, 82211, 83209, 83210, 83211, 84210, 84211);
-                NeutronSpectra.SetMacsCrossSection(isoopes, endfMacs.GetMacsData());
 
                 INeutronSpectra spectra = new NeutronSpectra(30000, flux);
+                NeutronSpectra.SetMacsCrossSection(isoopes, endfMacs.GetMacsData(), spectra);
                 IBurnUp burnUp = new BurnUp(isoopes, spectra);
 
                 IMatrixExp matrixExp = new MMPA();
                 var initial = isoopes.FirstOrDefault(x => x.Z == 83 && x.A == 209);
-                IBurnUpProcess burnUpProcess = new BurnUpProcess(burnUp, matrixExp, new NuclideDensity(initial, 1.0));
+                IBurnUpProcess burnUpProcess = new BurnUpProcess(burnUp, matrixExp, new NuclideDensity(initial, 1.0, Constants.NaturalLeadDensity, 208));
                 burnUpProcess.SetAvgCrossSections(endfMacs);
-                var finalDensities = burnUpProcess.Calculate(TimeSpan.FromDays(1000));
-                var heat = burnUpProcess.HeatDensity(finalDensities) * 1.6E-19;
+                var finalDensities = burnUpProcess.Calculate(TimeSpan.FromDays(1000).TotalSeconds);
+                var heat = finalDensities.Sum(x=>x.HeatDensityMeV) * 1.6E-19;
                 Console.WriteLine($"{flux}\t{heat}");
 
                 foreach (var final in finalDensities)
@@ -57,13 +57,13 @@ namespace TestNuclearData
             IMacsEndf endfMacs = new EndfBMacs();
             var isoopes = endf.GetIsotopes(81206, 81207, 82204, 82205, 82206, 82207, 82208, 82209, 82210, 82211, 83209, 83210, 83211, 84210, 84211);
             INeutronSpectra spectra = new NeutronSpectra(30000, 1E16);
-            NeutronSpectra.SetMacsCrossSection(isoopes, endfMacs.GetMacsData());
+            NeutronSpectra.SetMacsCrossSection(isoopes, endfMacs.GetMacsData(), spectra);
             IBurnUp burnUp = new BurnUp(isoopes, spectra);
 
 
             IMatrixExp matrixExp = new PADE();
             var initial = isoopes.FirstOrDefault(x => x.Z == 83 && x.A == 209);
-            IBurnUpProcess burnUpProcess = new BurnUpProcess(burnUp, matrixExp, new NuclideDensity(initial, 1.0));
+            IBurnUpProcess burnUpProcess = new BurnUpProcess(burnUp, matrixExp, new NuclideDensity(initial, 1.0, Constants.NaturalLeadDensity, 208));
             burnUpProcess.SetAvgCrossSections(endfMacs);
 
             foreach (var item in burnUp.Isotopes)
@@ -80,7 +80,7 @@ namespace TestNuclearData
                 Console.WriteLine();
             }
 
-            var finalDensities = burnUpProcess.Calculate(TimeSpan.FromDays(600000));
+            var finalDensities = burnUpProcess.Calculate(TimeSpan.FromDays(600000).TotalSeconds);
 
             foreach (var dens in finalDensities)
             {

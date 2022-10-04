@@ -1,4 +1,5 @@
-﻿using System.Numerics;
+﻿using System;
+using System.Numerics;
 
 namespace NuclearCalculation.Matrix
 {
@@ -8,6 +9,9 @@ namespace NuclearCalculation.Matrix
     public class CRAM : IMatrixExp
     {
         /// <inheritdoc/>
+        public event Action<int> CalculationStatusChangedEvent;
+
+        /// <inheritdoc/>
         public IMatrix<double> Calculate(IMatrix<double> a, IMatrix<double> n)
         {
             IMatrix<Complex> U = new MatrixComplex(a.Col, a.Row);
@@ -16,12 +20,14 @@ namespace NuclearCalculation.Matrix
             var aa = a.Cast<Complex>();
             var nn = n.Cast<Complex>();
             U = U.Unity();
+            double dx = 100 / 7;
             for (int i = 1; i <= 7; i++)
             {
                 var temp = (MatrixComplex)aa - ((MatrixComplex)U * Globals.Theta[i]);
                 var temp1 = temp.Inverse();
                 var _n = (MatrixComplex)((MatrixComplex)temp1 * nn) * Globals.Alpha[i];
                 N = (MatrixComplex)N + _n;
+                CalculationStatusChangedEvent?.Invoke((int)dx * i);
             }
             IMatrix<double> result = N.Cast<double>();
             result = (MatrixDouble)result * 2;

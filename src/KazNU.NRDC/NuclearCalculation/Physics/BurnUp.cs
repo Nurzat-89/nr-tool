@@ -31,9 +31,15 @@ namespace NuclearCalculation
         /// <inheritdoc/>
         public IMatrix<double> Matrix { get; }
 
+        /// <inheritdoc/>
+        public event Action<int> BurnupMatrixStatusChangedEvent;
+
         private void SetBurnMatrix()
         {
             Matrix.Zero();
+            var dx = 100 / _isotopes.Count;
+            double progress = 0.0;
+            int currentProgress = 0;
 
             for (int i = 0; i < _isotopes.Count; i++)
             {
@@ -73,6 +79,13 @@ namespace NuclearCalculation
                 if (!_isotopes[i].Stable)
                 {
                     Matrix.Array[i, i] += -_isotopes[i].DecayConst;
+                }
+
+                progress += dx;
+                if (currentProgress != (int)progress)
+                {
+                    currentProgress = (int)progress;
+                    BurnupMatrixStatusChangedEvent?.Invoke(currentProgress);
                 }
             }
         }

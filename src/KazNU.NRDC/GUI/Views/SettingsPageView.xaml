@@ -5,36 +5,620 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:GUI.Views"
              d:DataContext="{Binding SettingsPageViewModel, Source={StaticResource AppContext}}"
+             xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
              mc:Ignorable="d" 
              Background="White"
-             d:DesignHeight="800" d:DesignWidth="800">
-    <Grid>
-        <StackPanel Background="AliceBlue" Margin="20 20">
-            <TextBlock
-                Margin="6,0,0,0"
-                Style="{StaticResource HeaderTextBlockStyle}"
-                Text="Результаты рассчетов" />
-            <Grid Height="10" />
-            <TextBlock
-                    FontSize="14"
-                Margin="10 0 0 0"
-                    VerticalAlignment="Center"
-                    Text="Задать начальную концентрацию" />
-            <DataGrid Height="400" AutoGenerateColumns="False" ItemsSource="{Binding InitalDensities}" Width="300"         
-                      HorizontalAlignment="Left"
-                      Margin="10">
-                <DataGrid.Columns>
-                    <DataGridTextColumn CanUserResize="False" IsReadOnly="True" Header="Изотоп" Width="100" Binding="{Binding NuclideName, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
-                    <DataGridTextColumn CanUserResize="False" Header="Концентраця, %" Width="*" Binding="{Binding Density, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                </DataGrid.Columns>
-            </DataGrid>
-            <Button Width="100"
-                    Height="33"
-                    Content="Back"
-                    HorizontalAlignment="Right"
-                    Margin="0 5 10 5"
-                    FontSize="12"
-                    Command="{Binding GoToBackCommand}"/>
-        </StackPanel>
+             d:DesignHeight="800" d:DesignWidth="1200">
+    <UserControl.Resources>
+        <Style x:Key="DensityStyleKey" TargetType="{x:Type DataGridRow}">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Isotope.Stable}" Value="True">
+                    <Setter Property="Background" Value="LightGreen"></Setter>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+    <Grid Background="AliceBlue" Margin="20 20">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="270"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="35"/>
+            <RowDefinition Height="350"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+        <TextBlock
+            Margin="6,0,0,0"
+            Style="{StaticResource HeaderTextBlockStyle}"
+            Text="Результаты рассчетов" />
+        <Grid Height="10" />
+        <TextBlock
+            Grid.Row="1"
+            Grid.Column="0"
+            FontSize="14"
+            Margin="10 0 0 0"
+            VerticalAlignment="Center"
+            Text="Задать начальную концентрацию" />
+        <DataGrid
+            RowStyle="{StaticResource DensityStyleKey}"
+            Grid.Row="2"
+            Grid.Column="0"
+            Grid.RowSpan="2"
+            AutoGenerateColumns="False" 
+            ItemsSource="{Binding InitalDensities}" 
+            Width="300"         
+            HorizontalAlignment="Left"
+            Margin="10">
+            <DataGrid.Columns>
+                <DataGridTextColumn CanUserResize="False" IsReadOnly="True" Header="Изотоп" Width="100" Binding="{Binding NuclideName, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                <DataGridTextColumn CanUserResize="False" Header="Концентраця, %" Width="*" Binding="{Binding Density, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            </DataGrid.Columns>
+        </DataGrid>
+        <TextBlock
+            Grid.Row="1"
+            Grid.Column="1"
+            FontSize="14"
+            Margin="10 0 0 0"
+            VerticalAlignment="Center"
+            Text="Задать начальное условие для рассчета" />
+        <TabControl
+            BorderThickness="0"
+            Margin="10"
+            Grid.Column="1"
+            Grid.Row="2"
+            Grid.RowSpan="2">
+            <TabItem FontSize="15" BorderThickness="0" Margin="0" Padding="0" Header="Static">
+                <Grid Margin="3 0" Background="#00A3FF">
+                    <Grid  Margin="2" Background="AliceBlue">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="1"/>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="1"/>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="1"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="500"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="120"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock 
+                            FontSize="14"
+                            Margin="27 0 0 0"
+                            VerticalAlignment="Center"
+                            Text="Время облучения" />
+                        <TextBox 
+                            Grid.Column="1" 
+                            Grid.Row="0"
+                            IsEnabled="{Binding IsCalculationReady}"
+                            Margin="5 7"
+                            Width="120"
+                            HorizontalContentAlignment="Left"
+                            HorizontalAlignment="Right"
+                            VerticalContentAlignment="Center"
+                            Text="{Binding TimeCalculation, Mode=TwoWay, Converter={StaticResource StringToDoubleConverter}}"
+                            FontSize="12"/>
+                        <ComboBox
+                            Grid.Column="2" 
+                            Grid.Row="0"
+                            HorizontalAlignment="Right"
+                            IsEnabled="{Binding IsCalculationReady}"
+                            Margin="2 7 8 7"
+                            Width="100"
+                            MaxDropDownHeight="200"
+                            ItemsSource="{Binding TimeScales}"
+                            SelectedItem="{Binding SelectedTimeScale}"/>
+                        <Border
+                            Grid.Column="0" 
+                            Grid.Row="1"
+                            Grid.ColumnSpan="3"
+                            BorderBrush="#99999999"
+                            BorderThickness="1" />
+                        <TextBlock 
+                            Grid.Row="2"
+                            FontSize="14"
+                            Margin="27 0 0 0"
+                            VerticalAlignment="Center"
+                            Text="Метод экпонента матрицы" />
+                        <ComboBox
+                            Grid.Column="2" 
+                            Grid.Row="2"
+                            HorizontalAlignment="Right"
+                            IsEnabled="{Binding IsCalculationReady}"
+                            Margin="2 7 8 7"
+                            Width="100"
+                            MaxDropDownHeight="200"
+                            ItemsSource="{Binding MatrixExpList}"
+                            SelectedItem="{Binding SelectedMatrixExp}"/>
+                        <Button 
+                            Grid.Column="2" 
+                            Grid.Row="4"
+                            Content="Calculate"
+                            FontSize="12"
+                            IsEnabled="{Binding IsCalculationReady}"
+                            Margin="5 5 8 5"
+                            Command="{Binding CalculateCommand}"
+                            HorizontalAlignment="Right"
+                            FontWeight="ExtraLight"/>
+                        <local:ProcessProgressView 
+                            Grid.Column="0" 
+                            Grid.ColumnSpan="2"
+                            Grid.Row="4"
+                            Visibility="{Binding IsCalculationReady, Converter={StaticResource InverseBooleanToVisibleCollapsedConverter}}"
+                            Margin="30 6 30 2" />
+                        <Border
+                            Grid.Column="0" 
+                            Grid.Row="3"
+                            Grid.ColumnSpan="3"
+                            BorderBrush="#99999999"
+                            BorderThickness="1" />
+                        <Border
+                            Grid.Column="0" 
+                            Grid.Row="5"
+                            Grid.ColumnSpan="3"
+                            BorderBrush="#99999999"
+                            BorderThickness="1" />
+                        <TabControl
+                            Grid.Row="8"
+                            Grid.Column="0"
+                            Grid.ColumnSpan="3">
+                            <TabItem
+                                FontSize="15" BorderThickness="0" Margin="0" Padding="0"
+                                Header="Data table">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="400"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <DataGrid RowStyle="{DynamicResource DensityStyleKey}" 
+                                        Grid.Column="1"
+                                        ItemsSource="{Binding Densities}"
+                                        AutoGenerateColumns="False" 
+                                        Margin="5">
+                                        <DataGrid.Columns>
+                                            <DataGridTextColumn CanUserResize="False" IsReadOnly="True" Header="Name" Width="120" Binding="{Binding NuclideName, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                                            <DataGridTextColumn CanUserResize="False" IsReadOnly="True" Header="Density" Width="200" Binding="{Binding Density, Mode=OneWay, StringFormat={}{0}, UpdateSourceTrigger=PropertyChanged}" />
+                                            <DataGridTextColumn CanUserResize="False" IsReadOnly="True" Header="Плоность энергий, MeV/cm3,sec" Width="250" Binding="{Binding HeatDensityMeV, Mode=OneWay, StringFormat={}{0}, UpdateSourceTrigger=PropertyChanged}" />
+                                        </DataGrid.Columns>
+                                    </DataGrid>
+                                    <Grid  
+                                        Grid.Column="0" 
+                                        Margin="5"
+                                        Background="Green">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="218"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="28"/>
+                                            <RowDefinition Height="28"/>
+                                            <RowDefinition Height="28"/>
+                                            <RowDefinition Height="28"/>
+                                            <RowDefinition Height="28"/>
+                                            <RowDefinition Height="28"/>
+                                            <RowDefinition Height="28"/>
+                                            <RowDefinition Height="28"/>
+                                        </Grid.RowDefinitions>
+                                        <TextBlock Grid.Row="0" Text="Библиотека ENDF: " FontSize="15" Foreground="White" FontWeight="Light" Margin="20 0 0 0"/>
+                                        <TextBlock Grid.Row="1" Text="Библиотека MACS: " FontSize="15" Foreground="White" FontWeight="Light" Margin="20 0 0 0"/>
+                                        <TextBlock Grid.Row="2" Text="Температура:" FontSize="15" Foreground="White" FontWeight="Light" Margin="20 0 0 0"/>
+                                        <TextBlock Grid.Row="3" Text="Число изотопов:" FontSize="15" Foreground="White" FontWeight="Light" Margin="20 0 0 0"/>
+                                        <TextBlock Grid.Row="4" Text="Поток нейтронов:" FontSize="15" Foreground="White" FontWeight="Light" Margin="20 0 0 0"/>
+                                        <TextBlock Grid.Row="5" Text="Время облучения:" FontSize="15" Foreground="White" FontWeight="Light" Margin="20 0 0 0"/>
+                                        <TextBlock Grid.Row="6" Text="Метод экспаненты облучения:" FontSize="15" Foreground="White" FontWeight="Light" Margin="20 0 0 0"/>
+                                        <TextBlock Grid.Row="7" Text="Плотность энергии:" FontSize="15" Foreground="White" FontWeight="Light" Margin="20 0 0 0"/>
+
+                                        <TextBlock Grid.Row="0" Grid.Column="1" Visibility="{Binding IsCalculated, Converter={StaticResource BooleanToVisibleHiddenConverter}}" Text="{Binding SelectedEndfLibrary}" FontSize="16" Foreground="Yellow" Margin="2 0 0 0"/>
+                                        <TextBlock Grid.Row="1" Grid.Column="1" Visibility="{Binding IsCalculated, Converter={StaticResource BooleanToVisibleHiddenConverter}}" Text="{Binding SelectedMacsLibrary}" FontSize="16" Foreground="Yellow" Margin="2 0 0 0"/>
+                                        <TextBlock Grid.Row="2" Grid.Column="1" Visibility="{Binding IsCalculated, Converter={StaticResource BooleanToVisibleHiddenConverter}}" Text="{Binding Temperature, StringFormat={}{0:#} keV}" FontSize="16" Foreground="Yellow" Margin="2 0 0 0"/>
+                                        <TextBlock Grid.Row="3" Grid.Column="1" Visibility="{Binding IsCalculated, Converter={StaticResource BooleanToVisibleHiddenConverter}}" Text="{Binding IsotopeCount}" FontSize="16" Foreground="Yellow" Margin="2 0 0 0"/>
+                                        <TextBlock Grid.Row="4" Grid.Column="1" Visibility="{Binding IsCalculated, Converter={StaticResource BooleanToVisibleHiddenConverter}}" Text="{Binding NeutronFlux, StringFormat={}{0:#} 1/cm2/sec}" FontSize="16" Foreground="Yellow" Margin="2 0 0 0"/>
+                                        <TextBlock Grid.Row="5" Grid.Column="1" Visibility="{Binding IsCalculated, Converter={StaticResource BooleanToVisibleHiddenConverter}}" Text="{Binding IrradiationTime}" FontSize="16" Foreground="Yellow" Margin="2 0 0 0"/>
+                                        <TextBlock Grid.Row="6" Grid.Column="1" Visibility="{Binding IsCalculated, Converter={StaticResource BooleanToVisibleHiddenConverter}}" Text="{Binding SelectedMatrixExp}" FontSize="16" Foreground="Yellow" Margin="2 0 0 0"/>
+                                        <TextBlock Grid.Row="7" Grid.Column="1" Visibility="{Binding IsCalculated, Converter={StaticResource BooleanToVisibleHiddenConverter}}" Text="{Binding HeatDensity, StringFormat={}{0:#.00} MeV/cm3/sec}" FontSize="16" Foreground="Yellow" Margin="2 0 0 0"/>
+                                    </Grid>
+                                </Grid>
+                            </TabItem>
+                            <TabItem
+                                FontSize="15" BorderThickness="0" Margin="0" Padding="0"
+                                Header="Graph">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="60"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+                                    <CheckBox Margin="10" IsChecked="{Binding IsBarChartSelected, Mode=TwoWay}" Content="Гистаграмма" FontSize="16" Foreground="Gray" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
+                                    <lvc:CartesianChart 
+                                        Visibility="{Binding IsBarChartSelected, Converter={StaticResource BooleanToVisibleCollapsedConverter}}"
+                                        Grid.Row="1"                                         
+                                        Series="{Binding SeriesCollection}" 
+                                        LegendLocation="Left">
+                                        <lvc:CartesianChart.AxisX>
+                                            <lvc:Axis Title="Изотопы" Labels="{Binding Labels}"/>
+                                        </lvc:CartesianChart.AxisX>
+                                        <lvc:CartesianChart.AxisY>
+                                            <lvc:Axis Title="" LabelFormatter="{Binding Formatter}"/>
+                                        </lvc:CartesianChart.AxisY>
+                                    </lvc:CartesianChart>
+                                    <lvc:CartesianChart 
+                                        Visibility="{Binding IsBarChartSelected, Converter={StaticResource InverseBooleanToVisibleCollapsedConverter}}"
+                                        Grid.Row="1"                                         
+                                        Series="{Binding LineCollection}" 
+                                        LegendLocation="Left">
+                                        <lvc:CartesianChart.AxisX>
+                                            <lvc:Axis Title="Изотопы" Labels="{Binding Labels}"/>
+                                        </lvc:CartesianChart.AxisX>
+                                        <lvc:CartesianChart.AxisY>
+                                            <lvc:Axis Title="" LabelFormatter="{Binding Formatter}"/>
+                                        </lvc:CartesianChart.AxisY>
+                                    </lvc:CartesianChart>
+                                </Grid>
+                            </TabItem>
+                        </TabControl>
+                        
+                    </Grid>
+                </Grid>
+            </TabItem>
+            <TabItem FontSize="15" BorderThickness="0" Margin="0" Padding="0" Header="Dynamic flux">
+                <Grid Margin="3 0" Background="#00A3FF">
+                    <Grid  Margin="2" Background="AliceBlue">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="1"/>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="1"/>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="1"/>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="1"/>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="1"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="500"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="120"/>
+                        </Grid.ColumnDefinitions>
+                        <!--Время облучения-->
+                        <TextBlock 
+                            FontSize="14"
+                            Margin="27 0 0 0"
+                            VerticalAlignment="Center"
+                            Text="Время облучения" />
+                        <TextBox 
+                            Grid.Column="1" 
+                            Grid.Row="0"
+                            IsEnabled="{Binding IsCalculationReady}"
+                            Margin="5 7"
+                            Width="120"
+                            HorizontalContentAlignment="Left"
+                            HorizontalAlignment="Right"
+                            VerticalContentAlignment="Center"
+                            Text="{Binding TimeCalculation, Mode=TwoWay, Converter={StaticResource StringToDoubleConverter}}"
+                            FontSize="12"/>
+                        <ComboBox
+                            Grid.Column="2" 
+                            Grid.Row="0"
+                            HorizontalAlignment="Right"
+                            IsEnabled="{Binding IsCalculationReady}"
+                            Margin="2 7 8 7"
+                            Width="100"
+                            MaxDropDownHeight="200"
+                            ItemsSource="{Binding TimeScales}"
+                            SelectedItem="{Binding SelectedTimeScale}"/>
+                        <Border
+                            Grid.Column="0" 
+                            Grid.Row="1"
+                            Grid.ColumnSpan="3"
+                            BorderBrush="#99999999"
+                            BorderThickness="1" />
+                        
+                        <!--Метод экпонента матрицы-->
+                        <TextBlock 
+                            Grid.Row="2"
+                            FontSize="14"
+                            Margin="27 0 0 0"
+                            VerticalAlignment="Center"
+                            Text="Метод экпонента матрицы" />
+                        <ComboBox
+                            Grid.Column="2" 
+                            Grid.Row="2"
+                            HorizontalAlignment="Right"
+                            IsEnabled="{Binding IsCalculationReady}"
+                            Margin="2 7 8 7"
+                            Width="100"
+                            MaxDropDownHeight="200"
+                            ItemsSource="{Binding MatrixExpList}"
+                            SelectedItem="{Binding SelectedMatrixExp}"/>
+                        <Border
+                            Grid.Column="0" 
+                            Grid.Row="3"
+                            Grid.ColumnSpan="3"
+                            BorderBrush="#99999999"
+                            BorderThickness="1" />
+                        <!--Стартовый поток-->
+                        <TextBlock 
+                            FontSize="14"
+                            Grid.Row="4"
+                            Margin="27 0 0 0"
+                            VerticalAlignment="Center"
+                            Text="Стартовый поток" />
+                        <TextBox 
+                            Grid.Column="1" 
+                            Grid.Row="4"
+                            IsEnabled="{Binding IsCalculationReady}"
+                            Margin="5 7"
+                            Width="120"
+                            HorizontalContentAlignment="Left"
+                            HorizontalAlignment="Right"
+                            VerticalContentAlignment="Center"
+                            Text="{Binding InitialFluxText, Mode=TwoWay, Converter={StaticResource StringToDoubleConverter}}"
+                            FontSize="12"/>
+                        <Border
+                            Grid.Column="0" 
+                            Grid.Row="5"
+                            Grid.ColumnSpan="3"
+                            BorderBrush="#99999999"
+                            BorderThickness="1" />
+                        <!--Число итераций для потока-->
+                        <TextBlock 
+                            FontSize="14"
+                            Grid.Row="6"
+                            Margin="27 0 0 0"
+                            VerticalAlignment="Center"
+                            Text="Число итераций для потока" />
+                        <TextBox 
+                            Grid.Column="1" 
+                            Grid.Row="6"
+                            IsEnabled="{Binding IsCalculationReady}"
+                            Margin="5 7"
+                            Width="120"
+                            HorizontalContentAlignment="Left"
+                            HorizontalAlignment="Right"
+                            VerticalContentAlignment="Center"
+                            Text="{Binding FluxIterations, Mode=TwoWay, Converter={StaticResource StringToDoubleConverter}}"
+                            FontSize="12"/>
+                        <Border
+                            Grid.Column="0" 
+                            Grid.Row="7"
+                            Grid.ColumnSpan="3"
+                            BorderBrush="#99999999"
+                            BorderThickness="1" />
+                        <!--ProcessProgressView-->
+                        <local:ProcessProgressView 
+                            Grid.Column="0" 
+                            Grid.ColumnSpan="2"
+                            Grid.Row="8"
+                            Visibility="{Binding IsCalculationReady, Converter={StaticResource InverseBooleanToVisibleCollapsedConverter}}"
+                            Margin="30 6 30 2" />
+                        <Button 
+                            Grid.Column="2" 
+                            Grid.Row="8"
+                            Content="Calculate"
+                            FontSize="12"
+                            IsEnabled="{Binding IsCalculationReady}"
+                            Margin="5 5 8 5"
+                            Command="{Binding FluxCalculateCommand}"
+                            HorizontalAlignment="Right"
+                            FontWeight="ExtraLight"/>
+                        <Border
+                            Grid.Column="0" 
+                            Grid.Row="9"
+                            Grid.ColumnSpan="3"
+                            BorderBrush="#99999999"
+                            BorderThickness="1" />
+                        <TabControl
+                            Grid.Row="10"
+                            Grid.Column="0"
+                            Grid.ColumnSpan="3">
+                            <TabItem
+                                FontSize="15" BorderThickness="0" Margin="0" Padding="0"
+                                Header="Data table">
+                                <DataGrid 
+                                    ItemsSource="{Binding FluxHeatDensities}"
+                                    AutoGenerateColumns="False" 
+                                    Margin="5">
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn CanUserResize="False" IsReadOnly="True" Header="Поток" Width="120" Binding="{Binding Flux, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                                        <DataGridTextColumn CanUserResize="False" IsReadOnly="True" Header="Плотность энергий, MeV/cm3,sec" Width="250" Binding="{Binding HeatDensity, Mode=OneWay, StringFormat={}{0}, UpdateSourceTrigger=PropertyChanged}" />
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                            </TabItem>
+                            <TabItem
+                                FontSize="15" BorderThickness="0" Margin="0" Padding="0"
+                                Header="Graph">
+                                
+                            </TabItem>
+                        </TabControl>
+                    </Grid>
+                </Grid>
+            </TabItem>
+            <TabItem FontSize="15" BorderThickness="0" Margin="0" Padding="0" Header="Dynamic flux">
+                <Grid Margin="3 0" Background="#00A3FF">
+                    <Grid  Margin="2" Background="AliceBlue">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="1"/>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="1"/>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="1"/>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="1"/>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="1"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="500"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="120"/>
+                        </Grid.ColumnDefinitions>
+                        <!--Максимальное время облучения-->
+                        <TextBlock 
+                            FontSize="14"
+                            Margin="27 0 0 0"
+                            VerticalAlignment="Center"
+                            Text="Максимальное время облучения" />
+                        <TextBox 
+                            Grid.Column="1" 
+                            Grid.Row="0"
+                            IsEnabled="{Binding IsCalculationReady}"
+                            Margin="5 7"
+                            Width="120"
+                            HorizontalContentAlignment="Left"
+                            HorizontalAlignment="Right"
+                            VerticalContentAlignment="Center"
+                            Text="{Binding TimeCalculation, Mode=TwoWay, Converter={StaticResource StringToDoubleConverter}}"
+                            FontSize="12"/>
+                        <ComboBox
+                            Grid.Column="2" 
+                            Grid.Row="0"
+                            HorizontalAlignment="Right"
+                            IsEnabled="{Binding IsCalculationReady}"
+                            Margin="2 7 8 7"
+                            Width="100"
+                            MaxDropDownHeight="200"
+                            ItemsSource="{Binding TimeScales}"
+                            SelectedItem="{Binding SelectedTimeScale}"/>
+                        <Border
+                            Grid.Column="0" 
+                            Grid.Row="1"
+                            Grid.ColumnSpan="3"
+                            BorderBrush="#99999999"
+                            BorderThickness="1" />
+                        <!--Число итераций времени-->
+                        <TextBlock 
+                            FontSize="14"
+                            Grid.Row="2"
+                            Margin="27 0 0 0"
+                            VerticalAlignment="Center"
+                            Text="Число итераций времени" />
+                        <TextBox 
+                            Grid.Column="1" 
+                            Grid.Row="2"
+                            IsEnabled="{Binding IsCalculationReady}"
+                            Margin="5 7"
+                            Width="120"
+                            HorizontalContentAlignment="Left"
+                            HorizontalAlignment="Right"
+                            VerticalContentAlignment="Center"
+                            Text="{Binding TimeMeshCount, Mode=TwoWay, Converter={StaticResource StringToDoubleConverter}}"
+                            FontSize="12"/>
+                        <Border
+                            Grid.Column="0" 
+                            Grid.Row="3"
+                            Grid.ColumnSpan="3"
+                            BorderBrush="#99999999"
+                            BorderThickness="1" />
+                        <!--Стартовый поток-->
+                        <TextBlock 
+                            FontSize="14"
+                            Grid.Row="4"
+                            Margin="27 0 0 0"
+                            VerticalAlignment="Center"
+                            Text="Поток нейтонов" />
+                        <TextBox 
+                            Grid.Column="1" 
+                            Grid.Row="4"
+                            IsEnabled="{Binding IsCalculationReady}"
+                            Margin="5 7"
+                            Width="120"
+                            HorizontalContentAlignment="Left"
+                            HorizontalAlignment="Right"
+                            VerticalContentAlignment="Center"
+                            Text="{Binding InitialFluxText, Mode=TwoWay, Converter={StaticResource StringToDoubleConverter}}"
+                            FontSize="12"/>
+                        <Border
+                            Grid.Column="0" 
+                            Grid.Row="5"
+                            Grid.ColumnSpan="3"
+                            BorderBrush="#99999999"
+                            BorderThickness="1" />
+                        <!--Метод экпонента матрицы-->
+                        <TextBlock 
+                            Grid.Row="6"
+                            FontSize="14"
+                            Margin="27 0 0 0"
+                            VerticalAlignment="Center"
+                            Text="Метод экпонента матрицы" />
+                        <ComboBox
+                            Grid.Column="2" 
+                            Grid.Row="6"
+                            HorizontalAlignment="Right"
+                            IsEnabled="{Binding IsCalculationReady}"
+                            Margin="2 7 8 7"
+                            Width="100"
+                            MaxDropDownHeight="200"
+                            ItemsSource="{Binding MatrixExpList}"
+                            SelectedItem="{Binding SelectedMatrixExp}"/>
+                        <Border
+                            Grid.Column="0" 
+                            Grid.Row="7"
+                            Grid.ColumnSpan="3"
+                            BorderBrush="#99999999"
+                            BorderThickness="1" />
+                        <!--ProcessProgressView-->
+                        <local:ProcessProgressView 
+                            Grid.Column="0" 
+                            Grid.ColumnSpan="2"
+                            Grid.Row="8"
+                            Visibility="{Binding IsCalculationReady, Converter={StaticResource InverseBooleanToVisibleCollapsedConverter}}"
+                            Margin="30 6 30 2" />
+                        <Button 
+                            Grid.Column="2" 
+                            Grid.Row="8"
+                            Content="Calculate"
+                            FontSize="12"
+                            IsEnabled="{Binding IsCalculationReady}"
+                            Margin="5 5 8 5"
+                            Command="{Binding TimeMeshCalculateCommand}"
+                            HorizontalAlignment="Right"
+                            FontWeight="ExtraLight"/>
+                        <Border
+                            Grid.Column="0" 
+                            Grid.Row="9"
+                            Grid.ColumnSpan="3"
+                            BorderBrush="#99999999"
+                            BorderThickness="1" />
+                        <TabControl
+                            Grid.Row="10"
+                            Grid.Column="0"
+                            Grid.ColumnSpan="3">
+                            <TabItem
+                                FontSize="15" BorderThickness="0" Margin="0" Padding="0"
+                                Header="Graph">
+                                <lvc:CartesianChart 
+                                        Series="{Binding TimeMeshLineCollection}" 
+                                        LegendLocation="Left">
+                                    <lvc:CartesianChart.AxisX>
+                                        <lvc:Axis Title="Время" Labels="{Binding Labels}"/>
+                                    </lvc:CartesianChart.AxisX>
+                                    <lvc:CartesianChart.AxisY>
+                                        <lvc:Axis Title="" LabelFormatter="{Binding Formatter}"/>
+                                    </lvc:CartesianChart.AxisY>
+                                </lvc:CartesianChart>
+                            </TabItem>
+                        </TabControl>
+                    </Grid>
+                </Grid>
+            </TabItem>
+        </TabControl>
+        <Button 
+            Grid.Row="4"
+            Grid.Column="1"
+            Width="100"
+            Height="33"
+            Content="Back"
+            HorizontalAlignment="Right"
+            Margin="0 5 10 7"
+            FontSize="12"
+            Command="{Binding GoToBackCommand}"/>
     </Grid>
 </UserControl>

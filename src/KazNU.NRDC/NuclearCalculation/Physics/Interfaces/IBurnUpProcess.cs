@@ -30,18 +30,13 @@ namespace NuclearCalculation
         IEndf EndfLibrary { get; }
 
         /// <summary>
-        /// Method to calculate nuclide number density after time
+        /// Method to calculate nuclide number density after time, sec
         /// </summary>
-        IEnumerable<INuclideDensity> Calculate(TimeSpan time);
+        IEnumerable<INuclideDensity> Calculate(long time);
 
         /// <summary>
         /// Set averaged cross sections
         /// </summary>
         void SetAvgCrossSections(IMacsEndf macsEndf);
-
-        /// <summary>
-        /// Get total heat density 
-        /// </summary>
-        double HeatDensity(IEnumerable<INuclideDensity> nuclideDensities);
     }
 }

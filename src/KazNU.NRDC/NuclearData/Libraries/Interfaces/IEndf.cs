@@ -44,6 +44,6 @@ namespace NuclearData
         /// <summary>
         /// DataReaderStatusEvent
         /// </summary>
-        event Action<int> DataReaderStatusEvent;
+        event Action<int, string> DataReaderStatusEvent;
     }
 }

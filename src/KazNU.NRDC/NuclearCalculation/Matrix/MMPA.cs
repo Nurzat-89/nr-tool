@@ -1,10 +1,14 @@
-﻿namespace NuclearCalculation.Matrix
+﻿using System;
+
+namespace NuclearCalculation.Matrix
 {
     /// <summary>
     /// MMPA method to calculate matrix exponent (Hokkaido University)
     /// </summary>
     public class MMPA : IMatrixExp
     {
+        /// <inheritdoc/>
+        public event Action<int> CalculationStatusChangedEvent;
 
         /// <inheritdoc/>
         public IMatrix<double> Calculate(IMatrix<double> a, IMatrix<double> n)
@@ -23,6 +27,7 @@
             {
                 S = (MatrixDouble)At * S;
                 N = (MatrixDouble)N + (MatrixDouble)((MatrixDouble)S * n) * Globals.MMPA_a12[i];
+                CalculationStatusChangedEvent?.Invoke((int)dx * i);
             }
             N.RemoveMinuses();
 

@@ -21,7 +21,7 @@ namespace NuclearCalculation
             foreach (var isotope in BurnUp.Isotopes)
             {
                 var density = initialDensities.FirstOrDefault(x => x.Isotope.ZAID == isotope.ZAID);
-                _initialDensities.Add(new NuclideDensity(isotope, density?.Density ?? 0));
+                _initialDensities.Add(new NuclideDensity(isotope, density?.Density ?? 0, density?.MaterialDensity ?? 0, density?.AtomicMass ?? 1));
             }
             _nuclidesCount = _initialDensities.Count;
         }
@@ -39,26 +39,12 @@ namespace NuclearCalculation
         public IEndf EndfLibrary { get; }
 
         /// <inheritdoc/>
-        public IEnumerable<INuclideDensity> Calculate(TimeSpan time)
+        public IEnumerable<INuclideDensity> Calculate(long time)
         {
             var matrix = BurnUp.Matrix;
-            var density = MatrixExp.Calculate((MatrixDouble)matrix * time.TotalSeconds, DensityToMatix(InitialDensities));
+            var density = MatrixExp.Calculate((MatrixDouble)matrix * time, DensityToMatix(InitialDensities));
             density.Normalize();
             return MatrixToDensity(density);
-        }
-
-        /// <inheritdoc/>
-        public double HeatDensity(IEnumerable<INuclideDensity> nuclideDensities)
-        {
-            double concen = Constants.NaturalLeadDensity * Constants.N_Avogadro / 208.0;
-            double heatDensity = 0.0;
-
-            foreach (INuclideDensity density in nuclideDensities)
-            {
-                var decayEnergy = density.Isotope.Decays.Select(x => x.Value.DecayEnergy * x.Value.DecayProb).Sum();
-                heatDensity += decayEnergy * concen * density.Density * Constants.q_electron * 1E6;
-            }
-            return heatDensity;
         }
 
         /// <inheritdoc/>
@@ -93,7 +79,7 @@ namespace NuclearCalculation
             var densityList = new List<INuclideDensity>();
             for (int i = 0; i < matrix.Col; i++)
             {
-                densityList.Add(new NuclideDensity(_initialDensities[i].Isotope, matrix.Array[i, 0]));
+                densityList.Add(new NuclideDensity(_initialDensities[i].Isotope, matrix.Array[i, 0], _initialDensities[i].MaterialDensity, _initialDensities[i].AtomicMass));
             }
             return densityList;
         }

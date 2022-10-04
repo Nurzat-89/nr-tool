@@ -7,6 +7,8 @@ namespace NuclearCalculation.Matrix
     /// </summary>
     public class PADE : IMatrixExp
     {
+        /// <inheritdoc/>
+        public event Action<int> CalculationStatusChangedEvent;
 
         /// <inheritdoc/>
         public IMatrix<double> Calculate(IMatrix<double> a, IMatrix<double> n)
@@ -29,6 +31,7 @@ namespace NuclearCalculation.Matrix
                     Console.WriteLine("");
                 }
                 _exp = _exp.Pow(2);
+                CalculationStatusChangedEvent?.Invoke((int)dx * (i + 1));
             }
             n = (MatrixDouble)_exp * n;
             return n;

@@ -29,6 +29,11 @@ namespace GUI.Views
         string PercentText { get; }
 
         /// <summary>
+        /// Статус текст
+        /// </summary>
+        string StatusText { get; set; }
+
+        /// <summary>
         /// Команда отмены 
         /// </summary>
         Command CancelCommand { get; }
@@ -39,6 +44,7 @@ namespace GUI.Views
         #region fields
 
         private double fPercent;
+        private string fStatusText;
         private Command fCancelCommand;
         private CancellationTokenSource fCancellationTokenSource;
         private CancellationToken fCancellationToken;
@@ -81,6 +87,12 @@ namespace GUI.Views
         {
 
         });
+
+        public string StatusText
+        {
+            get => fStatusText;
+            set => this.Set(ref fStatusText, value);
+        }
 
         #endregion
 

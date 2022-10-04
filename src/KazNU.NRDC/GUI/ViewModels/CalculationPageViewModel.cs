@@ -2,6 +2,7 @@
 using GUI.Views;
 using NuclearCalculation;
 using NuclearData;
+using StructureMap.Pipeline;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -19,12 +20,14 @@ namespace GUI.ViewModels
         private int _selectedTemperature;
         private string _selectedLowerElement;
         private string _selectedUpperElement;
+        private string _neutronFluxText;      
         private string _isotopeRange;
         private double _neutronFlux;
         private TimeScales _selectedTimeScale;
         private int _halfLifeLowerLimit;
         private TimeSpan _halfLifeLowerLimitTimeSpan;
         private double _percent;
+        private string _statusText;
         private string _errorMessage;
         private string _informationMessage;
         private bool _isIsotopeRange;
@@ -51,7 +54,7 @@ namespace GUI.ViewModels
             _selectedMacsLibrary = Constants.MACSDATALIBS.ENDF_B;
             TemperatureList = new List<int>() { 5, 10, 15, 20, 25, 30, 35, 40, 50, 60 };
             _selectedTemperature = 30;
-            _neutronFlux = 1.0E14;
+            NeutronFluxText = "1E16";
             _selectedTimeScale = ViewModels.TimeScales.Microsecond;
             _halfLifeLowerLimit = 0;
             _isIsotopeRange = true;
@@ -133,15 +136,20 @@ namespace GUI.ViewModels
                 {
                     _isotopes = _isotopes.Where(x => x.HalfLife >= _halfLifeLowerLimitTimeSpan.TotalSeconds);
                 }
-
+                NuclearData.NeutronSpectra.SetMacsCrossSection(_isotopes, _currentMacsEndf.GetMacsData(), _currentNeutronSpectra);
+                _burnUp = new BurnUp(_isotopes, _currentNeutronSpectra);
+                _burnUp.BurnupMatrixStatusChangedEvent += OnBurnupMatrixStatusChanged;
                 InformationMessage = string.Format("Success: {0} изотопов успешно загрузились из базы дааных '{1}'. Из них {2} стабильные", _isotopes.Count(), _selectedEndfLibrary, _isotopes.Count(x => x.Stable));
                 IsBuildInProgress = false;
                 IsBurnupReady = true;
                 OnPropertyChanged(nameof(Isotopes));
-                NuclearData.NeutronSpectra.SetMacsCrossSection(_isotopes, _currentMacsEndf.GetMacsData());
-                NuclearData.NeutronSpectra.SetCalculatedAvgCrossSection(_isotopes, _currentNeutronSpectra);
-                _burnUp = new BurnUp(_isotopes, _currentNeutronSpectra);
             });
+        }
+
+        private void OnBurnupMatrixStatusChanged(int progress)
+        {
+            Percent = progress;
+            StatusText = "Setting burnup matrix...";
         }
 
         private bool ValidateIsotopeRange() 
@@ -200,9 +208,10 @@ namespace GUI.ViewModels
             return true;
         }
         
-        private void OnEndfDataReaderChanged(int progress)
+        private void OnEndfDataReaderChanged(int progress, string text)
         {
             Percent = progress;
+            StatusText = text;
         }
 
         protected override Control CreateView() => new CalculationPageView();
@@ -216,6 +225,11 @@ namespace GUI.ViewModels
         /// Burn up
         /// </summary>
         public IBurnUp BurnUp => _burnUp;
+
+        /// <summary>
+        /// CurrentMacsEndf
+        /// </summary>
+        public IMacsEndf CurrentMacsEndf => _currentMacsEndf;
 
         /// <summary>
         /// Isotopes
@@ -257,6 +271,21 @@ namespace GUI.ViewModels
         {
             get => _selectedTemperature;
             set => Set(ref _selectedTemperature, value);
+        }
+
+        /// <summary>
+        /// SelectedTemperature
+        /// </summary>
+        public string NeutronFluxText
+        {
+            get => _neutronFluxText;
+            set
+            {
+                if (Set(ref _neutronFluxText, value))
+                {
+                    double.TryParse(value, out _neutronFlux);
+                }
+            }
         }
 
         /// <summary>
@@ -461,6 +490,12 @@ namespace GUI.ViewModels
         public Command CancelCommand => throw new NotImplementedException();
 
         public Command GoToNextCommand { get; }
+
+        public string StatusText
+        {
+            get => _statusText;
+            set => Set(ref _statusText, value);            
+        }
     }
 
     internal enum TimeScales

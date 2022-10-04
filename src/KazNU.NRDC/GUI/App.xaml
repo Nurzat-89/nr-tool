@@ -1,8 +1,7 @@
 ﻿<Application x:Class="GUI.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:GUI"
-    xmlns:theme="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero2">
+             xmlns:local="clr-namespace:GUI">
     <Application.Resources>
         <ResourceDictionary>
             <x:Static x:Key="AppContext" Member="local:AppContext.Instance" />

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Xml.Linq;
 using static NuclearData.Constants;
 
 namespace NuclearData
@@ -16,7 +17,7 @@ namespace NuclearData
         private INuclearDataReader<IDecayData> _decayDataReader;
         private IEnumerable<INuclearDataReader<ICrossSectionValue>> _reactionDataReaderList;
 
-        public event Action<int> DataReaderStatusEvent;
+        public event Action<int, string> DataReaderStatusEvent;
 
         /// <inheritdoc/>
         public BaseEndf(DATALIBS library, string libFolder, string extention)
@@ -73,7 +74,7 @@ namespace NuclearData
                 if (currentProgress != (int)progress)
                 {
                     currentProgress = (int)progress;
-                    DataReaderStatusEvent?.Invoke(currentProgress);
+                    DataReaderStatusEvent?.Invoke(currentProgress, $"{Library}: {element.Name}-{element.A}");
                 }
             }
             return isotopes;
@@ -100,11 +101,11 @@ namespace NuclearData
                     if (currentProgress != (int)progress)
                     {
                         currentProgress = (int)progress;
-                        DataReaderStatusEvent?.Invoke(currentProgress);
+                        DataReaderStatusEvent?.Invoke(currentProgress, $"{Library}: {element.Name}-{element.A}");
                     }
                 }
             }
-            DataReaderStatusEvent?.Invoke(100);
+            DataReaderStatusEvent?.Invoke(100, "Finished!");
             return isotopes;
         }
 
@@ -137,7 +138,7 @@ namespace NuclearData
                 if (currentProgress != (int)progress)
                 {
                     currentProgress = (int)progress;
-                    DataReaderStatusEvent?.Invoke(currentProgress);
+                    DataReaderStatusEvent?.Invoke(currentProgress, $"{Library}: {Constants.ElementNames[za.Item1]}-{za.Item2}");
                 }
             }
             return isotopes;

@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GUI"
         mc:Ignorable="d"
+        Background="#D4E1F4"
         Title="KazNRDC" Height="1000" Width="1500">
     <Grid>
         <Grid>
@@ -19,13 +20,14 @@
 
             <!--  Меню  -->
             <Grid Grid.Column="0"
-                    Background="{StaticResource ToggleButtonGrayNormalBrush}">
+                    Background="#D4E1F4">
                 <ContentControl VerticalAlignment="Top"
                                     Content="{Binding Menu}" />
             </Grid>
                 
             <!--  Контент страниц  -->
             <Grid Grid.Column="1"
+                  Background="AliceBlue"
                     Margin="0,-8,0,0">
                 <ContentControl Content="{Binding PageView}" />
                 <!--  для эффекта отключения заднего фона  -->

@@ -50,15 +50,24 @@ namespace NuclearData
         }
 
         /// <summary>
-        /// Set macs
+        /// Set macs and averaged cross section
         /// </summary>
-        public static void SetMacsCrossSection(IEnumerable<IIsotope> isotopes, IEnumerable<IMacs> macsCollection) 
+        public static void SetMacsCrossSection(IEnumerable<IIsotope> isotopes, IEnumerable<IMacs> macsCollection, INeutronSpectra spectra) 
         {
             foreach (var isotope in isotopes)
             {
                 var macs = macsCollection.FirstOrDefault(x => x.Element.ZAID == isotope.ZAID);
-                if (macs == null) continue;
-                isotope.AvgCs = macs.AvgCs;
+                if (macs == null)
+                {
+                    if (isotope.CrossSections.ContainsKey(Constants.REACT.N_G))
+                    {
+                        isotope.AvgCs = OneGroupCrossSection(spectra, isotope.GetCrossSection(Constants.REACT.N_G));
+                    }
+                }
+                else
+                {
+                    isotope.AvgCs = macs.AvgCs;
+                }
             }
         }
 
