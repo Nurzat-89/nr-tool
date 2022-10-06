@@ -38,7 +38,7 @@ namespace TestNuclearData
                 var initial = isoopes.FirstOrDefault(x => x.Z == 83 && x.A == 209);
                 IBurnUpProcess burnUpProcess = new BurnUpProcess(burnUp, matrixExp, new NuclideDensity(initial, 1.0, Constants.NaturalLeadDensity, 208));
                 burnUpProcess.SetAvgCrossSections(endfMacs);
-                var finalDensities = burnUpProcess.Calculate(TimeSpan.FromDays(1000).TotalSeconds);
+                var finalDensities = burnUpProcess.Calculate((long)TimeSpan.FromDays(1000).TotalSeconds);
                 var heat = finalDensities.Sum(x=>x.HeatDensityMeV) * 1.6E-19;
                 Console.WriteLine($"{flux}\t{heat}");
 
@@ -80,7 +80,7 @@ namespace TestNuclearData
                 Console.WriteLine();
             }
 
-            var finalDensities = burnUpProcess.Calculate(TimeSpan.FromDays(600000).TotalSeconds);
+            var finalDensities = burnUpProcess.Calculate((long)TimeSpan.FromDays(600000).TotalSeconds);
 
             foreach (var dens in finalDensities)
             {

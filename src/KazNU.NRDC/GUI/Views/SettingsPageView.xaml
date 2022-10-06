@@ -358,7 +358,7 @@
                             HorizontalContentAlignment="Left"
                             HorizontalAlignment="Right"
                             VerticalContentAlignment="Center"
-                            Text="{Binding InitialFluxText, Mode=TwoWay, Converter={StaticResource StringToDoubleConverter}}"
+                            Text="{Binding InitialFluxText, Mode=TwoWay}"
                             FontSize="12"/>
                         <Border
                             Grid.Column="0" 
@@ -533,7 +533,7 @@
                             HorizontalContentAlignment="Left"
                             HorizontalAlignment="Right"
                             VerticalContentAlignment="Center"
-                            Text="{Binding InitialFluxText, Mode=TwoWay, Converter={StaticResource StringToDoubleConverter}}"
+                            Text="{Binding InitialFluxText, Mode=TwoWay}"
                             FontSize="12"/>
                         <Border
                             Grid.Column="0" 
