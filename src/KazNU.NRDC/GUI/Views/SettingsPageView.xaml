@@ -33,7 +33,7 @@
         <TextBlock
             Margin="6,0,0,0"
             Style="{StaticResource HeaderTextBlockStyle}"
-            Text="Результаты рассчетов" />
+            Text="Results" />
         <Grid Height="10" />
         <TextBlock
             Grid.Row="1"
@@ -41,7 +41,7 @@
             FontSize="14"
             Margin="10 0 0 0"
             VerticalAlignment="Center"
-            Text="Задать начальную концентрацию" />
+            Text="Set initial concentration" />
         <DataGrid
             RowStyle="{StaticResource DensityStyleKey}"
             Grid.Row="2"
@@ -53,8 +53,8 @@
             HorizontalAlignment="Left"
             Margin="10">
             <DataGrid.Columns>
-                <DataGridTextColumn CanUserResize="False" IsReadOnly="True" Header="Изотоп" Width="100" Binding="{Binding NuclideName, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
-                <DataGridTextColumn CanUserResize="False" Header="Концентраця, %" Width="*" Binding="{Binding Density, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                <DataGridTextColumn CanUserResize="False" IsReadOnly="True" Header="Isotope" Width="100" Binding="{Binding NuclideName, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                <DataGridTextColumn CanUserResize="False" Header="Concentration, %" Width="*" Binding="{Binding Density, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
             </DataGrid.Columns>
         </DataGrid>
         <TextBlock
@@ -63,7 +63,7 @@
             FontSize="14"
             Margin="10 0 0 0"
             VerticalAlignment="Center"
-            Text="Задать начальное условие для рассчета" />
+            Text="Set the initial condition of the calculation" />
         <TabControl
             BorderThickness="0"
             Margin="10"
@@ -83,7 +83,7 @@
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="500"/>
+                            <ColumnDefinition Width="400"/>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="120"/>
                         </Grid.ColumnDefinitions>
@@ -91,7 +91,7 @@
                             FontSize="14"
                             Margin="27 0 0 0"
                             VerticalAlignment="Center"
-                            Text="Время облучения" />
+                            Text="Irradiation time" />
                         <TextBox 
                             Grid.Column="1" 
                             Grid.Row="0"
@@ -124,7 +124,7 @@
                             FontSize="14"
                             Margin="27 0 0 0"
                             VerticalAlignment="Center"
-                            Text="Метод экпонента матрицы" />
+                            Text="Matrix exponential method" />
                         <ComboBox
                             Grid.Column="2" 
                             Grid.Row="2"
@@ -172,26 +172,31 @@
                                 Header="Data table">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="400"/>
+                                        <ColumnDefinition Width="103"/>
+                                        <ColumnDefinition Width="19"/>
+                                        <ColumnDefinition Width="12"/>
+                                        <ColumnDefinition Width="4"/>
+                                        <ColumnDefinition Width="262"/>
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
                                     <DataGrid RowStyle="{DynamicResource DensityStyleKey}" 
-                                        Grid.Column="1"
+                                        Grid.Column="5"
                                         ItemsSource="{Binding Densities}"
                                         AutoGenerateColumns="False" 
-                                        Margin="5">
+                                        Margin="5,5,5,5">
                                         <DataGrid.Columns>
                                             <DataGridTextColumn CanUserResize="False" IsReadOnly="True" Header="Name" Width="120" Binding="{Binding NuclideName, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
                                             <DataGridTextColumn CanUserResize="False" IsReadOnly="True" Header="Density" Width="200" Binding="{Binding Density, Mode=OneWay, StringFormat={}{0}, UpdateSourceTrigger=PropertyChanged}" />
-                                            <DataGridTextColumn CanUserResize="False" IsReadOnly="True" Header="Плоность энергий, MeV/cm3,sec" Width="250" Binding="{Binding HeatDensityMeV, Mode=OneWay, StringFormat={}{0}, UpdateSourceTrigger=PropertyChanged}" />
+                                            <DataGridTextColumn CanUserResize="False" IsReadOnly="True" Header="Heat density, MeV/cm3,sec" Width="250" Binding="{Binding HeatDensityMeV, Mode=OneWay, StringFormat={}{0}, UpdateSourceTrigger=PropertyChanged}" />
                                         </DataGrid.Columns>
                                     </DataGrid>
                                     <Grid  
                                         Grid.Column="0" 
-                                        Margin="5"
-                                        Background="Green">
+                                        Margin="5,5,5,5"
+                                        Background="Green" Grid.ColumnSpan="5">
                                         <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="218"/>
+                                            <ColumnDefinition Width="25"/>
+                                            <ColumnDefinition Width="193"/>
                                             <ColumnDefinition Width="*"/>
                                         </Grid.ColumnDefinitions>
                                         <Grid.RowDefinitions>
@@ -204,23 +209,23 @@
                                             <RowDefinition Height="28"/>
                                             <RowDefinition Height="28"/>
                                         </Grid.RowDefinitions>
-                                        <TextBlock Grid.Row="0" Text="Библиотека ENDF: " FontSize="15" Foreground="White" FontWeight="Light" Margin="20 0 0 0"/>
-                                        <TextBlock Grid.Row="1" Text="Библиотека MACS: " FontSize="15" Foreground="White" FontWeight="Light" Margin="20 0 0 0"/>
-                                        <TextBlock Grid.Row="2" Text="Температура:" FontSize="15" Foreground="White" FontWeight="Light" Margin="20 0 0 0"/>
-                                        <TextBlock Grid.Row="3" Text="Число изотопов:" FontSize="15" Foreground="White" FontWeight="Light" Margin="20 0 0 0"/>
-                                        <TextBlock Grid.Row="4" Text="Поток нейтронов:" FontSize="15" Foreground="White" FontWeight="Light" Margin="20 0 0 0"/>
-                                        <TextBlock Grid.Row="5" Text="Время облучения:" FontSize="15" Foreground="White" FontWeight="Light" Margin="20 0 0 0"/>
-                                        <TextBlock Grid.Row="6" Text="Метод экспаненты облучения:" FontSize="15" Foreground="White" FontWeight="Light" Margin="20 0 0 0"/>
-                                        <TextBlock Grid.Row="7" Text="Плотность энергии:" FontSize="15" Foreground="White" FontWeight="Light" Margin="20 0 0 0"/>
+                                        <TextBlock Grid.Row="0" Text="Nuclear data file: " FontSize="15" Foreground="White" FontWeight="Light" Margin="20,0,0,0" Grid.ColumnSpan="2"/>
+                                        <TextBlock Grid.Row="1" Text="MACS data file: " FontSize="15" Foreground="White" FontWeight="Light" Margin="20,0,0,0" Grid.ColumnSpan="2"/>
+                                        <TextBlock Grid.Row="2" Text="Temperature:" FontSize="15" Foreground="White" FontWeight="Light" Margin="20,0,0,0" Grid.ColumnSpan="2"/>
+                                        <TextBlock Grid.Row="3" Text="Isotopes number:" FontSize="15" Foreground="White" FontWeight="Light" Margin="20,0,0,0" Grid.ColumnSpan="2"/>
+                                        <TextBlock Grid.Row="4" Text="Neutron flux:" FontSize="15" Foreground="White" FontWeight="Light" Margin="20,0,0,0" Grid.ColumnSpan="2"/>
+                                        <TextBlock Grid.Row="5" Text="Irradiation time:" FontSize="15" Foreground="White" FontWeight="Light" Margin="20,0,0,0" Grid.ColumnSpan="2"/>
+                                        <TextBlock Grid.Row="6" Text="Method:" FontSize="15" Foreground="White" FontWeight="Light" Margin="20,0,0,0" Grid.ColumnSpan="2"/>
+                                        <TextBlock Grid.Row="7" Text="Heat density:" FontSize="15" Foreground="White" FontWeight="Light" Margin="20,0,0,0" Grid.ColumnSpan="2"/>
 
-                                        <TextBlock Grid.Row="0" Grid.Column="1" Visibility="{Binding IsCalculated, Converter={StaticResource BooleanToVisibleHiddenConverter}}" Text="{Binding SelectedEndfLibrary}" FontSize="16" Foreground="Yellow" Margin="2 0 0 0"/>
-                                        <TextBlock Grid.Row="1" Grid.Column="1" Visibility="{Binding IsCalculated, Converter={StaticResource BooleanToVisibleHiddenConverter}}" Text="{Binding SelectedMacsLibrary}" FontSize="16" Foreground="Yellow" Margin="2 0 0 0"/>
-                                        <TextBlock Grid.Row="2" Grid.Column="1" Visibility="{Binding IsCalculated, Converter={StaticResource BooleanToVisibleHiddenConverter}}" Text="{Binding Temperature, StringFormat={}{0:#} keV}" FontSize="16" Foreground="Yellow" Margin="2 0 0 0"/>
-                                        <TextBlock Grid.Row="3" Grid.Column="1" Visibility="{Binding IsCalculated, Converter={StaticResource BooleanToVisibleHiddenConverter}}" Text="{Binding IsotopeCount}" FontSize="16" Foreground="Yellow" Margin="2 0 0 0"/>
-                                        <TextBlock Grid.Row="4" Grid.Column="1" Visibility="{Binding IsCalculated, Converter={StaticResource BooleanToVisibleHiddenConverter}}" Text="{Binding NeutronFlux, StringFormat={}{0:#} 1/cm2/sec}" FontSize="16" Foreground="Yellow" Margin="2 0 0 0"/>
-                                        <TextBlock Grid.Row="5" Grid.Column="1" Visibility="{Binding IsCalculated, Converter={StaticResource BooleanToVisibleHiddenConverter}}" Text="{Binding IrradiationTime}" FontSize="16" Foreground="Yellow" Margin="2 0 0 0"/>
-                                        <TextBlock Grid.Row="6" Grid.Column="1" Visibility="{Binding IsCalculated, Converter={StaticResource BooleanToVisibleHiddenConverter}}" Text="{Binding SelectedMatrixExp}" FontSize="16" Foreground="Yellow" Margin="2 0 0 0"/>
-                                        <TextBlock Grid.Row="7" Grid.Column="1" Visibility="{Binding IsCalculated, Converter={StaticResource BooleanToVisibleHiddenConverter}}" Text="{Binding HeatDensity, StringFormat={}{0:#.00} MeV/cm3/sec}" FontSize="16" Foreground="Yellow" Margin="2 0 0 0"/>
+                                        <TextBlock Grid.Row="0" Grid.Column="2" Visibility="{Binding IsCalculated, Converter={StaticResource BooleanToVisibleHiddenConverter}}" Text="{Binding SelectedEndfLibrary}" FontSize="16" Foreground="Yellow" Margin="2,0,0,0"/>
+                                        <TextBlock Grid.Row="1" Grid.Column="2" Visibility="{Binding IsCalculated, Converter={StaticResource BooleanToVisibleHiddenConverter}}" Text="{Binding SelectedMacsLibrary}" FontSize="16" Foreground="Yellow" Margin="2,0,0,0"/>
+                                        <TextBlock Grid.Row="2" Grid.Column="2" Visibility="{Binding IsCalculated, Converter={StaticResource BooleanToVisibleHiddenConverter}}" Text="{Binding Temperature, StringFormat={}{0:#} keV}" FontSize="16" Foreground="Yellow" Margin="2,0,0,0"/>
+                                        <TextBlock Grid.Row="3" Grid.Column="2" Visibility="{Binding IsCalculated, Converter={StaticResource BooleanToVisibleHiddenConverter}}" Text="{Binding IsotopeCount}" FontSize="16" Foreground="Yellow" Margin="2,0,0,0"/>
+                                        <TextBlock Grid.Row="4" Grid.Column="2" Visibility="{Binding IsCalculated, Converter={StaticResource BooleanToVisibleHiddenConverter}}" Text="{Binding NeutronFlux, StringFormat={}{0:#} 1/cm2/sec}" FontSize="16" Foreground="Yellow" Margin="2,0,0,0"/>
+                                        <TextBlock Grid.Row="5" Grid.Column="2" Visibility="{Binding IsCalculated, Converter={StaticResource BooleanToVisibleHiddenConverter}}" Text="{Binding IrradiationTime}" FontSize="16" Foreground="Yellow" Margin="2,0,0,0"/>
+                                        <TextBlock Grid.Row="6" Grid.Column="2" Visibility="{Binding IsCalculated, Converter={StaticResource BooleanToVisibleHiddenConverter}}" Text="{Binding SelectedMatrixExp}" FontSize="16" Foreground="Yellow" Margin="2,0,0,0"/>
+                                        <TextBlock Grid.Row="7" Grid.Column="2" Visibility="{Binding IsCalculated, Converter={StaticResource BooleanToVisibleHiddenConverter}}" Text="{Binding HeatDensity, StringFormat={}{0:#.00} MeV/cm3/sec}" FontSize="16" Foreground="Yellow" Margin="2,0,0,0"/>
                                     </Grid>
                                 </Grid>
                             </TabItem>
@@ -232,7 +237,7 @@
                                         <RowDefinition Height="60"/>
                                         <RowDefinition Height="*"/>
                                     </Grid.RowDefinitions>
-                                    <CheckBox Margin="10" IsChecked="{Binding IsBarChartSelected, Mode=TwoWay}" Content="Гистаграмма" FontSize="16" Foreground="Gray" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
+                                    <CheckBox Margin="10" IsChecked="{Binding IsBarChartSelected, Mode=TwoWay}" Content="Histogram" FontSize="16" Foreground="Gray" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
                                     <lvc:CartesianChart 
                                         Visibility="{Binding IsBarChartSelected, Converter={StaticResource BooleanToVisibleCollapsedConverter}}"
                                         Grid.Row="1"                                         
@@ -251,7 +256,7 @@
                                         Series="{Binding LineCollection}" 
                                         LegendLocation="Left">
                                         <lvc:CartesianChart.AxisX>
-                                            <lvc:Axis Title="Изотопы" Labels="{Binding Labels}"/>
+                                            <lvc:Axis Title="Isotopes" Labels="{Binding Labels}"/>
                                         </lvc:CartesianChart.AxisX>
                                         <lvc:CartesianChart.AxisY>
                                             <lvc:Axis Title="" LabelFormatter="{Binding Formatter}"/>
@@ -260,7 +265,7 @@
                                 </Grid>
                             </TabItem>
                         </TabControl>
-                        
+
                     </Grid>
                 </Grid>
             </TabItem>
@@ -290,7 +295,7 @@
                             FontSize="14"
                             Margin="27 0 0 0"
                             VerticalAlignment="Center"
-                            Text="Время облучения" />
+                            Text="Irradiation time" />
                         <TextBox 
                             Grid.Column="1" 
                             Grid.Row="0"
@@ -318,14 +323,14 @@
                             Grid.ColumnSpan="3"
                             BorderBrush="#99999999"
                             BorderThickness="1" />
-                        
+
                         <!--Метод экпонента матрицы-->
                         <TextBlock 
                             Grid.Row="2"
                             FontSize="14"
                             Margin="27 0 0 0"
                             VerticalAlignment="Center"
-                            Text="Метод экпонента матрицы" />
+                            Text="Method" />
                         <ComboBox
                             Grid.Column="2" 
                             Grid.Row="2"
@@ -348,7 +353,7 @@
                             Grid.Row="4"
                             Margin="27 0 0 0"
                             VerticalAlignment="Center"
-                            Text="Стартовый поток" />
+                            Text="Starting flux" />
                         <TextBox 
                             Grid.Column="1" 
                             Grid.Row="4"
@@ -372,7 +377,7 @@
                             Grid.Row="6"
                             Margin="27 0 0 0"
                             VerticalAlignment="Center"
-                            Text="Число итераций для потока" />
+                            Text="Number of iterations of the flux" />
                         <TextBox 
                             Grid.Column="1" 
                             Grid.Row="6"
@@ -425,15 +430,15 @@
                                     AutoGenerateColumns="False" 
                                     Margin="5">
                                     <DataGrid.Columns>
-                                        <DataGridTextColumn CanUserResize="False" IsReadOnly="True" Header="Поток" Width="120" Binding="{Binding Flux, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
-                                        <DataGridTextColumn CanUserResize="False" IsReadOnly="True" Header="Плотность энергий, MeV/cm3,sec" Width="250" Binding="{Binding HeatDensity, Mode=OneWay, StringFormat={}{0}, UpdateSourceTrigger=PropertyChanged}" />
+                                        <DataGridTextColumn CanUserResize="False" IsReadOnly="True" Header="flux" Width="120" Binding="{Binding Flux, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                                        <DataGridTextColumn CanUserResize="False" IsReadOnly="True" Header="Heat density, MeV/cm3,sec" Width="250" Binding="{Binding HeatDensity, Mode=OneWay, StringFormat={}{0}, UpdateSourceTrigger=PropertyChanged}" />
                                     </DataGrid.Columns>
                                 </DataGrid>
                             </TabItem>
                             <TabItem
                                 FontSize="15" BorderThickness="0" Margin="0" Padding="0"
                                 Header="Graph">
-                                
+
                             </TabItem>
                         </TabControl>
                     </Grid>
@@ -456,33 +461,34 @@
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="500"/>
+                            <ColumnDefinition Width="23"/>
+                            <ColumnDefinition Width="477"/>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="120"/>
                         </Grid.ColumnDefinitions>
                         <!--Максимальное время облучения-->
                         <TextBlock 
                             FontSize="14"
-                            Margin="27 0 0 0"
+                            Margin="4,0,0,0"
                             VerticalAlignment="Center"
-                            Text="Максимальное время облучения" />
+                            Text="Maximum irradiation time" Grid.Column="1" />
                         <TextBox 
-                            Grid.Column="1" 
+                            Grid.Column="2" 
                             Grid.Row="0"
                             IsEnabled="{Binding IsCalculationReady}"
-                            Margin="5 7"
+                            Margin="111,7,0,7"
                             Width="120"
                             HorizontalContentAlignment="Left"
-                            HorizontalAlignment="Right"
+                            HorizontalAlignment="Left"
                             VerticalContentAlignment="Center"
                             Text="{Binding TimeCalculation, Mode=TwoWay, Converter={StaticResource StringToDoubleConverter}}"
                             FontSize="12"/>
                         <ComboBox
-                            Grid.Column="2" 
+                            Grid.Column="3" 
                             Grid.Row="0"
-                            HorizontalAlignment="Right"
+                            HorizontalAlignment="Left"
                             IsEnabled="{Binding IsCalculationReady}"
-                            Margin="2 7 8 7"
+                            Margin="12,7,0,7"
                             Width="100"
                             MaxDropDownHeight="200"
                             ItemsSource="{Binding TimeScales}"
@@ -490,70 +496,70 @@
                         <Border
                             Grid.Column="0" 
                             Grid.Row="1"
-                            Grid.ColumnSpan="3"
+                            Grid.ColumnSpan="4"
                             BorderBrush="#99999999"
                             BorderThickness="1" />
                         <!--Число итераций времени-->
                         <TextBlock 
                             FontSize="14"
                             Grid.Row="2"
-                            Margin="27 0 0 0"
+                            Margin="4,0,0,0"
                             VerticalAlignment="Center"
-                            Text="Число итераций времени" />
+                            Text="Number of time iterations" Grid.Column="1" />
                         <TextBox 
-                            Grid.Column="1" 
+                            Grid.Column="2" 
                             Grid.Row="2"
                             IsEnabled="{Binding IsCalculationReady}"
-                            Margin="5 7"
+                            Margin="111,7,0,7"
                             Width="120"
                             HorizontalContentAlignment="Left"
-                            HorizontalAlignment="Right"
+                            HorizontalAlignment="Left"
                             VerticalContentAlignment="Center"
                             Text="{Binding TimeMeshCount, Mode=TwoWay, Converter={StaticResource StringToDoubleConverter}}"
                             FontSize="12"/>
                         <Border
                             Grid.Column="0" 
                             Grid.Row="3"
-                            Grid.ColumnSpan="3"
+                            Grid.ColumnSpan="4"
                             BorderBrush="#99999999"
                             BorderThickness="1" />
                         <!--Стартовый поток-->
                         <TextBlock 
                             FontSize="14"
                             Grid.Row="4"
-                            Margin="27 0 0 0"
+                            Margin="4,0,0,0"
                             VerticalAlignment="Center"
-                            Text="Поток нейтонов" />
+                            Text="Neutron flux" Grid.Column="1" />
                         <TextBox 
-                            Grid.Column="1" 
+                            Grid.Column="2" 
                             Grid.Row="4"
                             IsEnabled="{Binding IsCalculationReady}"
-                            Margin="5 7"
+                            Margin="111,7,0,7"
                             Width="120"
                             HorizontalContentAlignment="Left"
-                            HorizontalAlignment="Right"
+                            HorizontalAlignment="Left"
                             VerticalContentAlignment="Center"
                             Text="{Binding InitialFluxText, Mode=TwoWay}"
                             FontSize="12"/>
                         <Border
                             Grid.Column="0" 
                             Grid.Row="5"
-                            Grid.ColumnSpan="3"
+                            Grid.ColumnSpan="4"
                             BorderBrush="#99999999"
                             BorderThickness="1" />
                         <!--Метод экпонента матрицы-->
                         <TextBlock 
                             Grid.Row="6"
                             FontSize="14"
-                            Margin="27 0 0 0"
+                            Margin="4,0,0,0"
                             VerticalAlignment="Center"
-                            Text="Метод экпонента матрицы" />
+                            Text="Method" Grid.Column="1" />
                         <ComboBox
-                            Grid.Column="2" 
+                            Grid.Column="3" 
                             Grid.Row="6"
-                            HorizontalAlignment="Right"
+                            HorizontalAlignment="Left"
                             IsEnabled="{Binding IsCalculationReady}"
-                            Margin="2 7 8 7"
+                            Margin="12,7,0,7"
                             Width="100"
                             MaxDropDownHeight="200"
                             ItemsSource="{Binding MatrixExpList}"
@@ -561,36 +567,36 @@
                         <Border
                             Grid.Column="0" 
                             Grid.Row="7"
-                            Grid.ColumnSpan="3"
+                            Grid.ColumnSpan="4"
                             BorderBrush="#99999999"
                             BorderThickness="1" />
                         <!--ProcessProgressView-->
                         <local:ProcessProgressView 
-                            Grid.Column="0" 
+                            Grid.Column="1" 
                             Grid.ColumnSpan="2"
                             Grid.Row="8"
                             Visibility="{Binding IsCalculationReady, Converter={StaticResource InverseBooleanToVisibleCollapsedConverter}}"
-                            Margin="30 6 30 2" />
+                            Margin="7,6,30,2" />
                         <Button 
-                            Grid.Column="2" 
+                            Grid.Column="3" 
                             Grid.Row="8"
                             Content="Calculate"
                             FontSize="12"
                             IsEnabled="{Binding IsCalculationReady}"
-                            Margin="5 5 8 5"
+                            Margin="0,5,0,5"
                             Command="{Binding TimeMeshCalculateCommand}"
-                            HorizontalAlignment="Right"
+                            HorizontalAlignment="Center"
                             FontWeight="ExtraLight"/>
                         <Border
                             Grid.Column="0" 
                             Grid.Row="9"
-                            Grid.ColumnSpan="3"
+                            Grid.ColumnSpan="4"
                             BorderBrush="#99999999"
                             BorderThickness="1" />
                         <TabControl
                             Grid.Row="10"
                             Grid.Column="0"
-                            Grid.ColumnSpan="3">
+                            Grid.ColumnSpan="4">
                             <TabItem
                                 FontSize="15" BorderThickness="0" Margin="0" Padding="0"
                                 Header="Graph">
