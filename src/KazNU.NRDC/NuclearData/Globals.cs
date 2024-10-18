@@ -20,6 +20,7 @@ namespace NuclearData
                { FILETYP.DECAY, "dec-" },
                { FILETYP.NEUTRON, "n-" },
                { FILETYP.FISSION, "nfy-" },
+
         };
     }
 }
