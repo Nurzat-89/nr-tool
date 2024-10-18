@@ -139,7 +139,7 @@ namespace GUI.ViewModels
                 NuclearData.NeutronSpectra.SetMacsCrossSection(_isotopes, _currentMacsEndf.GetMacsData(), _currentNeutronSpectra);
                 _burnUp = new BurnUp(_isotopes, _currentNeutronSpectra);
                 _burnUp.BurnupMatrixStatusChangedEvent += OnBurnupMatrixStatusChanged;
-                InformationMessage = string.Format("Success: {0} изотопов успешно загрузились из базы дааных '{1}'. Из них {2} стабильные", _isotopes.Count(), _selectedEndfLibrary, _isotopes.Count(x => x.Stable));
+                InformationMessage = string.Format("Success: {0} isotopes were successfully loaded from the database '{1}'. {2} of them are stable", _isotopes.Count(), _selectedEndfLibrary, _isotopes.Count(x => x.Stable));
                 IsBuildInProgress = false;
                 IsBurnupReady = true;
                 OnPropertyChanged(nameof(Isotopes));

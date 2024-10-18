@@ -64,7 +64,7 @@
         <TextBlock
             Margin="6,0,0,0"
             Style="{StaticResource HeaderTextBlockStyle}"
-            Text="Начальные условия для рассчета" />
+            Text="Initial conditions" />
         <Grid Grid.Row="2" Margin="10 0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
@@ -97,7 +97,7 @@
             <TextBlock 
                 FontSize="14"
                 VerticalAlignment="Center"
-                Text="Поток нейтронов" />
+                Text="Neutron flux" />
             <TextBox 
                 Grid.Column="1" 
                 Grid.Row="0"
@@ -127,7 +127,7 @@
                 Grid.Row="2"
                 FontSize="14"
                 VerticalAlignment="Center"
-                Text="Дата файл ядерных данных" />
+                Text="Nuclear data file" />
             <ComboBox
                 Grid.Column="1" 
                 Grid.Row="2"
@@ -155,7 +155,7 @@
                 Grid.Row="4"
                 FontSize="14"
                 VerticalAlignment="Center"
-                Text="Дата файл усредненного сечения по Максвеллу (MACS)" />
+                Text="Maxwellian-averaged cross sections (MACS) data file" />
             <ComboBox
                 Grid.Column="1" 
                 Grid.Row="4"
@@ -183,7 +183,7 @@
                 Grid.Row="6"
                 FontSize="14"
                 VerticalAlignment="Center"
-                Text="Температура нейтронов (или среднее температура звезды)" />
+                Text="Neutron temperature (or average temperature of the star)" />
             <ComboBox
                 Grid.Column="1" 
                 Grid.Row="6"
@@ -211,7 +211,7 @@
                 Grid.Row="8"
                 FontSize="14"
                 VerticalAlignment="Center"
-                Text="Выбрать изотопов которые будут участвовать в реакции" />
+                Text="Select isotopes to participate in the reaction" />
             <StackPanel 
                 Orientation="Horizontal" 
                 Grid.Column="1"
@@ -228,7 +228,7 @@
                     Margin="5"
                     FontSize="14"
                     VerticalAlignment="Center"
-                    Text="Диапазон" />
+                    Text="Range" />
                 <RadioButton  
                     x:Name="fIndivid"
                     Grid.Column="0" 
@@ -239,7 +239,7 @@
                     Margin="5"
                     FontSize="14"
                     VerticalAlignment="Center"
-                    Text="Индивидуально" />
+                    Text="Individually" />
             </StackPanel>
             <Border
                 Grid.Column="0" 
@@ -259,7 +259,7 @@
                     Grid.Row="8"
                     FontSize="14"
                     VerticalAlignment="Center"
-                    Text="Выбрать диапазон изотопов" />
+                    Text="Select isotope range" />
                 <ComboBox
                     Margin="16 7 2 7"
                     Width="60"
@@ -296,7 +296,7 @@
                     Grid.Row="0"
                     FontSize="14"
                     VerticalAlignment="Center"
-                    Text="Выбрать изотопы индивидуально" />
+                    Text="Select isotopes individually" />
                 <TextBox 
                     Grid.Column="1" 
                     Grid.Row="0"
@@ -320,7 +320,7 @@
                 Grid.Row="12"
                 FontSize="14"
                 VerticalAlignment="Center"
-                Text="Исключить изотопы периоды полураспадов которые ниже" />
+                Text="Exclude isotopes with half-lives that are lower than" />
             <TextBox 
                 Grid.Column="1" 
                 Grid.Row="12"

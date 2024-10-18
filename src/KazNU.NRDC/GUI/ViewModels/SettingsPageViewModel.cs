@@ -64,7 +64,7 @@ namespace GUI.ViewModels
             {
                 new ColumnSeries
                 {
-                    Title = "Концентрациия",
+                    Title = "Concentration",
                     Values = new ChartValues<double>()
                 }
             };
@@ -72,7 +72,7 @@ namespace GUI.ViewModels
             {
                 new LineSeries
                 {
-                    Title = "Концентрациия",
+                    Title = "Concentration",
                     Values = new ChartValues<double>()
                 }
             };
