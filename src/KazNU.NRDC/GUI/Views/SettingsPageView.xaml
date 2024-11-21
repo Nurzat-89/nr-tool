@@ -269,7 +269,7 @@
                     </Grid>
                 </Grid>
             </TabItem>
-            <TabItem Visibility="Collapsed" FontSize="15" BorderThickness="0" Margin="0" Padding="0" Header="Dynamic">
+            <TabItem IsEnabled="False" FontSize="15" BorderThickness="0" Margin="0" Padding="0" Header="Dynamic">
                 <Grid Margin="3 0" Background="#00A3FF">
                     <Grid  Margin="2" Background="AliceBlue">
                         <Grid.RowDefinitions>
