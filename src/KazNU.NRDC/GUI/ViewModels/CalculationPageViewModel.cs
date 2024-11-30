@@ -6,6 +6,7 @@ using StructureMap.Pipeline;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection.Emit;
 using System.Threading.Tasks;
@@ -43,14 +44,14 @@ namespace GUI.ViewModels
 
         public CalculationPageViewModel()
         {
-            EndfLibraryList = Enum.GetValues(typeof(Constants.DATALIBS)).Cast<Constants.DATALIBS>();
+            InitDataLibraries();
             MacsLibraryList = Enum.GetValues(typeof(Constants.MACSDATALIBS)).Cast<Constants.MACSDATALIBS>();
             TimeScales = Enum.GetValues(typeof(TimeScales)).Cast<TimeScales>();
             ElementList = Constants.ElementNames;
             _selectedLowerElement = "Pb";
             _selectedUpperElement = "Po";
 
-            _selectedEndfLibrary = Constants.DATALIBS.ENDFB_VIII;
+            _selectedEndfLibrary = EndfLibraryList.FirstOrDefault();
             _selectedMacsLibrary = Constants.MACSDATALIBS.ENDF_B;
             TemperatureList = new List<int>() { 5, 10, 15, 20, 25, 30, 35, 40, 50, 60 };
             _selectedTemperature = 30;
@@ -62,6 +63,33 @@ namespace GUI.ViewModels
 
             BuildCommand = new Command(OnBuild);
             GoToNextCommand = new Command(OnGoToNext);
+        }
+
+        private void InitDataLibraries()
+        {
+            List<Constants.DATALIBS> endfLibraryList = new List<Constants.DATALIBS>();
+            var localAppdatafolder = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+            var dataFolder = $"{localAppdatafolder}\\KazNRDC\\xsdir";
+            foreach (var folder in Directory.GetDirectories(dataFolder))
+            {
+                string folderName = (new DirectoryInfo(folder)).Name;
+                switch (folderName)
+                {
+                    case "ENDFB-VIII":
+                        endfLibraryList.Add(Constants.DATALIBS.ENDFB_VIII);
+                        break;
+                    case "JENDL":
+                        endfLibraryList.Add(Constants.DATALIBS.JENDL);
+                        break;
+                    case "TENDL":
+                        endfLibraryList.Add(Constants.DATALIBS.TENDL);
+                        break;
+                    case "JEFF":
+                        endfLibraryList.Add(Constants.DATALIBS.JEFF);
+                        break;
+                }
+            }
+            EndfLibraryList = endfLibraryList;
         }
 
         private void OnGoToNext() 
