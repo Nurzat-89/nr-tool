@@ -15,9 +15,11 @@ This application is designed to calculate the nuclear number density of isotopes
    * **ENDF (Evaluated Nuclear Data Files) datasets.** You can obtain these from [IAEA ENDF Database](https://www-nds.iaea.org/exfor/endf.htm).
 
 # Installation
-* **Download the Tool.** Download the latest version of the tool:
+* **Download the Data Library.** First download and install Evaluated Nuclear Data File (ENDF) installer:
+  * [ENDFB-VIII]()
+* **Download the Tool.** Download the latest version of the KazNRDC tool:
+  *  [1.0.6] (https://drive.google.com/file/d/1uJD0mueM_WGa90zDZfMG45u1vXzJgVTi/view?usp=sharing)
   *  [1.0.5](https://drive.google.com/file/d/1Z0W1F7b07-5T1ufLCoOc3Wirwj1-ez4u/view?usp=sharing)
-  *  [1.0.3](https://drive.google.com/file/d/11wECOpWDE0SssbjpWPpxJvA0E_C5z5Z2/view?usp=sharing)
 * **Default Data Library.** The application currently includes only one default data library: ENDFB-VIII. The associated data files are located in:
   > ```%LocalAppData%/KazNRDC/xsdir```
 * **Additional Data Libraries.**
