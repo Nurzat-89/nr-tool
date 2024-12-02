@@ -10,6 +10,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection.Emit;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace GUI.ViewModels
@@ -70,6 +71,13 @@ namespace GUI.ViewModels
             List<Constants.DATALIBS> endfLibraryList = new List<Constants.DATALIBS>();
             var localAppdatafolder = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
             var dataFolder = $"{localAppdatafolder}\\KazNRDC\\xsdir";
+
+            if (!Directory.Exists(dataFolder))
+            {
+                MessageBox.Show("Nuclear data library does not exist. Install nr-tool-data first", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                Application.Current.Shutdown();
+            }
+
             foreach (var folder in Directory.GetDirectories(dataFolder))
             {
                 string folderName = (new DirectoryInfo(folder)).Name;
@@ -89,6 +97,12 @@ namespace GUI.ViewModels
                         break;
                 }
             }
+            if (!endfLibraryList.Any())
+            {
+                MessageBox.Show("Nuclear data library does not exist. Install nr-tool-data first", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                Application.Current.Shutdown();
+            }
+
             EndfLibraryList = endfLibraryList;
         }
 
