@@ -49,7 +49,7 @@ namespace GUI.ViewModels
             MacsLibraryList = Enum.GetValues(typeof(Constants.MACSDATALIBS)).Cast<Constants.MACSDATALIBS>();
             TimeScales = Enum.GetValues(typeof(TimeScales)).Cast<TimeScales>();
             ElementList = Constants.ElementNames;
-            _selectedLowerElement = "Pb";
+            _selectedLowerElement = "Fe";
             _selectedUpperElement = "Po";
 
             _selectedEndfLibrary = EndfLibraryList.FirstOrDefault();

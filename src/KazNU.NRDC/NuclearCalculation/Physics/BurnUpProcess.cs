@@ -39,7 +39,7 @@ namespace NuclearCalculation
         public IEndf EndfLibrary { get; }
 
         /// <inheritdoc/>
-        public IEnumerable<INuclideDensity> Calculate(long time)
+        public IEnumerable<INuclideDensity> Calculate(double time)
         {
             var matrix = BurnUp.Matrix;
             var density = MatrixExp.Calculate((MatrixDouble)matrix * time, DensityToMatix(InitialDensities));

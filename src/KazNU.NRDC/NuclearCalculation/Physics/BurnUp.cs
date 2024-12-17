@@ -3,6 +3,7 @@ using NuclearData;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Xml.Linq;
 
 namespace NuclearCalculation
 {
@@ -66,15 +67,11 @@ namespace NuclearCalculation
                     Matrix.Array[i, iEcup] += _isotopes[iEcup].DecayConst * prob;
                 }
 
-                if (iCapt != -1 && _isotopes[iCapt].CrossSections.TryGetValue(Constants.REACT.N_G, out ICrossSectionData csData))
+                if (iCapt != -1)
                 {
-                    Matrix.Array[i, iCapt] += NeutronSpectra.Flux * csData.AvgCs * Constants.barn;
+                    Matrix.Array[i, iCapt] += NeutronSpectra.Flux * _isotopes[iCapt].AvgCs * Constants.barn;
                 }
-
-                if(_isotopes[i].CrossSections.TryGetValue(Constants.REACT.N_G, out ICrossSectionData ngCs))
-                {
-                    Matrix.Array[i, i] += -NeutronSpectra.Flux * ngCs.AvgCs * Constants.barn;
-                }
+                Matrix.Array[i, i] += -NeutronSpectra.Flux * _isotopes[i].AvgCs * Constants.barn;
 
                 if (!_isotopes[i].Stable)
                 {

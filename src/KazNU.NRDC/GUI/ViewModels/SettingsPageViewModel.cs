@@ -18,6 +18,8 @@ using LiveCharts.Wpf;
 using LiveCharts.Configurations;
 using System.Security.AccessControl;
 using System.Reflection.Emit;
+using Microsoft.Win32;
+using System.IO;
 
 namespace GUI.ViewModels
 {
@@ -30,8 +32,8 @@ namespace GUI.ViewModels
         private bool _isCalculated;
         private TimeScales _selectedTimeScale;
         private TimeSpan _calculationTimeSpan;
-        private int _timeCalculation;
-        private long _totalCalculationSec;
+        private double _timeCalculation;
+        private double _totalCalculationSec;
         private double _percent;
         private string _statusText;
         private MatrixExpType _selectedMatrixExp;
@@ -92,6 +94,8 @@ namespace GUI.ViewModels
             FluxIterations = 10;
 
             GoToBackCommand = new Command(OnGoToBack);
+            ExportRawDataCommand = new Command(OnExportRawData);
+            ExportGroupdDataCommand = new Command(OnExportRawDataLight);
             CalculateCommand = new Command(OnCalculate);
             FluxCalculateCommand = new Command(OnFluxCalculate);
             TimeMeshCalculateCommand = new Command(OnTimeMeshCalculate);
@@ -154,7 +158,7 @@ namespace GUI.ViewModels
                 {
                     dens.CalculateHeat(Constants.NaturalLeadDensity, 208);
                 }
-                _timeMeshDensities.Add(new TimeDensties(meshTime * (i + 1), fdensities));
+                //_timeMeshDensities.Add(new TimeDensties(meshTime * (i + 1), fdensities));
             }
             Application.Current.Dispatcher.Invoke(() => TimeMeshLineCollection.Clear());
             List<IGrouping<int, INuclideDensity>> dens1 = _timeMeshDensities
@@ -198,6 +202,7 @@ namespace GUI.ViewModels
                 names.Add(density.NuclideName);
             }
             Labels = names.ToArray();
+            OnPropertyChanged(nameof(SeriesCollection));
         }
 
         private void OnFluxCalculate()
@@ -314,7 +319,7 @@ namespace GUI.ViewModels
                 FillBarchart(fdensities);
                 Application.Current.Dispatcher.Invoke(() => 
                 {
-                    Densities = new ObservableCollection<INuclideDensity>(fdensities);
+                    Densities = new ObservableCollection<INuclideDensity>(fdensities.Where(x => x.Density > 0));
                     HeatDensity = fdensities.Sum(x => x.HeatDensityMeV);
                     
                     OnPropertyChanged(nameof(HeatDensity));
@@ -410,6 +415,44 @@ namespace GUI.ViewModels
             AppContext.Instance.GetInstance<PageNavigation>().ShowCalculationPage();
         }
 
+        private void OnExportRawData()
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.FileName = $"KazNRDC-raw-data-result-{DateTime.Now:yyyy-MM-dd-hh-mm-ss}.txt";
+            if (saveFileDialog.ShowDialog() == true)
+            {
+                using StreamWriter outputFile = new StreamWriter(saveFileDialog.FileName, true);
+                outputFile.WriteLine($"Name\tZAID\tAtomicMass\t(n,g) CS\tDensity\t(N x CS)");
+                foreach (var density in Densities.Where(x => x.Density > 0))
+                {
+                    outputFile.WriteLine($"{density.NuclideName}\t{density.Isotope.ZAID}\t{density.Isotope.AtomicMass}\t{density.Isotope.AvgCs}\t{density.Density}\t{density.Density * density.Isotope.AvgCs}");
+                }
+            }
+        }
+
+        private void OnExportRawDataLight()
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.FileName = $"KazNRDC-raw-data-result-light-{DateTime.Now:yyyy-MM-dd-hh-mm-ss}.txt";
+            if (saveFileDialog.ShowDialog() == true)
+            {
+                using StreamWriter outputFile = new StreamWriter(saveFileDialog.FileName, true);
+                var densities = Densities
+                            .Where(x => x.Density > 0)
+                            .GroupBy(x => x.Isotope.A)
+                            .Select(x => new
+                            {
+                                A = x.Key,
+                                Density = x.Sum(x => x.Density),
+                                Cs = x.OrderByDescending(x => x.Density).FirstOrDefault()?.Isotope.AvgCs ?? 0
+                            });
+                foreach (var density in densities.Where(x => x.Density > 1E-8).OrderBy(x => x.A))
+                {
+                    outputFile.WriteLine($"{density.A}\t{density.Density}\t{density.Density * density.Cs * 1E9}");
+                }
+            }
+        }
+
         public Func<double, string> FormatterY { get; set; }
 
         public IEnumerable<IIsotope> Isotopes => _calculationPageViewModel.Isotopes;
@@ -438,6 +481,10 @@ namespace GUI.ViewModels
 
         public Command GoToBackCommand { get; }
 
+        public Command ExportRawDataCommand { get; }
+
+        public Command ExportGroupdDataCommand { get; }
+
         public SeriesCollection SeriesCollection { get; set; }
 
         public SeriesCollection LineCollection { get; set; }
@@ -464,6 +511,21 @@ namespace GUI.ViewModels
         /// TimeScales
         /// </summary>
         public IEnumerable<TimeScales> TimeScales { get; set; }
+
+        private string _timeCalculationText;
+
+        public string TimeCalculationText
+        {
+            get => _timeCalculationText;
+            set 
+            {
+                Set(ref _timeCalculationText, value);
+                if (double.TryParse(value, out double timeCalculation))
+                {
+                    TimeCalculation = timeCalculation;
+                }
+            }
+        }
 
         /// <summary>
         /// SelectedTimeScale
@@ -508,6 +570,10 @@ namespace GUI.ViewModels
                         default:
                             break;
                     }
+                    if (_totalCalculationSec < 0)
+                    {
+                        throw new InvalidDataException("Time is negative");
+                    }
                 }
             }
         }
@@ -526,7 +592,7 @@ namespace GUI.ViewModels
         /// <summary>
         /// HalfLifeLowerLimit
         /// </summary>
-        public int TimeCalculation
+        public double TimeCalculation
         {
             get => _timeCalculation;
             set
@@ -544,8 +610,7 @@ namespace GUI.ViewModels
                             _totalCalculationSec = (long)_calculationTimeSpan.TotalSeconds;
                             break;
                         case ViewModels.TimeScales.Second:
-                            _calculationTimeSpan = TimeSpan.FromSeconds(value);
-                            _totalCalculationSec = (long)_calculationTimeSpan.TotalSeconds;
+                            _totalCalculationSec = value;
                             break;
                         case ViewModels.TimeScales.Minute:
                             _calculationTimeSpan = TimeSpan.FromMinutes(value);
@@ -560,10 +625,15 @@ namespace GUI.ViewModels
                             _totalCalculationSec = (long)_calculationTimeSpan.TotalSeconds;
                             break;
                         case ViewModels.TimeScales.Year:
-                            _totalCalculationSec = value * 365 * 86400;
+                            _totalCalculationSec = (long)(value * 3.0E7);
                             break;
                         default:
                             break;
+                    }
+
+                    if (_totalCalculationSec < 0)
+                    {
+                        throw new InvalidDataException("Time is negative");
                     }
                 }
             }

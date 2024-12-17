@@ -32,7 +32,7 @@ namespace NuclearCalculation
         /// <summary>
         /// Method to calculate nuclide number density after time, sec
         /// </summary>
-        IEnumerable<INuclideDensity> Calculate(long time);
+        IEnumerable<INuclideDensity> Calculate(double time);
 
         /// <summary>
         /// Set averaged cross sections

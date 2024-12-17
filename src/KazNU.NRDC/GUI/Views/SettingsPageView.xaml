@@ -101,7 +101,7 @@
                             HorizontalContentAlignment="Left"
                             HorizontalAlignment="Right"
                             VerticalContentAlignment="Center"
-                            Text="{Binding TimeCalculation, Mode=TwoWay, Converter={StaticResource StringToDoubleConverter}}"
+                            Text="{Binding TimeCalculationText, Mode=TwoWay}"
                             FontSize="12"/>
                         <ComboBox
                             Grid.Column="2" 
@@ -238,10 +238,10 @@
                                         <RowDefinition Height="*"/>
                                     </Grid.RowDefinitions>
                                     <CheckBox Margin="10" IsChecked="{Binding IsBarChartSelected, Mode=TwoWay}" Content="Histogram" FontSize="16" Foreground="Gray" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
-                                    <lvc:CartesianChart 
+                                    <lvc:CartesianChart                                         
                                         Visibility="{Binding IsBarChartSelected, Converter={StaticResource BooleanToVisibleCollapsedConverter}}"
                                         Grid.Row="1"                                         
-                                        Series="{Binding SeriesCollection}" 
+                                        Series="{Binding SeriesCollection, Mode=TwoWay, NotifyOnSourceUpdated=True}" 
                                         LegendLocation="Left">
                                         <lvc:CartesianChart.AxisX>
                                             <lvc:Axis Title="Изотопы" Labels="{Binding Labels}"/>
@@ -616,15 +616,34 @@
                 </Grid>
             </TabItem>
         </TabControl>
-        <Button 
-            Grid.Row="4"
-            Grid.Column="1"
-            Width="100"
-            Height="33"
-            Content="Back"
-            HorizontalAlignment="Right"
-            Margin="0 5 10 7"
-            FontSize="12"
-            Command="{Binding GoToBackCommand}"/>
+        <StackPanel Grid.Row="4"
+                    HorizontalAlignment="Right"
+                    Orientation="Horizontal"
+                    Grid.Column="1">
+            <Button 
+                Width="150"
+                Height="33"
+                Content="Export all data"
+                HorizontalAlignment="Right"
+                Margin="0 5 10 7"
+                FontSize="12"
+                Command="{Binding ExportRawDataCommand}"/>
+            <Button 
+                Width="150"
+                Height="33"
+                Content="Export grouped"
+                HorizontalAlignment="Right"
+                Margin="0 5 10 7"
+                FontSize="12"
+                Command="{Binding ExportGroupdDataCommand}"/>
+            <Button 
+                Width="100"
+                Height="33"
+                Content="Back"
+                HorizontalAlignment="Right"
+                Margin="0 5 15 7"
+                FontSize="12"
+                Command="{Binding GoToBackCommand}"/>
+        </StackPanel>
     </Grid>
 </UserControl>

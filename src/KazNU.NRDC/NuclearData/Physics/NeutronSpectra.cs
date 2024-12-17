@@ -60,9 +60,7 @@ namespace NuclearData
                 if (macs == null)
                 {
                     if (isotope.CrossSections.ContainsKey(Constants.REACT.N_G))
-                    {
                         isotope.AvgCs = OneGroupCrossSection(spectra, isotope.GetCrossSection(Constants.REACT.N_G));
-                    }
                 }
                 else
                 {
