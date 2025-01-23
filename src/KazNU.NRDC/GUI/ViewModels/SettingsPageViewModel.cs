@@ -423,10 +423,14 @@ namespace GUI.ViewModels
             {
                 using StreamWriter outputFile = new StreamWriter(saveFileDialog.FileName, true);
                 outputFile.WriteLine($"Name\tZAID\tAtomicMass\t(n,g) CS\tDensity\t(N x CS)");
-                foreach (var density in Densities.Where(x => x.Density > 0))
+                foreach (var density in Densities.Where(x => x.Density > 1E-8 && x.Isotope.AvgCs != 0).OrderBy(x => x.Isotope.A))
                 {
-                    outputFile.WriteLine($"{density.NuclideName}\t{density.Isotope.ZAID}\t{density.Isotope.AtomicMass}\t{density.Isotope.AvgCs}\t{density.Density}\t{density.Density * density.Isotope.AvgCs}");
+                    outputFile.WriteLine($"{density.Isotope.A}\t{density.Density}\t{density.Density * density.Isotope.AvgCs * 1E7}");
                 }
+                //foreach (var density in Densities.Where(x => x.Density > 0).OrderBy(x => x.Isotope.A))
+                //{
+                //    outputFile.WriteLine($"{density.NuclideName}\t{density.Isotope.ZAID}\t{density.Isotope.AtomicMass}\t{density.Isotope.AvgCs}\t{density.Density}\t{density.Density * density.Isotope.AvgCs}");
+                //}
             }
         }
 
@@ -437,18 +441,10 @@ namespace GUI.ViewModels
             if (saveFileDialog.ShowDialog() == true)
             {
                 using StreamWriter outputFile = new StreamWriter(saveFileDialog.FileName, true);
-                var densities = Densities
-                            .Where(x => x.Density > 0)
-                            .GroupBy(x => x.Isotope.A)
-                            .Select(x => new
-                            {
-                                A = x.Key,
-                                Density = x.Sum(x => x.Density),
-                                Cs = x.OrderByDescending(x => x.Density).FirstOrDefault()?.Isotope.AvgCs ?? 0
-                            });
-                foreach (var density in densities.Where(x => x.Density > 1E-8).OrderBy(x => x.A))
+                outputFile.WriteLine($"Name\tDensity\t(N x CS)");
+                foreach (var density in Densities.Where(x => x.Density > 1E-8 && x.Isotope.AvgCs != 0).OrderBy(x => x.Isotope.A))
                 {
-                    outputFile.WriteLine($"{density.A}\t{density.Density}\t{density.Density * density.Cs * 1E9}");
+                    outputFile.WriteLine($"{density.Isotope.A}\t{density.Density}\t{density.Density * density.Isotope.AvgCs * 1E7}");
                 }
             }
         }
