@@ -20,6 +20,7 @@ using System.Security.AccessControl;
 using System.Reflection.Emit;
 using Microsoft.Win32;
 using System.IO;
+using StructureMap.Pipeline;
 
 namespace GUI.ViewModels
 {
@@ -248,6 +249,8 @@ namespace GUI.ViewModels
                 Application.Current.Dispatcher.Invoke(() => Percent = 0);
                 var flux = _initialNeutronFlux;
                 Application.Current.Dispatcher.Invoke(() => FluxHeatDensities.Clear());
+                var filename = $"E://mesh_density_{DateTime.Now.ToShortTimeString()}.txt";
+                Dictionary<int, IEnumerable<INuclideDensity>> zaidDensities = new();
                 for (int i = 0; i < _fluxIterations; i++)
                 {
                     var neutronSpectra = new NeutronSpectra(_calculationPageViewModel.SelectedTemperature * 1000, flux);
@@ -260,6 +263,7 @@ namespace GUI.ViewModels
                     {
                         dens.CalculateHeat(Constants.NaturalLeadDensity, 208);
                     }
+                    zaidDensities.Add(i, fdensities);
                     var heatDensity = fdensities.Sum(x => x.HeatDensityMeV);
                     FluxHeatDensities.Add(new FluxHeatDensity(flux, heatDensity));
                     flux *= 10;

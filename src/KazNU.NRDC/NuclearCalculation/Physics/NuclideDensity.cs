@@ -49,7 +49,7 @@ namespace NuclearCalculation
         {
             double concen = materialDensity * Constants.N_Avogadro / atomicMass;
             var decayEnergy = Isotope.Decays.Select(x => x.Value.DecayEnergy * x.Value.DecayProb).Sum();
-            return decayEnergy * concen * Density * Constants.q_electron;
+            return decayEnergy * concen * Density * Constants.q_electron * Isotope.DecayConst;
         }
     }
 }
