@@ -32,7 +32,7 @@ This application is designed to calculate the nuclear number density of isotopes
     * [JENDL](https://wwwndc.jaea.go.jp/jendl/j5/j5.html?utm_source=chatgpt.com)
     * [JEFF](https://www.oecd-nea.org/dbdata/jeff/jeff40/t3/?utm_source=chatgpt.com)
     * [TENDL](https://tendl.web.psi.ch/tendl_2023/tendl2023.html?utm_source=chatgpt.com)
-* **MACS** *  
+* **MACS**
   * For nuclear astrophysics calculations, the MACS (Maxwellian-Averaged Cross Section) data library is also a valuable resource. MACS values represent neutron capture cross sections averaged over a Maxwell–Boltzmann distribution of neutron energies, typically at stellar temperatures (e.g. 30 keV).
     
 | MACS Source | Description | URL |
