@@ -32,7 +32,9 @@ This application is designed to calculate the nuclear number density of isotopes
     * [JENDL](https://wwwndc.jaea.go.jp/jendl/j5/j5.html?utm_source=chatgpt.com)
     * [JEFF](https://www.oecd-nea.org/dbdata/jeff/jeff40/t3/?utm_source=chatgpt.com)
     * [TENDL](https://tendl.web.psi.ch/tendl_2023/tendl2023.html?utm_source=chatgpt.com)
+* **MACS** *  
   * For nuclear astrophysics calculations, the MACS (Maxwellian-Averaged Cross Section) data library is also a valuable resource. MACS values represent neutron capture cross sections averaged over a Maxwell–Boltzmann distribution of neutron energies, typically at stellar temperatures (e.g. 30 keV).
+    
 | MACS Source | Description | URL |
 |-------------|-------------|-----|
 | **KADoNiS** | Karlsruhe Astrophysical Database of Nucleosynthesis in Stars (main MACS database for astrophysics) | [kadonis.org](https://www.kadonis.org) |
@@ -41,4 +43,5 @@ This application is designed to calculate the nuclear number density of isotopes
 | **TENDL (via TALYS)** | Theoretical nuclear data, from which MACS can be calculated using TALYS | [tendl.web.psi.ch](https://tendl.web.psi.ch) |
 | **REACLIB** | Reaction rate library for astrophysical network calculations (rates can be converted to MACS) | [reaclib.jinaweb.org](https://reaclib.jinaweb.org) |
 | **ENDF / JEFF / JENDL** | Evaluated nuclear data files used to compute MACS with processing tools | [ENDF](https://www.nndc.bnl.gov/endf/), [JEFF](https://www.oecd-nea.org/dbdata/jeff/), [JENDL](https://wwwndc.jaea.go.jp/jendl/) |
-  * If you require additional data libraries, please contact: Nurzat Kenzhebaev 📧 nurzat.kenzhebaev@gmail.com
+
+  * If you have some questions or need support, please contact: Nurzat Kenzhebaev 📧 nurzat.kenzhebaev@gmail.com
