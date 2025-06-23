@@ -25,12 +25,17 @@ namespace TestNuclearData
                 Directory.CreateDirectory(dir);
             }
 
-            //HeatDensityTest();
+            IEndf endf = new EndfB();
+            IMacsEndf endfMacs = new EafMacs();
+            var isotopes = endf.GetIsotopes(81206, 81207, 82204, 82205, 82206, 82207, 82208, 82209, 82210, 82211, 83209, 83210, 83211, 84210, 84211);
+            var macsList = endfMacs.GetMacsData(isotopes.ToList());
 
-            foreach (var flux in fluxes)
-            {
-                TimeMeshTest(flux, $"{dir}/time_mesh_density_endfb_{flux:E2}.txt");
-            }
+            HeatDensityTest();
+
+            //foreach (var flux in fluxes)
+            //{
+            //    TimeMeshTest(flux, $"{dir}/time_mesh_density_endfb_{flux:E2}.txt");
+            //}
 
             //TimeMeshTest();
             //HeatDensityTest();
@@ -57,18 +62,20 @@ namespace TestNuclearData
                 { 1E28, 1E8 },
             };
 
+            IEndf endf = new EndfB();
+            IMacsEndf endfMacs = new EafMacs();
+            var isotopes = endf.GetIsotopes(81206, 81207, 82204, 82205, 82206, 82207, 82208, 82209, 82210, 82211, 83209, 83210, 83211, 84210, 84211);
+            var macsList = endfMacs.GetMacsData(isotopes.ToList());
+            var initial = isotopes.FirstOrDefault(x => x.Z == 82 && x.A == 206);
+
+            IMatrixExp matrixExp = new MMPA();
+
             foreach (var flux in fluxWithTime)
             {
-                IEndf endf = new Tendl();
-                IMacsEndf endfMacs = new EndfBMacs();
-                var isotopes = endf.GetIsotopes(81206, 81207, 82204, 82205, 82206, 82207, 82208, 82209, 82210, 82211, 83209, 83210, 83211, 84210, 84211);
-
                 INeutronSpectra spectra = new NeutronSpectra(0.0253, flux.Key);
-                NeutronSpectra.SetMacsCrossSection(isotopes, endfMacs.GetMacsData(), spectra);
+                NeutronSpectra.SetMacsCrossSection(isotopes, macsList, spectra);
                 IBurnUp burnUp = new BurnUp(isotopes, spectra);
 
-                IMatrixExp matrixExp = new MMPA();
-                var initial = isotopes.FirstOrDefault(x => x.Z == 82 && x.A == 206);
                 IBurnUpProcess burnUpProcess = new BurnUpProcess(burnUp, matrixExp, new NuclideDensity(initial, 1.0, Constants.NaturalLeadDensity, 208));
                 burnUpProcess.SetAvgCrossSections(endfMacs);
                 var finalDensities = burnUpProcess.Calculate(flux.Value);
@@ -84,7 +91,7 @@ namespace TestNuclearData
 
                 Console.WriteLine();
                 Console.WriteLine();
-                var heat = finalDensities.Sum(x => x.HeatDensityMeV);// * 1.6E-19;
+                var heat = finalDensities.Sum(x => x.HeatDensity);// * 1.6E-19;
                 Console.WriteLine($"{flux.Key}\t{heat}");
 
                 foreach (var final in finalDensities)
@@ -92,7 +99,7 @@ namespace TestNuclearData
                     //Console.WriteLine($"\t{final.NuclideName}-{final.Density}");
                 }
                 Console.WriteLine("");
-                System.IO.File.AppendAllText($"E://heatDensity_long_endfb.txt", $"{flux.Key}\t{heat}\n");
+                System.IO.File.AppendAllText($"E://CatalysisResults/heat_density_long_jeff.txt", $"{flux.Key}\t{heat}\n");
             }
         }
 
@@ -102,7 +109,7 @@ namespace TestNuclearData
             Dictionary<double, IEnumerable<INuclideDensity>> zaidDensities = new Dictionary<double, IEnumerable<INuclideDensity>>();
 
             //double flux = 1E12;
-            double time = 100;
+            double time = 1;
             //var filename = $"E://mesh_density_{DateTime.Now.Hour}_{DateTime.Now.Minute}_{DateTime.Now.Second}.txt";
             Console.WriteLine($"Started for flux: {flux}");
             for (int i = 0; i < intervalCount; i++)
@@ -127,7 +134,6 @@ namespace TestNuclearData
                     if (i == 19)
                     {
                         Console.WriteLine($"{nuclideDensity.Isotope.Name}\tDensity={nuclideDensity.Density}");
-
                     }
                 }
                 Console.WriteLine($"\tTime: {currTime}");
@@ -172,7 +178,7 @@ namespace TestNuclearData
 
             foreach (var item in burnUp.Isotopes)
             {
-                Console.WriteLine($"{item.Name}\t{item.AvgCs}");
+                Console.WriteLine($"{item.Name}\t{item.AvgMacsCs}");
             }
 
             for (int i = 0; i < burnUp.Matrix.Col; i++)

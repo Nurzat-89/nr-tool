@@ -19,5 +19,8 @@ namespace NuclearData
 
         /// <inheritdoc/>
         public abstract IEnumerable<IMacs> GetMacsData();
+
+        /// <inheritdoc/>
+        public abstract IEnumerable<IMacs> GetMacsData(ICollection<IIsotope> isotopes);
     }
 }

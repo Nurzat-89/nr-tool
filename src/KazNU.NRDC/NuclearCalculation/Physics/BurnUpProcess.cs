@@ -58,7 +58,7 @@ namespace NuclearCalculation
                 {
                     continue;
                 }
-                isotope.AvgCs = macs.AvgCs;
+                isotope.AvgDataMacsCs = macs.AvgCs;
             }
         }
 

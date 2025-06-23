@@ -427,9 +427,9 @@ namespace GUI.ViewModels
             {
                 using StreamWriter outputFile = new StreamWriter(saveFileDialog.FileName, true);
                 outputFile.WriteLine($"Name\tZAID\tAtomicMass\t(n,g) CS\tDensity\t(N x CS)");
-                foreach (var density in Densities.Where(x => x.Density > 1E-8 && x.Isotope.AvgCs != 0).OrderBy(x => x.Isotope.A))
+                foreach (var density in Densities.Where(x => x.Density > 1E-8 && x.Isotope.AvgMacsCs != 0).OrderBy(x => x.Isotope.A))
                 {
-                    outputFile.WriteLine($"{density.Isotope.A}\t{density.Density}\t{density.Density * density.Isotope.AvgCs * 1E7}");
+                    outputFile.WriteLine($"{density.Isotope.A}\t{density.Density}\t{density.Density * density.Isotope.AvgMacsCs * 1E7}");
                 }
                 //foreach (var density in Densities.Where(x => x.Density > 0).OrderBy(x => x.Isotope.A))
                 //{
@@ -446,9 +446,9 @@ namespace GUI.ViewModels
             {
                 using StreamWriter outputFile = new StreamWriter(saveFileDialog.FileName, true);
                 outputFile.WriteLine($"Name\tDensity\t(N x CS)");
-                foreach (var density in Densities.Where(x => x.Density > 1E-8 && x.Isotope.AvgCs != 0).OrderBy(x => x.Isotope.A))
+                foreach (var density in Densities.Where(x => x.Density > 1E-8 && x.Isotope.AvgMacsCs != 0).OrderBy(x => x.Isotope.A))
                 {
-                    outputFile.WriteLine($"{density.Isotope.A}\t{density.Density}\t{density.Density * density.Isotope.AvgCs * 1E7}");
+                    outputFile.WriteLine($"{density.Isotope.A}\t{density.Density}\t{density.Density * density.Isotope.AvgMacsCs * 1E7}");
                 }
             }
         }

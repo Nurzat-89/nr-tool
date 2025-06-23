@@ -408,7 +408,8 @@
                     <DataGridTextColumn CanUserResize="False" IsReadOnly="True" Header="Half life" Width="120" Binding="{Binding HalfLife, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
                     <DataGridTextColumn CanUserResize="False" IsReadOnly="True" Header="Decays" Width="100" Binding="{Binding Decays, Mode=OneWay, Converter={StaticResource StringListToStringConverter}, UpdateSourceTrigger=PropertyChanged}"/>
                     <DataGridTextColumn CanUserResize="False" IsReadOnly="True" Header="Decay Energy, MeV" Width="180" Binding="{Binding Decays, Mode=OneWay, Converter={StaticResource DecaysToDecayEnergyConverter}, UpdateSourceTrigger=PropertyChanged}"/>
-                    <DataGridTextColumn CanUserResize="False" IsReadOnly="True" Header="Avg cs, barn" Width="150"  Binding="{Binding AvgCs, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                    <DataGridTextColumn CanUserResize="False" IsReadOnly="True" Header="Avg macs cs, barn" Width="150"  Binding="{Binding AvgDataMacsCs, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                    <DataGridTextColumn CanUserResize="False" IsReadOnly="True" Header="Avg equation cs, barn" Width="150"  Binding="{Binding AvgCalculatedCs, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
                     <DataGridCheckBoxColumn CanUserResize="False" IsReadOnly="True" Header="Stable" Binding="{Binding Stable, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
                 </DataGrid.Columns>
             </DataGrid>

@@ -56,16 +56,11 @@ namespace NuclearData
         {
             foreach (var isotope in isotopes)
             {
+                if (isotope.CrossSections.ContainsKey(Constants.REACT.N_G))
+                    isotope.AvgCalculatedCs = OneGroupCrossSection(spectra, isotope.GetCrossSection(Constants.REACT.N_G));
                 var macs = macsCollection.FirstOrDefault(x => x.Element.ZAID == isotope.ZAID);
-                if (macs == null)
-                {
-                    if (isotope.CrossSections.ContainsKey(Constants.REACT.N_G))
-                        isotope.AvgCs = OneGroupCrossSection(spectra, isotope.GetCrossSection(Constants.REACT.N_G));
-                }
-                else
-                {
-                    isotope.AvgCs = macs.AvgCs;
-                }
+                if (macs != null)
+                    isotope.AvgDataMacsCs = macs.AvgCs;
             }
         }
 

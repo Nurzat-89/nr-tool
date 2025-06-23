@@ -51,12 +51,22 @@ namespace NuclearData
         /// <summary>
         /// Averaged cross section for (n,g) reaction cs
         /// </summary>
-        double AvgCs { get; set; }
+        double AvgDataMacsCs { get; set; }
+
+        /// <summary>
+        /// Averaged cross section for (n,g) reaction cs
+        /// </summary>
+        double AvgMacsCs { get; }
 
         /// <summary>
         /// Averaged calculated cross section for (n,g) reaction cs
         /// </summary>
         double AvgCalculatedCs { get; set; }
+
+        /// <summary>
+        /// HasMacsCs
+        /// </summary>
+        bool HasMacsCs { get; }
 
         /// <summary>
         /// Get decay data via decay type

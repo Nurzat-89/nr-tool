@@ -17,5 +17,10 @@ namespace NuclearData
         /// Get list of MACS data
         /// </summary>
         IEnumerable<IMacs> GetMacsData();
+
+        /// <summary>
+        /// Get list of MACS data
+        /// </summary>
+        IEnumerable<IMacs> GetMacsData(ICollection<IIsotope> isotopes);
     }
 }

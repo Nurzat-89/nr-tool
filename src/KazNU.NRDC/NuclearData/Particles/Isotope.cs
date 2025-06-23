@@ -51,7 +51,7 @@ namespace NuclearData
         //        }
         //    }
         //}
-        public double AvgCs { get; set; }
+        public double AvgMacsCs => HasMacsCs ? AvgDataMacsCs : AvgCalculatedCs;
 
         /// <inheritdoc/>
         public double AvgCalculatedCs { get; set; }
@@ -62,6 +62,10 @@ namespace NuclearData
             CrossSections.TryGetValue(reactionType, out ICrossSectionData crossSection);
             return crossSection;
         }
+
+        public double AvgDataMacsCs { get; set; }
+
+        public bool HasMacsCs => AvgDataMacsCs != 0;
 
         /// <inheritdoc/>
         public IDecayData GetDecay(RTYPE decayType)

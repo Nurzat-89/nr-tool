@@ -69,9 +69,9 @@ namespace NuclearCalculation
 
                 if (iCapt != -1)
                 {
-                    Matrix.Array[i, iCapt] += NeutronSpectra.Flux * _isotopes[iCapt].AvgCs * Constants.barn;
+                    Matrix.Array[i, iCapt] += NeutronSpectra.Flux * _isotopes[iCapt].AvgMacsCs * Constants.barn;
                 }
-                Matrix.Array[i, i] += -NeutronSpectra.Flux * _isotopes[i].AvgCs * Constants.barn;
+                Matrix.Array[i, i] += -NeutronSpectra.Flux * _isotopes[i].AvgMacsCs * Constants.barn;
 
                 if (!_isotopes[i].Stable)
                 {
